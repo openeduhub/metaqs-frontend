@@ -6,7 +6,7 @@ stages:
 deploy:
   stage: deploy
   script:
-    - npm build
+    - npm run build
   artifacts:
         paths:
           - dist/*
