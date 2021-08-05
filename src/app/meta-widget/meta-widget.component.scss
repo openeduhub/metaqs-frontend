@@ -1,9 +1,11 @@
 .wrapper {
   mat-card {
+    box-shadow: none;
     ::ng-deep mat-card-header {
       align-items: center;
       .mat-card-header-text {
         flex-grow: 1;
+        margin:0;
         mat-card-title {
           padding: 20px 0 0 10px;
           font-size: 120%;

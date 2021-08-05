@@ -7,6 +7,9 @@ export enum Mode {
   MaterialsNoDiscipline = 'MaterialsNoDiscipline',
   MaterialsNoContext = 'MaterialsNoContext',
   MaterialsNoKeywords = 'MaterialsNoKeywords',
+  CollectionsNoDescription = 'CollectionsNoDescription',
+  CollectionsNoKeywords = 'CollectionsNoKeywords',
+  CollectionsNoContent = 'CollectionsNoContent',
 }
 
 export type ModeDetail = {
@@ -18,6 +21,24 @@ ModeDetails[Mode.MaterialsNoTitle] = {
 };
 ModeDetails[Mode.MaterialsNoLicense] = {
   title: 'Materialien ohne Lizenz'
+};
+ModeDetails[Mode.MaterialsNoDiscipline] = {
+  title: 'Materialien ohne Fachgebiet'
+};
+ModeDetails[Mode.MaterialsNoContext] = {
+  title: 'Materialien ohne Bildungsstufe'
+};
+ModeDetails[Mode.MaterialsNoKeywords] = {
+  title: 'Materialien ohne Schlagworte'
+};
+ModeDetails[Mode.CollectionsNoDescription] = {
+  title: 'Sammlungen ohne Beschreibungstext'
+};
+ModeDetails[Mode.CollectionsNoKeywords] = {
+  title: 'Sammlungen ohne Schlagworte'
+};
+ModeDetails[Mode.CollectionsNoContent] = {
+  title: 'Sammlungen ohne Inhalt'
 };
 @Component({
   selector: 'app-meta-widget',
