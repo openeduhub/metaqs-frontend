@@ -6,4 +6,7 @@ stages:
 deploy:
   stage: deploy
   script:
-    - npm publish
+    - npm build
+  artifacts:
+        paths:
+          - dist/*
