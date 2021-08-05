@@ -9,5 +9,6 @@ deploy:
     - npm ci
     - npm run build
   artifacts:
-        paths:
-          - dist/ng-meta-widgets/*
+      name: "ng-meta-widgets"
+      paths:
+        - dist/ng-meta-widgets/*
