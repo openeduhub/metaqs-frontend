@@ -43,6 +43,6 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
   }
 
   refresh() {
-
+    console.log('refresh');
   }
 }
