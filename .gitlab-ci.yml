@@ -6,6 +6,7 @@ stages:
 deploy:
   stage: deploy
   script:
+    - npm i -g @angular/cli
     - npm run build
   artifacts:
         paths:
