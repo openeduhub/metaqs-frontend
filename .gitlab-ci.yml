@@ -10,4 +10,4 @@ deploy:
     - npm run build
   artifacts:
         paths:
-          - dist/*
+          - dist/ng-meta-widgets/*
