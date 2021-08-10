@@ -17,8 +17,9 @@ export interface LearningMaterial {
     path?: Array<string>;
     name?: string;
     title?: string;
-    keywords?: string;
-    educontext?: string;
-    subjects?: string;
+    keywords?: Array<string>;
+    educontext?: Array<string>;
+    subjects?: Array<string>;
+    www_url?: string;
 }
 

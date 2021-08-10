@@ -12,6 +12,8 @@ export class MetaApiService {
   getByMissingAttribute(nodeRef: string, type: Type, attribute: Attribute) {
     if(type === Type.Material) {
       return this.collectionsService.getMaterialsWithMissingAttributesApiV1CollectionsNodeRefIdPendingMaterialsMissingAttrGet(nodeRef, attribute);
+    } else if (type === Type.Collection) {
+      //return this.collectionsService.getMaterialsWithMissingAttributesApiV1CollectionsNodeRefIdPendingMaterialsMissingAttrGet()
     }
     throw new Error('Unexpected type ' + type);
   }

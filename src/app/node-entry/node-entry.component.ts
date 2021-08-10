@@ -17,6 +17,6 @@ export class NodeEntryComponent implements OnInit {
   }
 
   openNode(node: LearningMaterial) {
-    window.open(environment.eduSharingPath+'/components/render/'+encodeURIComponent(node.node_ref_id));
+    window.open(node.www_url || environment.eduSharingPath+'/components/render/'+encodeURIComponent(node.node_ref_id));
   }
 }

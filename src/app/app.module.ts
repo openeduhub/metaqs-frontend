@@ -13,6 +13,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { NodeImageUrlPipe } from './node-image-url.pipe';
+import {MatSliderModule} from "@angular/material/slider";
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NodeImageUrlPipe } from './node-image-url.pipe';
     }),
     BrowserAnimationsModule,
     MatIconModule,
+    MatSliderModule,
     MatButtonModule,
     MatProgressSpinnerModule,
   ],

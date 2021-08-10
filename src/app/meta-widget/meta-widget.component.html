@@ -9,6 +9,19 @@
         <mat-icon>refresh</mat-icon>
       </button>
     </mat-card-header>
+    <div *ngIf="mode === Mode.CollectionsNoContent "
+          class="count-slider">
+      <label>Sammlungen mit {{count}} oder weniger Inhalten</label>
+      <mat-slider
+        thumbLabel
+        step="1"
+        tickInterval="1"
+        min="0"
+        max="10"
+        [value]="count"
+        (change)="count = $event.value; refresh()"
+      ></mat-slider>
+    </div>
     <mat-spinner *ngIf="!data"
                  diameter="40"
                  color="primary"
