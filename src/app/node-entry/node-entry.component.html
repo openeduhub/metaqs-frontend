@@ -1,1 +1,18 @@
-<p>node-entry works!</p>
+<div class="node">
+  <img class="icon"
+       [src]="node | nodeImageUrl"
+  >
+  <div class="text">
+    <span class="title">{{node.title || node.name}}</span>
+    <span class="description">Lorem dolor sit armet Lorem dolor sit armet Lorem dolor sit armet</span>
+
+  </div>
+  <div class="actions">
+    <button mat-icon-button color="primary" (click)="openNode(node)">
+      <mat-icon>open_in_new</mat-icon>
+    </button>
+    <button mat-icon-button color="primary" (click)="edit.emit(node)">
+      <mat-icon>edit</mat-icon>
+    </button>
+  </div>
+</div>

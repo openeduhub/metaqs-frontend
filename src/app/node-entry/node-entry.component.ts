@@ -1,4 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {LearningMaterial} from "../api";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-node-entry',
@@ -6,10 +8,15 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./node-entry.component.scss']
 })
 export class NodeEntryComponent implements OnInit {
-  @Input() node: any;
+  @Input() node: LearningMaterial;
+  @Output() edit = new EventEmitter<LearningMaterial>();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  openNode(node: LearningMaterial) {
+    window.open(environment.eduSharingPath+'/components/render/'+encodeURIComponent(node.node_ref_id));
+  }
 }

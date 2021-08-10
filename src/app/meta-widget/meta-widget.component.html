@@ -2,18 +2,22 @@
   <mat-card *ngIf="modeDetail">
     <mat-card-header>
       <mat-card-title>{{ modeDetail.title }}</mat-card-title>
-      <button mat-icon-button color="primary" (click)="refresh()">
+      <button mat-icon-button
+              color="primary"
+              [disabled]="!data"
+              (click)="refresh()">
         <mat-icon>refresh</mat-icon>
       </button>
     </mat-card-header>
-    <div class="scroll">
-      <p>
-        lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor
-        lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor
-      </p>
-    <app-node-entry *ngFor="let node of nodes"
-                    [node]="node"></app-node-entry>
-
+    <mat-spinner *ngIf="!data"
+                 diameter="40"
+                 color="primary"
+    ></mat-spinner>
+    <div class="scroll" *ngIf="data">
+      <app-node-entry *ngFor="let node of data"
+                      [node]="node"
+                      (edit)="editNode(node)"
+      ></app-node-entry>
     </div>
   </mat-card>
 </div>

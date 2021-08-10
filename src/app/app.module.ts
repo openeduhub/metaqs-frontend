@@ -8,18 +8,31 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NodeEntryComponent } from './node-entry/node-entry.component';
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
+import {ApiModule, Configuration} from "./api";
+import {HttpClientModule} from "@angular/common/http";
+import {environment} from "../environments/environment";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { NodeImageUrlPipe } from './node-image-url.pipe';
 
 @NgModule({
   declarations: [
     MetaWidgetComponent,
-    NodeEntryComponent
+    NodeEntryComponent,
+    NodeImageUrlPipe
   ],
   imports: [
     BrowserModule,
     MatCardModule,
+    HttpClientModule,
+    ApiModule.forRoot(() => {
+      return new Configuration({
+        basePath: environment.apiPath
+      })
+    }),
     BrowserAnimationsModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     {provide: APP_BASE_HREF, useValue: '/'}
