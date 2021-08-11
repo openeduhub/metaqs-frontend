@@ -14,13 +14,15 @@
 /**
  * An enumeration.
  */
-export type Attribute = 'properties.cclom:title' | 'properties.cclom:general_keyword' | 'properties.ccm:educationalcontext' | 'properties.ccm:taxonid' | 'properties.ccm:wwwurl';
+export type Attribute = 'properties.cclom:title' | 'properties.cclom:general_keyword' | 'properties.ccm:educationalcontext' | 'properties.ccm:taxonid' | 'properties.ccm:wwwurl' | 'properties.cclom:general_description' | 'properties.ccm:commonlicense_key';
 
 export const Attribute = {
     Cclomtitle: 'properties.cclom:title' as Attribute,
     CclomgeneralKeyword: 'properties.cclom:general_keyword' as Attribute,
     Ccmeducationalcontext: 'properties.ccm:educationalcontext' as Attribute,
     Ccmtaxonid: 'properties.ccm:taxonid' as Attribute,
-    Ccmwwwurl: 'properties.ccm:wwwurl' as Attribute
+    Ccmwwwurl: 'properties.ccm:wwwurl' as Attribute,
+    CclomgeneralDescription: 'properties.cclom:general_description' as Attribute,
+    CcmcommonlicenseKey: 'properties.ccm:commonlicense_key' as Attribute
 };
 

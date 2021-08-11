@@ -28,6 +28,7 @@ ModeDetails[Mode.MaterialsNoTitle] = {
 ModeDetails[Mode.MaterialsNoLicense] = {
   title: 'Materialien ohne Lizenz',
   type: Type.Material,
+  attribute: Attribute.CcmcommonlicenseKey
 };
 ModeDetails[Mode.MaterialsNoDiscipline] = {
   title: 'Materialien ohne Fachgebiet',

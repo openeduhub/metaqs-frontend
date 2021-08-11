@@ -21,5 +21,7 @@ export interface LearningMaterial {
     educontext?: Array<string>;
     subjects?: Array<string>;
     www_url?: string;
+    description?: Array<string>;
+    licenses?: Array<string>;
 }
 
