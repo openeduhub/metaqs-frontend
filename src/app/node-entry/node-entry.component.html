@@ -11,7 +11,10 @@
     <button mat-icon-button color="primary" (click)="openNode(node)">
       <mat-icon>open_in_new</mat-icon>
     </button>
-    <button mat-icon-button color="primary" (click)="edit.emit(node)">
+    <button *ngIf="node.type === 'ccm:io'"
+            mat-icon-button
+            color="primary"
+            (click)="edit.emit(node)">
       <mat-icon>edit</mat-icon>
     </button>
   </div>

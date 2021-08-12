@@ -1,6 +1,11 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MetaApiService, Type} from "../meta-api.service";
-import {Attribute, LearningMaterial} from "../api";
+import {
+  AppModelsCollectionAttribute,
+  AppModelsLearningMaterialAttribute,
+  Collection,
+  LearningMaterial
+} from "../api";
 import {environment} from "../../environments/environment";
 
 export enum Mode {
@@ -14,45 +19,48 @@ export enum Mode {
   CollectionsNoContent = 'CollectionsNoContent',
 }
 
+export type Attribute = AppModelsLearningMaterialAttribute|AppModelsCollectionAttribute;
+export type Node = LearningMaterial|Collection;
 export type ModeDetail = {
   title: string,
   type: Type,
-  attribute?: Attribute
+  attribute?: Attribute;
 };
 const ModeDetails: { [key: string]: ModeDetail } = {};
 ModeDetails[Mode.MaterialsNoTitle] = {
   title: 'Materialien ohne Titel',
   type: Type.Material,
-  attribute: Attribute.Cclomtitle
+  attribute: AppModelsLearningMaterialAttribute.Cclomtitle
 };
 ModeDetails[Mode.MaterialsNoLicense] = {
   title: 'Materialien ohne Lizenz',
   type: Type.Material,
-  attribute: Attribute.CcmcommonlicenseKey
+  attribute: AppModelsLearningMaterialAttribute.CcmcommonlicenseKey
 };
 ModeDetails[Mode.MaterialsNoDiscipline] = {
   title: 'Materialien ohne Fachgebiet',
   type: Type.Material,
-  attribute: Attribute.Ccmtaxonid
+  attribute: AppModelsLearningMaterialAttribute.Ccmtaxonid
 };
 ModeDetails[Mode.MaterialsNoContext] = {
   title: 'Materialien ohne Bildungsstufe',
   type: Type.Material,
-  attribute: Attribute.Ccmeducationalcontext
+  attribute: AppModelsLearningMaterialAttribute.Ccmeducationalcontext
 };
 ModeDetails[Mode.MaterialsNoKeywords] = {
   title: 'Materialien ohne Schlagworte',
   type: Type.Material,
-  attribute: Attribute.CclomgeneralKeyword
+  attribute: AppModelsLearningMaterialAttribute.CclomgeneralKeyword
 };
 ModeDetails[Mode.CollectionsNoDescription] = {
   title: 'Sammlungen ohne Beschreibungstext',
   type: Type.Collection,
+  attribute: AppModelsCollectionAttribute.Cmdescription
 };
 ModeDetails[Mode.CollectionsNoKeywords] = {
   title: 'Sammlungen ohne Schlagworte',
   type: Type.Collection,
-  attribute: Attribute.CclomgeneralKeyword
+  attribute: AppModelsCollectionAttribute.CclomgeneralKeyword
 };
 ModeDetails[Mode.CollectionsNoContent] = {
   title: 'Sammlungen ohne Inhalt',
@@ -67,7 +75,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
   readonly Mode = Mode;
   @Input() collectionid: string;
   @Input() mode: Mode;
-  data: LearningMaterial[];
+  data: Node[];
   modeDetail: ModeDetail;
   count: number|null = 0;
   constructor(
@@ -93,7 +101,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
     console.log('refresh', this.count);
   }
 
-  editNode(node: LearningMaterial) {
+  editNode(node: Node) {
     let action: string;
     if(this.mode === Mode.MaterialsNoLicense) {
       action = 'OPTIONS.LICENSE';

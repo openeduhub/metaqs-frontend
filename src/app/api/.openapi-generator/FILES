@@ -8,7 +8,9 @@ configuration.ts
 encoder.ts
 git_push.sh
 index.ts
-model/attribute.ts
+model/appModelsCollectionAttribute.ts
+model/appModelsLearningMaterialAttribute.ts
+model/collection.ts
 model/hTTPValidationError.ts
 model/learningMaterial.ts
 model/models.ts

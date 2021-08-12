@@ -1,13 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {environment} from "../environments/environment";
-import {LearningMaterial} from "./api";
+import {Node} from "./meta-widget/meta-widget.component";
 
 @Pipe({
   name: 'nodeImageUrl'
 })
 export class NodeImageUrlPipe implements PipeTransform {
 
-  transform(value: LearningMaterial, args = {
+  transform(value: Node, args = {
               width: 200, height: 200
             }
   ): string {

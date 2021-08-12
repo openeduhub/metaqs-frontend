@@ -11,17 +11,13 @@
  */
 
 
-export interface LearningMaterial { 
+export interface Collection { 
     node_ref_id: string;
     type?: string;
     path?: Array<string>;
     name?: string;
     title?: string;
     keywords?: Array<string>;
-    educontext?: Array<string>;
-    subjects?: Array<string>;
-    www_url?: string;
-    description?: Array<string>;
-    licenses?: string;
+    description?: string;
 }
 
