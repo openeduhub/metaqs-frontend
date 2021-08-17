@@ -11,17 +11,10 @@
  */
 
 
-export interface LearningMaterial { 
-    node_ref_id: string;
-    type?: string;
-    path?: Array<string>;
-    name?: string;
-    title?: string;
-    keywords?: Array<string>;
-    educontext?: Array<string>;
-    subjects?: Array<string>;
-    www_url?: string;
-    description?: string;
-    licenses?: string;
+export interface Ping { 
+    /**
+     * Ping output. Should be \'ok\' in happy case.
+     */
+    status?: string;
 }
 

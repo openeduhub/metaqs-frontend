@@ -3,7 +3,7 @@ import {MetaApiService, Type} from "../meta-api.service";
 import {
   AppModelsCollectionAttribute,
   AppModelsLearningMaterialAttribute,
-  Collection,
+  Collection, CollectionMaterialsCount,
   LearningMaterial
 } from "../api";
 import {environment} from "../../environments/environment";
@@ -20,11 +20,11 @@ export enum Mode {
 }
 
 export type Attribute = AppModelsLearningMaterialAttribute|AppModelsCollectionAttribute;
-export type Node = LearningMaterial|Collection;
+export type Node = LearningMaterial|Collection|CollectionMaterialsCount;
 export type ModeDetail = {
   title: string,
   type: Type,
-  attribute?: Attribute;
+  attribute?: Attribute | 'count';
 };
 const ModeDetails: { [key: string]: ModeDetail } = {};
 ModeDetails[Mode.MaterialsNoTitle] = {
@@ -65,6 +65,7 @@ ModeDetails[Mode.CollectionsNoKeywords] = {
 ModeDetails[Mode.CollectionsNoContent] = {
   title: 'Sammlungen ohne Inhalt',
   type: Type.Collection,
+  attribute: 'count',
 };
 @Component({
   selector: 'app-meta-widget',
@@ -76,6 +77,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
   @Input() collectionid: string;
   @Input() mode: Mode;
   data: Node[];
+  rawData: Node[];
   modeDetail: ModeDetail;
   count: number|null = 0;
   constructor(
@@ -94,8 +96,12 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
   async refresh() {
     if(this.modeDetail.attribute) {
       this.data = await this.metaApi.getByMissingAttribute(this.collectionid, this.modeDetail.type, this.modeDetail.attribute).toPromise()
+      this.rawData = this.data.slice();
     } else {
       console.warn('missing mode ' + this.modeDetail);
+    }
+    if(this.mode === Mode.CollectionsNoContent && this.rawData){
+      this.data = this.rawData.filter((d) => (d as CollectionMaterialsCount).materials_count <= (this.count || 0));
     }
     //this.data = [{name: 'Test'}] as any;
     console.log('refresh', this.count);
@@ -108,7 +114,8 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
     } else {
       action = 'OPTIONS.EDIT';
     }
-    const win = window.open(environment.eduSharingPath+'/components/render/'+encodeURIComponent(node.node_ref_id)+'?action='+action)
+    const id = (node as LearningMaterial).node_ref_id ?? (node as CollectionMaterialsCount).collection_id;
+    const win = window.open(environment.eduSharingPath+'/components/render/'+encodeURIComponent(id)+'?action='+action)
     if(win) {
       win.onunload = () => {
         this.refresh();

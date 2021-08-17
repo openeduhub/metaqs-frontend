@@ -16,11 +16,15 @@ export class MetaApiService {
   constructor(
     private collectionsService: CollectionsService
   ) { }
-  getByMissingAttribute(nodeRef: string, type: Type, attribute: Attribute) : Observable<Node[]> {
+  getByMissingAttribute(nodeRef: string, type: Type, attribute: Attribute | 'count') : Observable<Node[]> {
     if(type === Type.Material) {
       return this.collectionsService.getChildMaterialsWithMissingAttributesApiV1CollectionsNodeRefIdPendingMaterialsMissingAttrGet(nodeRef, attribute as AppModelsLearningMaterialAttribute);
     } else if (type === Type.Collection) {
-      return this.collectionsService.getChildCollectionsWithMissingAttributesApiV1CollectionsNodeRefIdPendingSubcollectionsMissingAttrGet(nodeRef, attribute as AppModelsCollectionAttribute)
+      if(attribute === 'count') {
+        return this.collectionsService.getDescendantCollectionsMaterialsCountsApiV1CollectionsNodeRefIdStatsDescendantCollectionsMaterialsCountsGet(nodeRef);
+      } else {
+        return this.collectionsService.getChildCollectionsWithMissingAttributesApiV1CollectionsNodeRefIdPendingSubcollectionsMissingAttrGet(nodeRef, attribute as AppModelsCollectionAttribute)
+      }
     }
     throw new Error('Unexpected type ' + type);
   }

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
-import {LearningMaterial} from "../api";
+import {CollectionMaterialsCount, LearningMaterial} from "../api";
 import {environment} from "../../environments/environment";
 import {Node} from "../meta-widget/meta-widget.component";
 
@@ -18,10 +18,15 @@ export class NodeEntryComponent implements OnInit {
   }
 
   openNode(node: Node) {
-    if(node.type === 'ccm:io') {
-      window.open((node as LearningMaterial).www_url || environment.eduSharingPath + '/components/render/' + encodeURIComponent(node.node_ref_id));
+    const id = (node as LearningMaterial).node_ref_id ?? (node as CollectionMaterialsCount).collection_id;
+    if((node as LearningMaterial).type === 'ccm:io') {
+      window.open((node as LearningMaterial).www_url || environment.eduSharingPath + '/components/render/' + encodeURIComponent(id));
     } else {
-      window.open(environment.eduSharingPath + '/components/collections?id=' + encodeURIComponent(node.node_ref_id));
+      window.open(environment.eduSharingPath + '/components/collections?id=' + encodeURIComponent(id));
     }
+  }
+
+  isCollectionCount() {
+    return !!(this.node as CollectionMaterialsCount).collection_id;
   }
 }

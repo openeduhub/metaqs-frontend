@@ -18,7 +18,7 @@
     .title {
       @include limitLines(2);
     }
-    .description {
+    .description,.count {
       font-size: 90%;
       color: #555;
       @include limitLines(1);

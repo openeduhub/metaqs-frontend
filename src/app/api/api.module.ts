@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 import { CollectionsService } from './api/collections.service';
+import { DefaultService } from './api/default.service';
 import { DemoService } from './api/demo.service';
 
 @NgModule({
