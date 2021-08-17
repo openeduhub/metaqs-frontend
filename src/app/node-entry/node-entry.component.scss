@@ -1,30 +1,31 @@
-@import "src/mixins";
+@import 'src/mixins';
 
 .node {
-  display: flex;
-  align-items: center;
-  padding:5px 10px;
-  .icon {
-    width: 50px;
-    min-width: 50px;
-    height: 50px;
-    object-fit: cover;
-    padding-right: 10px;
-  }
-  .text {
-    flex-grow: 1;
     display: flex;
-    flex-direction: column;
-    .title {
-      @include limitLines(2);
+    align-items: center;
+    padding: 5px 10px;
+    .icon {
+        width: 50px;
+        min-width: 50px;
+        height: 50px;
+        object-fit: cover;
+        padding-right: 10px;
     }
-    .description,.count {
-      font-size: 90%;
-      color: #555;
-      @include limitLines(1);
+    .text {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        .title {
+            @include limitLines(2);
+        }
+        .description,
+        .count {
+            font-size: 90%;
+            color: #555;
+            @include limitLines(1);
+        }
     }
-  }
-  .actions {
-    display: flex;
-  }
+    .actions {
+        display: flex;
+    }
 }

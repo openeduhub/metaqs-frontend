@@ -1,8 +1,8 @@
-@mixin limitLines($count){
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  word-break: break-word;
-  -webkit-line-clamp: $count;
-  -webkit-box-orient: vertical;
+@mixin limitLines($count) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    word-break: break-word;
+    -webkit-line-clamp: $count;
+    -webkit-box-orient: vertical;
 }

@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiPath: 'https://oeh.tzelleke.com',
-  eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
+    production: false,
+    apiPath: 'https://oeh.tzelleke.com',
+    eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
 };
 
 /*

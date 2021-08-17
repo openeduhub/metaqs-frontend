@@ -75,7 +75,8 @@
               "browserTarget": "ng-meta-widgets:build:production"
             },
             "development": {
-              "browserTarget": "ng-meta-widgets:build:development"
+              "browserTarget": "ng-meta-widgets:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

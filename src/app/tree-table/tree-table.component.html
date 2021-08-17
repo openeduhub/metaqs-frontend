@@ -1,0 +1,36 @@
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <!-- This is the tree node template for leaf nodes -->
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+    <!-- use a disabled button to provide padding for tree leaf -->
+    <button mat-icon-button disabled></button>
+    <ng-container *ngTemplateOutlet="row; context: { $implicit: node }"></ng-container>
+  </mat-tree-node>
+  <!-- This is the tree node template for expandable nodes -->
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name">
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+      </mat-icon>
+    </button>
+    <ng-container *ngTemplateOutlet="row; context: { $implicit: node }"></ng-container>
+  </mat-tree-node>
+</mat-tree>
+
+<ng-template #row let-node>
+  <div class="row" role="row">
+    <div
+      class="cell"
+      role="gridcell"
+      *ngFor="let column of columns; let index = index"
+      [ngSwitch]="column"
+      [style.margin-left]="index === 1 ? '-' + treeControl.getLevel(node) * 40 + 'px' : null"
+    >
+      <ng-container *ngSwitchDefault>
+        {{ node.data[column] }}
+      </ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #column_title></ng-template>
+<ng-template #column_count_total_resources></ng-template>

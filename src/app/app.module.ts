@@ -1,63 +1,80 @@
-import {ApplicationRef, ComponentFactory, NgModule, Type} from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { ApplicationRef, ComponentRef, NgModule, Type } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTreeModule } from '@angular/material/tree';
 import { BrowserModule } from '@angular/platform-browser';
-
-import {APP_BASE_HREF} from "@angular/common";
-import { MetaWidgetComponent } from './meta-widget/meta-widget.component';
-import {MatCardModule} from "@angular/material/card";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { environment } from '../environments/environment';
+import { ApiModule, Configuration } from './api';
+import { MetaWidgetComponent } from './meta-widget/meta-widget.component';
 import { NodeEntryComponent } from './node-entry/node-entry.component';
-import {MatIconModule} from "@angular/material/icon";
-import {MatButtonModule} from "@angular/material/button";
-import {ApiModule, Configuration} from "./api";
-import {HttpClientModule} from "@angular/common/http";
-import {environment} from "../environments/environment";
-import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import { NodeImageUrlPipe } from './node-image-url.pipe';
-import {MatSliderModule} from "@angular/material/slider";
+import { TreeTableComponent } from './tree-table/tree-table.component';
 
 @NgModule({
-  declarations: [
-    MetaWidgetComponent,
-    NodeEntryComponent,
-    NodeImageUrlPipe
-  ],
-  imports: [
-    BrowserModule,
-    MatCardModule,
-    HttpClientModule,
-    ApiModule.forRoot(() => {
-      return new Configuration({
-        basePath: environment.apiPath
-      })
-    }),
-    BrowserAnimationsModule,
-    MatIconModule,
-    MatSliderModule,
-    MatButtonModule,
-    MatProgressSpinnerModule,
-  ],
-  providers: [
-    {provide: APP_BASE_HREF, useValue: '/'}
-  ]
+    declarations: [MetaWidgetComponent, NodeEntryComponent, NodeImageUrlPipe, TreeTableComponent],
+    imports: [
+        BrowserModule,
+        MatCardModule,
+        MatTreeModule,
+        HttpClientModule,
+        ApiModule.forRoot(() => {
+            return new Configuration({
+                basePath: environment.apiPath,
+            });
+        }),
+        BrowserAnimationsModule,
+        MatIconModule,
+        MatSliderModule,
+        MatButtonModule,
+        MatProgressSpinnerModule,
+    ],
+    providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
 })
 export class AppModule {
-  // add any component that may be injected from an external html container
-  static readonly BOOTSTRAP_COMPONENTS: {[key: string] : Type<any>} = {
-    'app-meta-widget': MetaWidgetComponent
-  }
-  ngDoBootstrap(appRef: ApplicationRef) {
+    // add any component that may be injected from an external html container
+    static readonly BOOTSTRAP_COMPONENTS: { [key: string]: Type<any> } = {
+        'app-meta-widget': MetaWidgetComponent,
+        'app-tree-table': TreeTableComponent,
+    };
 
-    for(const key of Object.keys(AppModule.BOOTSTRAP_COMPONENTS)){
-    const rootElements = document.querySelectorAll(key);
-    for (const element of rootElements as any as HTMLElement[]) {
-        const componentRef = appRef.bootstrap(AppModule.BOOTSTRAP_COMPONENTS[key], element);
-        for (let i = 0; i < element.attributes.length; i++) {
-          const attr = (element.attributes.item(i) as Attr);
-          (componentRef.instance as any)[attr.name] = attr.value;
+    ngDoBootstrap(appRef: ApplicationRef) {
+        for (const key of Object.keys(AppModule.BOOTSTRAP_COMPONENTS)) {
+            const componentClass = AppModule.BOOTSTRAP_COMPONENTS[key];
+            // Don't call ngOnInit right away when bootstrapping, but wait for inputs to be set.
+            const ngOnInit = componentClass.prototype.ngOnInit;
+            componentClass.prototype.ngOnInit = () => {};
+            const rootElements = document.querySelectorAll(key);
+            for (const element of rootElements as any as HTMLElement[]) {
+                const componentRef = appRef.bootstrap(componentClass, element);
+                for (let i = 0; i < element.attributes.length; i++) {
+                    const attr = element.attributes.item(i) as Attr;
+                    this.setInput(componentRef, attr.name, attr.value);
+                }
+                if (typeof ngOnInit === 'function') {
+                    ngOnInit.apply(componentRef.instance);
+                }
+            }
         }
-        // we unfortunately need to manually trigger ng on changes
-        componentRef.instance.ngOnChanges({});
-      }
     }
-  }
+
+    private setInput(componentRef: ComponentRef<any>, name: string, value: string): void {
+        const cmp = (componentRef.componentType as any).ɵcmp;
+        const publicName = Object.keys(cmp.inputs).find(
+            (publicName) => publicName.toLowerCase() === name,
+        );
+        if (publicName) {
+            const privateName: string = cmp.inputs[publicName];
+            if (cmp.setInput) {
+                cmp.setInput(componentRef.instance, value, publicName, privateName);
+            } else {
+                componentRef.instance[privateName] = value;
+            }
+        }
+    }
 }

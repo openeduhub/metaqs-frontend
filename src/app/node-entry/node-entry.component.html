@@ -1,21 +1,22 @@
 <div class="node">
-  <img class="icon"
-       [src]="node | nodeImageUrl"
-  >
+  <img class="icon" [src]="node | nodeImageUrl" />
   <div class="text">
-    <span class="title">{{$any(node).title || $any(node).name}}</span>
-    <span class="description" *ngIf="!isCollectionCount()">{{$any(node).description}}</span>
-    <span class="count" *ngIf="isCollectionCount()">{{$any(node).materials_count}} Materialien</span>
-
+    <span class="title">{{ $any(node).title || $any(node).name }}</span>
+    <span class="description" *ngIf="!isCollectionCount()">{{ $any(node).description }}</span>
+    <span class="count" *ngIf="isCollectionCount()"
+      >{{ $any(node).materials_count }} Materialien</span
+    >
   </div>
   <div class="actions">
     <button mat-icon-button color="primary" (click)="openNode(node)">
       <mat-icon>open_in_new</mat-icon>
     </button>
-    <button *ngIf="$any(node).type === 'ccm:io'"
-            mat-icon-button
-            color="primary"
-            (click)="edit.emit(node)">
+    <button
+      *ngIf="$any(node).type === 'ccm:io'"
+      mat-icon-button
+      color="primary"
+      (click)="edit.emit(node)"
+    >
       <mat-icon>edit</mat-icon>
     </button>
   </div>

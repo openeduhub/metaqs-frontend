@@ -1,17 +1,16 @@
 <div class="wrapper">
   <mat-card *ngIf="modeDetail">
     <mat-card-header>
-      <mat-card-title>{{ modeDetail.title }} <span class="count" *ngIf="data">{{data.length}}</span></mat-card-title>
-      <button mat-icon-button
-              color="primary"
-              [disabled]="!data"
-              (click)="refresh()">
+      <mat-card-title
+        >{{ modeDetail.title }}
+        <span class="count" *ngIf="data">{{ data.length }}</span></mat-card-title
+      >
+      <button mat-icon-button color="primary" [disabled]="!data" (click)="refresh()">
         <mat-icon>refresh</mat-icon>
       </button>
     </mat-card-header>
-    <div *ngIf="mode === Mode.CollectionsNoContent "
-          class="count-slider">
-      <label>Sammlungen mit {{count}} oder weniger Inhalten</label>
+    <div *ngIf="mode === Mode.CollectionsNoContent" class="count-slider">
+      <label>Sammlungen mit {{ count }} oder weniger Inhalten</label>
       <mat-slider
         thumbLabel
         step="1"
@@ -22,14 +21,12 @@
         (change)="count = $event.value; filterCount()"
       ></mat-slider>
     </div>
-    <mat-spinner *ngIf="!data"
-                 diameter="40"
-                 color="primary"
-    ></mat-spinner>
+    <mat-spinner *ngIf="!data" diameter="40" color="primary"></mat-spinner>
     <div class="scroll" *ngIf="data">
-      <app-node-entry *ngFor="let node of data"
-                      [node]="node"
-                      (edit)="editNode(node)"
+      <app-node-entry
+        *ngFor="let node of data"
+        [node]="node"
+        (edit)="editNode(node)"
       ></app-node-entry>
     </div>
   </mat-card>
