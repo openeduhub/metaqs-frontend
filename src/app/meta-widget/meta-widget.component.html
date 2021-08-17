@@ -19,7 +19,7 @@
         min="0"
         max="10"
         [value]="count"
-        (change)="count = $event.value; refresh()"
+        (change)="count = $event.value; filterCount()"
       ></mat-slider>
     </div>
     <mat-spinner *ngIf="!data"

@@ -101,7 +101,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
       console.warn('missing mode ' + this.modeDetail);
     }
     if(this.mode === Mode.CollectionsNoContent && this.rawData){
-      this.data = this.rawData.filter((d) => (d as CollectionMaterialsCount).materials_count <= (this.count || 0));
+      this.filterCount();
     }
     //this.data = [{name: 'Test'}] as any;
     console.log('refresh', this.count);
@@ -123,5 +123,9 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
         setTimeout(() => this.refresh(), 5000);
       }
     }
+  }
+
+  filterCount() {
+    this.data = this.rawData.filter((d) => (d as CollectionMaterialsCount).materials_count <= (this.count || 0));
   }
 }
