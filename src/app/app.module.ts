@@ -1,4 +1,4 @@
-import {ApplicationRef, NgModule} from '@angular/core';
+import {ApplicationRef, ComponentFactory, NgModule, Type} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import {APP_BASE_HREF} from "@angular/common";
@@ -41,16 +41,23 @@ import {MatSliderModule} from "@angular/material/slider";
   ]
 })
 export class AppModule {
+  // add any component that may be injected from an external html container
+  static readonly BOOTSTRAP_COMPONENTS: {[key: string] : Type<any>} = {
+    'app-meta-widget': MetaWidgetComponent
+  }
   ngDoBootstrap(appRef: ApplicationRef) {
-    const rootElements = document.querySelectorAll('app-meta-widget');
-    console.log(rootElements)
-    for (const element of rootElements as any as HTMLElement[]){
-      const componentRef = appRef.bootstrap(MetaWidgetComponent, element);
-      for(let i = 0; i < element.attributes.length; i++) {
-        const attr = (element.attributes.item(i) as Attr);
-        (componentRef.instance as any)[attr.name] = attr.value;
+
+    for(const key of Object.keys(AppModule.BOOTSTRAP_COMPONENTS)){
+    const rootElements = document.querySelectorAll(key);
+    for (const element of rootElements as any as HTMLElement[]) {
+        const componentRef = appRef.bootstrap(AppModule.BOOTSTRAP_COMPONENTS[key], element);
+        for (let i = 0; i < element.attributes.length; i++) {
+          const attr = (element.attributes.item(i) as Attr);
+          (componentRef.instance as any)[attr.name] = attr.value;
+        }
+        // we unfortunately need to manually trigger ng on changes
+        componentRef.instance.ngOnChanges({});
       }
-      componentRef.instance.ngOnChanges({});
     }
   }
 }
