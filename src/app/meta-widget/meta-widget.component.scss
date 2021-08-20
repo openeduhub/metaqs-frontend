@@ -8,20 +8,12 @@
                 flex-grow: 1;
                 margin: 0;
                 mat-card-title {
-                    display: flex;
-                    align-items: center;
                     padding: 20px 0 0 10px;
                     font-size: 120%;
                     .count {
                         font-size: 80%;
                         color: #888;
-                        &:before {
-                            content: '(';
-                            padding-left: 7px;
-                        }
-                        &:after {
-                            content: ')';
-                        }
+                        padding-left: 7px;
                     }
                 }
             }
