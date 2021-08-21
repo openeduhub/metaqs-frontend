@@ -1,10 +1,10 @@
 <div class="wrapper">
   <mat-card *ngIf="modeDetail">
     <mat-card-header>
-      <mat-card-title
-        >{{ modeDetail.title }}
-        <span class="count" *ngIf="data">{{ data.length }}</span></mat-card-title
-      >
+      <mat-card-title>
+        {{ modeDetail.title }}
+        <span class="count" *ngIf="data">({{ data.length }})</span>
+      </mat-card-title>
       <button mat-icon-button color="primary" [disabled]="!data" (click)="refresh()">
         <mat-icon>refresh</mat-icon>
       </button>
