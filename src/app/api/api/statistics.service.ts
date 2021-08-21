@@ -26,7 +26,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class DemoService {
+export class StatisticsService {
 
     protected basePath = 'http://localhost';
     public defaultHeaders = new HttpHeaders();
@@ -84,14 +84,14 @@ export class DemoService {
     }
 
     /**
-     * Demo
+     * Get Descendant Collections Materials Counts
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public demoApiV1DemoGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
-    public demoApiV1DemoGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
-    public demoApiV1DemoGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
-    public demoApiV1DemoGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getDescendantCollectionsMaterialsCountsApiV1StatsGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
+    public getDescendantCollectionsMaterialsCountsApiV1StatsGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
+    public getDescendantCollectionsMaterialsCountsApiV1StatsGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
+    public getDescendantCollectionsMaterialsCountsApiV1StatsGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -113,7 +113,7 @@ export class DemoService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<object>(`${this.configuration.basePath}/api/v1/demo`,
+        return this.httpClient.get<object>(`${this.configuration.basePath}/api/v1/stats`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

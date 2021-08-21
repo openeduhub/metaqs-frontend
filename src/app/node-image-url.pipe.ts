@@ -15,8 +15,7 @@ export class NodeImageUrlPipe implements PipeTransform {
         },
     ): string {
         const id =
-            (value as LearningMaterial).node_ref_id ??
-            (value as CollectionMaterialsCount).collection_id;
+            (value as LearningMaterial).noderef_id;
         return (
             environment.eduSharingPath +
             '/preview?nodeId=' +

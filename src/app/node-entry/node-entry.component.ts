@@ -18,8 +18,7 @@ export class NodeEntryComponent implements OnInit {
 
     openNode(node: Node) {
         const id =
-            (node as LearningMaterial).node_ref_id ??
-            (node as CollectionMaterialsCount).collection_id;
+            (node as LearningMaterial).noderef_id;
         if ((node as LearningMaterial).type === 'ccm:io') {
             window.open(
                 (node as LearningMaterial).www_url ||
@@ -33,6 +32,6 @@ export class NodeEntryComponent implements OnInit {
     }
 
     isCollectionCount() {
-        return !!(this.node as CollectionMaterialsCount).collection_id;
+        return (this.node as CollectionMaterialsCount).materials_count !== undefined;
     }
 }

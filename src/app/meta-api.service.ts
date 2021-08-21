@@ -19,17 +19,17 @@ export class MetaApiService {
         attribute: Attribute | 'count',
     ): Observable<Node[]> {
         if (type === Type.Material) {
-            return this.collectionsService.getChildMaterialsWithMissingAttributesApiV1CollectionsNodeRefIdPendingMaterialsMissingAttrGet(
+            return this.collectionsService.getChildMaterialsWithMissingAttributesApiV1CollectionsNoderefIdPendingMaterialsMissingAttrGet(
                 nodeRef,
                 attribute as AppModelsLearningMaterialAttribute,
             );
         } else if (type === Type.Collection) {
             if (attribute === 'count') {
-                return this.collectionsService.getDescendantCollectionsMaterialsCountsApiV1CollectionsNodeRefIdStatsDescendantCollectionsMaterialsCountsGet(
+                return this.collectionsService.getDescendantCollectionsMaterialsCountsApiV1CollectionsNoderefIdStatsDescendantCollectionsMaterialsCountsGet(
                     nodeRef,
                 );
             } else {
-                return this.collectionsService.getChildCollectionsWithMissingAttributesApiV1CollectionsNodeRefIdPendingSubcollectionsMissingAttrGet(
+                return this.collectionsService.getChildCollectionsWithMissingAttributesApiV1CollectionsNoderefIdPendingSubcollectionsMissingAttrGet(
                     nodeRef,
                     attribute as AppModelsCollectionAttribute,
                 );

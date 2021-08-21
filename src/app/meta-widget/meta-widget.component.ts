@@ -56,12 +56,12 @@ ModeDetails[Mode.MaterialsNoKeywords] = {
 ModeDetails[Mode.CollectionsNoDescription] = {
     title: 'Sammlungen ohne Beschreibungstext',
     type: Type.Collection,
-    attribute: AppModelsCollectionAttribute.Cmdescription,
+    attribute: AppModelsCollectionAttribute.PropertiesCmdescription,
 };
 ModeDetails[Mode.CollectionsNoKeywords] = {
     title: 'Sammlungen ohne Schlagworte',
     type: Type.Collection,
-    attribute: AppModelsCollectionAttribute.CclomgeneralKeyword,
+    attribute: AppModelsCollectionAttribute.PropertiesCclomgeneralKeyword,
 };
 ModeDetails[Mode.CollectionsNoContent] = {
     title: 'Sammlungen ohne Inhalt',
@@ -119,8 +119,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
             action = 'OPTIONS.EDIT';
         }
         const id =
-            (node as LearningMaterial).node_ref_id ??
-            (node as CollectionMaterialsCount).collection_id;
+            (node as LearningMaterial).noderef_id;
         const win = window.open(
             environment.eduSharingPath +
                 '/components/render/' +
