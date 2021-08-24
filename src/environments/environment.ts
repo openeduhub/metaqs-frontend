@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    apiPath: 'https://oeh.tzelleke.com',
-    eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
+    apiPath: 'https://metaqs-api.openeduhub.net',
+    eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',
 };
 
 /*

@@ -278,9 +278,9 @@ export class CollectionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPortalsApiV1CollectionsTreeGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<any>>;
-    public getPortalsApiV1CollectionsTreeGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<any>>>;
-    public getPortalsApiV1CollectionsTreeGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<any>>>;
+    public getPortalsApiV1CollectionsTreeGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<object>>;
+    public getPortalsApiV1CollectionsTreeGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<object>>>;
+    public getPortalsApiV1CollectionsTreeGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<object>>>;
     public getPortalsApiV1CollectionsTreeGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -303,7 +303,7 @@ export class CollectionsService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<any>>(`${this.configuration.basePath}/api/v1/collections/tree`,
+        return this.httpClient.get<Array<object>>(`${this.configuration.basePath}/api/v1/collections/tree`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
