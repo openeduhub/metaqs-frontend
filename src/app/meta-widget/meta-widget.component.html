@@ -21,13 +21,28 @@
         (change)="count = $event.value; filterCount()"
       ></mat-slider>
     </div>
-    <mat-spinner *ngIf="!data" diameter="40" color="primary"></mat-spinner>
-    <div class="scroll" *ngIf="data">
-      <app-node-entry
-        *ngFor="let node of data"
-        [node]="node"
-        (edit)="editNode(node)"
-      ></app-node-entry>
-    </div>
+    <ng-container *ngIf="wrappedData$ | async as wrappedData">
+      <mat-spinner
+        *ngIf="wrappedData.state === 'loading'"
+        diameter="40"
+        color="primary"
+      ></mat-spinner>
+      <div class="error" *ngIf="wrappedData.state === 'error'">
+        <p class="error-text">Etwas ist schief gelaufen.</p>
+      </div>
+      <div class="scroll" *ngIf="wrappedData.state === 'success'">
+        <app-node-entry
+          *ngFor="let node of data"
+          [node]="node"
+          (edit)="editNode(node)"
+        ></app-node-entry>
+        <div *ngIf="data?.length === 0">
+          <div class="all-done">
+            <p class="all-done-emoji">🥳</p>
+            <p class="all-done-text">Keine passenden Elemente</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
   </mat-card>
 </div>

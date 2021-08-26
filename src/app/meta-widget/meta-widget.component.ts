@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { MetaApiService, Type } from '../meta-api.service';
+import { Observable } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import {
     AppModelsCollectionAttribute,
     AppModelsLearningMaterialAttribute,
@@ -7,7 +9,8 @@ import {
     CollectionMaterialsCount,
     LearningMaterial,
 } from '../api';
-import { environment } from '../../environments/environment';
+import { MetaApiService, Type } from '../meta-api.service';
+import { WrappedResponse, wrapResponse } from '../wrap-observable.pipe';
 
 export enum Mode {
     MaterialsNoTitle = 'MaterialsNoTitle',
@@ -77,8 +80,9 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
     readonly Mode = Mode;
     @Input() collectionId: string;
     @Input() mode: Mode;
-    data: Node[];
-    rawData: Node[];
+    wrappedData$: Observable<WrappedResponse<Node[]>>;
+    data: Node[] | undefined;
+    rawData: Node[] | undefined;
     modeDetail: ModeDetail;
     count: number | null = 0;
     constructor(private metaApi: MetaApiService) {}
@@ -93,21 +97,27 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
 
     async refresh() {
         if (this.modeDetail.attribute) {
-            this.data = await this.metaApi
+            this.wrappedData$ = this.metaApi
                 .getByMissingAttribute(
                     this.collectionId,
                     this.modeDetail.type,
                     this.modeDetail.attribute,
                 )
+                .pipe(wrapResponse(), shareReplay(1));
+            this.data = await this.wrappedData$
+                .pipe(
+                    map((wrappedData) =>
+                        wrappedData.state === 'success' ? wrappedData.data : undefined,
+                    ),
+                )
                 .toPromise();
-            this.rawData = this.data.slice();
+            this.rawData = this.data?.slice();
         } else {
             console.warn('missing mode ' + this.modeDetail);
         }
         if (this.mode === Mode.CollectionsNoContent && this.rawData) {
             this.filterCount();
         }
-        //this.data = [{name: 'Test'}] as any;
         console.log('refresh', this.count);
     }
 
@@ -118,8 +128,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
         } else {
             action = 'OPTIONS.EDIT';
         }
-        const id =
-            (node as LearningMaterial).noderef_id;
+        const id = (node as LearningMaterial).noderef_id;
         const win = window.open(
             environment.eduSharingPath +
                 '/components/render/' +
@@ -137,7 +146,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
     }
 
     filterCount() {
-        this.data = this.rawData.filter(
+        this.data = this.rawData?.filter(
             (d) => (d as CollectionMaterialsCount).materials_count <= (this.count || 0),
         );
     }

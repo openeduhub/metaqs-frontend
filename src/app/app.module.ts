@@ -15,9 +15,10 @@ import { MetaWidgetComponent } from './meta-widget/meta-widget.component';
 import { NodeEntryComponent } from './node-entry/node-entry.component';
 import { NodeImageUrlPipe } from './node-image-url.pipe';
 import { TreeTableComponent } from './tree-table/tree-table.component';
+import { WrapObservablePipe } from './wrap-observable.pipe';
 
 @NgModule({
-    declarations: [MetaWidgetComponent, NodeEntryComponent, NodeImageUrlPipe, TreeTableComponent],
+    declarations: [MetaWidgetComponent, NodeEntryComponent, NodeImageUrlPipe, TreeTableComponent, WrapObservablePipe],
     imports: [
         BrowserModule,
         MatCardModule,
