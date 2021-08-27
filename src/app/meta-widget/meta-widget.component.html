@@ -36,10 +36,10 @@
           [node]="node"
           (edit)="editNode(node)"
         ></app-node-entry>
-        <div *ngIf="data?.length === 0">
+        <div *ngIf="!data?.length">
           <div class="all-done">
             <p class="all-done-emoji">🥳</p>
-            <p class="all-done-text">Keine passenden Elemente</p>
+            <p class="all-done-text">Keine Elemente ausstehend</p>
           </div>
         </div>
       </div>
