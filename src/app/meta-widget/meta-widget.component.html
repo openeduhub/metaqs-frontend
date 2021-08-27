@@ -3,7 +3,7 @@
     <mat-card-header>
       <mat-card-title>
         {{ modeDetail.title }}
-        <span class="count" *ngIf="data">({{ data.length }})</span>
+        <span class="count" *ngIf="data">({{ data.length || 0 }})</span>
       </mat-card-title>
       <button mat-icon-button color="primary" [disabled]="!data" (click)="refresh()">
         <mat-icon>refresh</mat-icon>
