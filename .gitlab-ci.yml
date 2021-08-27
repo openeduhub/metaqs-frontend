@@ -8,6 +8,12 @@ deploy:
   script:
     - npm ci
     - npm run build
+    - cd dist/ng-meta-widgets
+    - mv main.js main.metaqs.js
+    - mv polyfills.js polyfills.metaqs.js
+    - mv runtime.js runtime.metaqs.js
+    - mv styles.css styles.metaqs.css
+
   artifacts:
       name: "ng-meta-widgets"
       paths:
