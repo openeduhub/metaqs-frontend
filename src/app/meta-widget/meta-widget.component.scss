@@ -8,12 +8,11 @@
                 flex-grow: 1;
                 margin: 0;
                 mat-card-title {
-                    padding: 20px 0 0 10px;
+                    padding-top: 20px;
                     font-size: 120%;
                     .count {
                         font-size: 80%;
                         color: #888;
-                        padding-left: 7px;
                     }
                 }
             }
