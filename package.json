@@ -6,6 +6,7 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
+    "generate-api-dev": "openapi-generator-cli generate -i https://cd77-2001-16b8-c1-2800-e0c5-a99c-5bc6-3575.ngrok.io/openapi.json -g typescript-angular -o src/app/api/",
     "generate-api": "openapi-generator-cli generate -i https://metaqs-api.openeduhub.net/openapi.json -g typescript-angular -o src/app/api/",
     "test": "ng test"
   },

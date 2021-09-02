@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiPath: 'https://metaqs-api.openeduhub.net',
+    apiPath: 'https://cd77-2001-16b8-c1-2800-e0c5-a99c-5bc6-3575.ngrok.io',
     eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',
 };
 

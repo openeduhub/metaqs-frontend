@@ -3,11 +3,9 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import {
-    AppModelsCollectionAttribute,
-    AppModelsLearningMaterialAttribute,
     Collection,
     CollectionMaterialsCount,
-    LearningMaterial,
+    LearningMaterial, MissingCollectionField, MissingMaterialField,
 } from '../api';
 import { MetaApiService, Type } from '../meta-api.service';
 import { WrappedResponse, wrapResponse } from '../wrap-observable.pipe';
@@ -23,53 +21,53 @@ export enum Mode {
     CollectionsNoContent = 'CollectionsNoContent',
 }
 
-export type Attribute = AppModelsLearningMaterialAttribute | AppModelsCollectionAttribute;
+export type MissingField = MissingMaterialField | MissingCollectionField;
 export type Node = LearningMaterial | Collection | CollectionMaterialsCount;
 export type ModeDetail = {
     title: string;
     type: Type;
-    attribute?: Attribute | 'count';
+    missing?: MissingField | 'count';
 };
 const ModeDetails: { [key: string]: ModeDetail } = {};
 ModeDetails[Mode.MaterialsNoTitle] = {
     title: 'Materialien ohne Titel',
     type: Type.Material,
-    attribute: AppModelsLearningMaterialAttribute.Cclomtitle,
+    missing: MissingMaterialField.Cclomtitle,
 };
 ModeDetails[Mode.MaterialsNoLicense] = {
     title: 'Materialien ohne Lizenz',
     type: Type.Material,
-    attribute: AppModelsLearningMaterialAttribute.CcmcommonlicenseKey,
+    missing: MissingMaterialField.CcmcommonlicenseKey,
 };
 ModeDetails[Mode.MaterialsNoDiscipline] = {
     title: 'Materialien ohne Fachgebiet',
     type: Type.Material,
-    attribute: AppModelsLearningMaterialAttribute.Ccmtaxonid,
+    missing: MissingMaterialField.Ccmtaxonid,
 };
 ModeDetails[Mode.MaterialsNoContext] = {
     title: 'Materialien ohne Bildungsstufe',
     type: Type.Material,
-    attribute: AppModelsLearningMaterialAttribute.Ccmeducationalcontext,
+    missing: MissingMaterialField.Ccmeducationalcontext,
 };
 ModeDetails[Mode.MaterialsNoKeywords] = {
     title: 'Materialien ohne Schlagworte',
     type: Type.Material,
-    attribute: AppModelsLearningMaterialAttribute.CclomgeneralKeyword,
+    missing: MissingMaterialField.CclomgeneralKeyword,
 };
 ModeDetails[Mode.CollectionsNoDescription] = {
     title: 'Sammlungen ohne Beschreibungstext',
     type: Type.Collection,
-    attribute: AppModelsCollectionAttribute.PropertiesCmdescription,
+    missing: MissingCollectionField.Cmdescription,
 };
 ModeDetails[Mode.CollectionsNoKeywords] = {
     title: 'Sammlungen ohne Schlagworte',
     type: Type.Collection,
-    attribute: AppModelsCollectionAttribute.PropertiesCclomgeneralKeyword,
+    missing: MissingCollectionField.CclomgeneralKeyword,
 };
 ModeDetails[Mode.CollectionsNoContent] = {
     title: 'Sammlungen ohne Inhalt',
     type: Type.Collection,
-    attribute: 'count',
+    missing: 'count',
 };
 @Component({
     selector: 'app-meta-widget',
@@ -96,12 +94,12 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
     }
 
     async refresh() {
-        if (this.modeDetail.attribute) {
+        if (this.modeDetail.missing) {
             this.wrappedData$ = this.metaApi
                 .getByMissingAttribute(
                     this.collectionId,
                     this.modeDetail.type,
-                    this.modeDetail.attribute,
+                    this.modeDetail.missing,
                 )
                 .pipe(wrapResponse(), shareReplay(1));
             this.data = await this.wrappedData$

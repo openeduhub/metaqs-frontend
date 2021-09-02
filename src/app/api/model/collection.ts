@@ -14,11 +14,11 @@
 export interface Collection { 
     noderef_id: string;
     type?: string;
-    path?: Array<string>;
     name?: string;
     title?: string;
     keywords?: Array<string>;
     description?: string;
+    path?: Array<string>;
     parent_id?: string;
 }
 

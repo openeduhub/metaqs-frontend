@@ -16,6 +16,7 @@ import { NodeEntryComponent } from './node-entry/node-entry.component';
 import { NodeImageUrlPipe } from './node-image-url.pipe';
 import { TreeTableComponent } from './tree-table/tree-table.component';
 import { WrapObservablePipe } from './wrap-observable.pipe';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
     declarations: [MetaWidgetComponent, NodeEntryComponent, NodeImageUrlPipe, TreeTableComponent, WrapObservablePipe],
@@ -34,6 +35,7 @@ import { WrapObservablePipe } from './wrap-observable.pipe';
         MatSliderModule,
         MatButtonModule,
         MatProgressSpinnerModule,
+        MatTableModule,
     ],
     providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
 })

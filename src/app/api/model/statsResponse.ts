@@ -11,16 +11,8 @@
  */
 
 
-export interface LearningMaterial { 
-    noderef_id: string;
-    type?: string;
-    name?: string;
-    title?: string;
-    keywords?: Array<string>;
-    educontext?: Array<string>;
-    subjects?: Array<string>;
-    www_url?: string;
-    description?: string;
-    licenses?: string;
+export interface StatsResponse { 
+    derived_at: string;
+    stats: { [key: string]: { [key: string]: { [key: string]: number; }; }; };
 }
 

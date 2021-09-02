@@ -11,16 +11,9 @@
  */
 
 
-export interface LearningMaterial { 
+export interface PortalTreeNode { 
     noderef_id: string;
-    type?: string;
-    name?: string;
-    title?: string;
-    keywords?: Array<string>;
-    educontext?: Array<string>;
-    subjects?: Array<string>;
-    www_url?: string;
-    description?: string;
-    licenses?: string;
+    title: string;
+    children: Array<PortalTreeNode>;
 }
 
