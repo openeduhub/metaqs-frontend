@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CollectionMaterialsCount, LearningMaterial } from '../api';
 import { environment } from '../../environments/environment';
 import { Node } from '../meta-widget/meta-widget.component';
+import {Helper} from "../helper";
 
 @Component({
     selector: 'app-node-entry',
@@ -17,18 +18,7 @@ export class NodeEntryComponent implements OnInit {
     ngOnInit(): void {}
 
     openNode(node: Node) {
-        const id =
-            (node as LearningMaterial).noderef_id;
-        if ((node as LearningMaterial).type === 'ccm:io') {
-            window.open(
-                (node as LearningMaterial).www_url ||
-                    environment.eduSharingPath + '/components/render/' + encodeURIComponent(id),
-            );
-        } else {
-            window.open(
-                environment.eduSharingPath + '/components/collections?id=' + encodeURIComponent(id),
-            );
-        }
+        Helper.openNode(node);
     }
 
     isCollectionCount() {

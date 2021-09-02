@@ -1,3 +1,5 @@
+@use '~@angular/material' as mat;
+
 .row {
     flex-grow: 1;
     display: flex;
@@ -32,8 +34,30 @@ mat-tree-node, mat-nested-tree-node {
 .mat-cell {
     .number {
         text-align: center;
+        &.number-warn {
+            color: #a86d00;
+        }
+        &.number-error {
+            color: #a60000;
+        }
+        &.number-search {
+            color: #888;
+        }
+    }
+    a {
+        cursor: pointer;
+        color: mat.get-color-from-palette(mat.$blue-palette);
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
+tr:nth-child(odd) {background: #fff}
+tr:nth-child(even) {background: #eee}
+tr.mat-header-row {
+    background-color: #eee;
+}
+
 @for $i from 1 through 3 {
     .mat-cell-level-#{$i} {
         padding-left: ($i) * 20px!important;

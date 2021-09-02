@@ -3,6 +3,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {CollectionTreeNode, MetaApiService} from "../meta-api.service";
 import {StatsResponse} from "../api";
+import {Node} from "../meta-widget/meta-widget.component";
+import {Helper} from "../helper";
+import {environment} from "../../environments/environment";
 
 interface CollectionTreeNodeEntry extends CollectionTreeNode{
     title: string;
@@ -20,6 +23,8 @@ interface CollectionTreeNodeEntry extends CollectionTreeNode{
 export class TreeTableComponent implements OnInit {
     readonly COLLECTION_POSTFIX = '_collection';
     readonly SEARCH_POSTFIX = '_search';
+    readonly THRESHOLD_ERROR = 1;
+    readonly THRESHOLD_WARN = 5;
     @Input() collectionId: string;
 
     /*
@@ -75,11 +80,6 @@ export class TreeTableComponent implements OnInit {
     async ngOnInit() {
         const data = await this.metaApi.getTree(this.collectionId).toPromise();
         const stats = await this.metaApi.getStatistics(this.collectionId).toPromise();
-        // const facettes = this.collectFacettes(stats);
-        const mappings: any = {
-            'n-a': 'Keine Angabe',
-            'total': 'Gesamt',
-        }
         this.lrtCombinedSKOS = (await this.metaApi.getCombinedVocab().toPromise()).hasTopConcept;
         const facettes = this.lrtCombinedSKOS.map((skos: any) => {
             return {
@@ -89,10 +89,10 @@ export class TreeTableComponent implements OnInit {
         });
         console.log(facettes);
 
-        this.columns = facettes;
-        this.columns = this.columns.sort((a, b) => {
-            return Object.keys(mappings).indexOf(a.id) <= Object.keys(mappings).indexOf(b.id) ? 1 : -1;
-        })
+        this.columns = [{
+            id:'total', label: 'Gesamt',
+        }].concat(facettes)
+
         const dataFlat = this.flatten(data);
         const lrtData = this.mapLRTData(dataFlat, stats);
         console.log(lrtData);
@@ -110,7 +110,7 @@ export class TreeTableComponent implements OnInit {
         return ['title'].concat(this.columns.map(c => c.id));
     }
     getColumnIdsSplitted() {
-        return this.getColumnIds().map(c => [c + this.SEARCH_POSTFIX, c + this.COLLECTION_POSTFIX]).reduce((a,b) => a.concat(b));
+        return this.getColumnIds().map(c => [c + this.COLLECTION_POSTFIX, c + this.SEARCH_POSTFIX]).reduce((a,b) => a.concat(b));
     }
 
     private mapLRTData(dataFlat: CollectionTreeNodeEntry[], stats: StatsResponse) {
@@ -123,7 +123,9 @@ export class TreeTableComponent implements OnInit {
         console.log(dataFlat);
         return dataFlat;
     }
-
+    openNode(node: Node) {
+        Helper.openNode(node);
+    }
     private collectHits(skos: any, stat: { [p: string]: number }) {
         //console.log(stat);
         let data: {[key: string]: number} = {
@@ -138,5 +140,31 @@ export class TreeTableComponent implements OnInit {
             data[s.id] = count;
         });
         return data;
+    }
+
+    getCount(element: CollectionTreeNodeEntry, column: string) {
+        return element.data
+            [column.includes('_search') ? 'search' : 'collection']
+            [this.getColumnId(column)] || 0
+    }
+
+    getColumnId(column: string) {
+        return column.replace(this.SEARCH_POSTFIX, '').replace(this.COLLECTION_POSTFIX, '');
+    }
+
+    showSearch(element: CollectionTreeNodeEntry, column: string) {
+        const id = this.getColumnId(column);
+        console.log(element, id, this.lrtCombinedSKOS);
+        const query = element.title;
+        const parameters: any = {};
+        if(id !== 'total') {
+            parameters['ccm:educationallearningresourcetype'] = this.lrtCombinedSKOS.filter((lrt: any) => lrt.id ===id)[0].relatedMatch.map((r: any) => r.id);
+        }
+        window.open(
+            environment.eduSharingPath + '/components/search?' +
+            'query=' + encodeURIComponent(query) + '&' +
+            'parameters=' + encodeURIComponent(JSON.stringify(parameters)) + '&',
+            '_BLANK'
+        )
     }
 }

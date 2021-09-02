@@ -145,7 +145,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
 
     filterCount() {
         this.data = this.rawData?.filter(
-            (d) => (d as CollectionMaterialsCount).materials_count <= (this.count || 0),
+            (d) => (d as CollectionMaterialsCount).materials_count <= (this.count ?? 0),
         );
     }
 }
