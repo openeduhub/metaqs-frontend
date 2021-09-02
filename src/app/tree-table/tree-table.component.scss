@@ -52,6 +52,9 @@ mat-tree-node, mat-nested-tree-node {
         }
     }
 }
+td:nth-child(2), td:nth-child(4) {
+    border-right: 1px solid #e0e0e0;
+}
 tr:nth-child(odd) {background: #fff}
 tr:nth-child(even) {background: #eee}
 tr.mat-header-row {
