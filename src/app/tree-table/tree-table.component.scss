@@ -38,10 +38,12 @@ mat-tree-node, mat-nested-tree-node {
             color: #a86d00;
         }
         &.number-error {
-            color: #a60000;
+            color: #a86d00;
+            font-weight: bold;
         }
         &.number-search {
-            color: #888;
+            font-weight: normal;
+            color: #555;
         }
     }
     a {
@@ -52,16 +54,48 @@ mat-tree-node, mat-nested-tree-node {
         }
     }
 }
-td:nth-child(2), td:nth-child(4) {
-    border-right: 1px solid #e0e0e0;
+$colors:
+          #b1d6ff,
+          #b1f6ff,
+          #b1fff6,
+          #b1ffd0,
+          #d9ffb1,
+          #faffb1,
+          #ffe4b1,
+          #ffbab1;
+
+@for $i from 1 through 8 {
+    .mat-header-cell-label:nth-child(#{$i + 1}),
+    .mat-header-cell-scope:nth-child(#{$i * 2 + 1}),
+    .mat-header-cell-scope:nth-child(#{$i * 2 + 2}),
+    td:nth-child(#{$i * 2 + 1}),
+    td:nth-child(#{$i * 2 + 2})
+    {
+        background: nth($colors, $i);
+    }
+    tr:nth-child(odd) {
+        td:nth-child(#{$i * 2 + 1}),
+        td:nth-child(#{$i * 2 + 2}) {
+            background-color: lighten(nth($colors, $i), 5%);
+        }
+    }
+
+    .mat-header-cell-label:nth-child(#{$i}),
+    .mat-header-cell-label:nth-child(#{$i + 1}),
+    .mat-header-cell-scope:nth-child(#{$i*2}),
+    td:nth-child(#{$i*2}) {
+        border-right: 1px solid #888;
+    }
 }
-tr:nth-child(odd) {background: #fff}
-tr:nth-child(even) {background: #eee}
-tr.mat-header-row {
-    background-color: #eee;
+:host ::ng-deep {
+    thead {
+        box-shadow: 0 5px 3px rgba(0,0,0,.15);
+        position: relative;
+        z-index: 1;
+    }
 }
 
-@for $i from 1 through 3 {
+@for $i from 1 through 8 {
     .mat-cell-level-#{$i} {
         padding-left: ($i) * 20px!important;
     }

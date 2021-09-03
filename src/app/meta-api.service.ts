@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {
-    CollectionsService, MissingCollectionField, MissingMaterialField, StatisticsService,
+    CollectionsService, MissingCollectionField, MissingMaterialField, StatisticsService, StatsResponse,
 } from './api';
 import { MissingField, Node } from './meta-widget/meta-widget.component';
 import {HttpClient} from "@angular/common/http";
@@ -27,11 +27,26 @@ export class MetaApiService {
     getTree(
         nodeRef: string
     ) {
+        return of([
+            {
+                noderef_id: '1',
+                title: 'Test 1',
+                children: [],
+            },
+            {
+                noderef_id: '2',
+                title: 'Test 2',
+                children: [],
+            }]);
         return (this.collectionsService.getPortalTreeApiV1CollectionsNoderefIdTreeGet(nodeRef) as Observable<CollectionTreeNode[]>);
     }
     getStatistics(
         nodeRef: string
     ) {
+        return of({
+            derived_at: '',
+            stats: {}
+        } as StatsResponse);
         return this.statisticsService.getReadStatsApiV1ReadStatsNoderefIdGet(nodeRef);
     }
     getByMissingAttribute(

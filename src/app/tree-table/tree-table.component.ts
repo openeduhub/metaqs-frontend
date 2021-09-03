@@ -116,8 +116,8 @@ export class TreeTableComponent implements OnInit {
     private mapLRTData(dataFlat: CollectionTreeNodeEntry[], stats: StatsResponse) {
         dataFlat.map((d) => {
             d.data = {
-                search: this.collectHits(this.lrtCombinedSKOS, stats.stats[d.noderef_id]['search']),
-                collection: this.collectHits(this.lrtCombinedSKOS, stats.stats[d.noderef_id]['material_types'])
+                search: this.collectHits(this.lrtCombinedSKOS, stats.stats[d.noderef_id]?.['search']),
+                collection: this.collectHits(this.lrtCombinedSKOS, stats.stats[d.noderef_id]?.['material_types'])
             };
         });
         console.log(dataFlat);
@@ -129,12 +129,12 @@ export class TreeTableComponent implements OnInit {
     private collectHits(skos: any, stat: { [p: string]: number }) {
         //console.log(stat);
         let data: {[key: string]: number} = {
-            total: stat['total']
+            total: stat?.['total']
         };
         skos.forEach((s: any) => {
             const count = s.relatedMatch.map(
                 (r: any) => {
-                    return (stat[r.id]  || 0) as number
+                    return (stat?.[r.id]  || 0) as number
                 }).
             reduce((a: number, b: number) => a + b);
             data[s.id] = count;
