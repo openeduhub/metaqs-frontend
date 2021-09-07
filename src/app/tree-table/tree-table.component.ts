@@ -24,7 +24,7 @@ export class TreeTableComponent implements OnInit {
     readonly COLLECTION_POSTFIX = '_collection';
     readonly SEARCH_POSTFIX = '_search';
     readonly THRESHOLD_ERROR = 1;
-    readonly THRESHOLD_WARN = 5;
+    readonly THRESHOLD_WARN = 3;
     @Input() collectionId: string;
 
     /*
@@ -51,8 +51,9 @@ export class TreeTableComponent implements OnInit {
 
     dataSource = new MatTreeNestedDataSource<CollectionTreeNodeEntry>();
 
-    columns: {id: string; label: string;}[];
+    columns: {id: string, icon: string; label: string;}[];
     lrtCombinedSKOS: any;
+    private lrtData: CollectionTreeNodeEntry[];
 
     constructor(
         private readonly metaApi: MetaApiService
@@ -77,26 +78,40 @@ export class TreeTableComponent implements OnInit {
         console.log(facettes);
         return [...facettes];
     }
+    filter(){
+        this.dataSource.data = this.lrtData.filter((l) =>
+            l.title.toLowerCase().includes(this.searchToken.toLowerCase())
+        );
+    }
     async ngOnInit() {
         const data = await this.metaApi.getTree(this.collectionId).toPromise();
         const stats = await this.metaApi.getStatistics(this.collectionId).toPromise();
         this.lrtCombinedSKOS = (await this.metaApi.getCombinedVocab().toPromise()).hasTopConcept;
+        const icons = [
+            '',
+            'worksheet',
+            'video',
+            'audio',
+            'image',
+            'exercise',
+            'lesson_planning',
+        ]
         const facettes = this.lrtCombinedSKOS.map((skos: any) => {
             return {
                 id: skos.id,
+                icon: icons[skos.id.split('/')[skos.id.split('/').length - 1]],
                 label: skos.prefLabel.de
             }
         });
         console.log(facettes);
 
         this.columns = [{
-            id:'total', label: 'Gesamt',
+            id:'total', icon: 'total', label: 'Gesamt',
         }].concat(facettes)
 
         const dataFlat = this.flatten(data);
-        const lrtData = this.mapLRTData(dataFlat, stats);
-        console.log(lrtData);
-        this.dataSource.data = lrtData;
+        this.lrtData = this.mapLRTData(dataFlat, stats);
+        this.filter();
         /*
         this.treeTable.getCollectionTree(this.collectionId).subscribe((collectionTree) => {
             this.dataSource.data = collectionTree.rootNodes;
@@ -105,6 +120,7 @@ export class TreeTableComponent implements OnInit {
     }
 
     hasChild = (_: number, node: CollectionTreeNodeEntry) => node.children?.length;
+    searchToken = '';
 
     getColumnIds() {
         return ['title'].concat(this.columns.map(c => c.id));
@@ -123,8 +139,15 @@ export class TreeTableComponent implements OnInit {
         console.log(dataFlat);
         return dataFlat;
     }
-    openNode(node: Node) {
-        Helper.openNode(node);
+    openNode(node: Node|'root') {
+        if(node === 'root') {
+            Helper.openNode({
+                noderef_id: this.collectionId,
+                type: 'ccm:map'
+            } as Node);
+        } else {
+            Helper.openNode(node);
+        }
     }
     private collectHits(skos: any, stat: { [p: string]: number }) {
         //console.log(stat);

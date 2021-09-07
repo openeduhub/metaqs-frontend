@@ -27,7 +27,7 @@ export class MetaApiService {
     getTree(
         nodeRef: string
     ) {
-        return of([
+        /*return of([
             {
                 noderef_id: '1',
                 title: 'Test 1',
@@ -37,16 +37,16 @@ export class MetaApiService {
                 noderef_id: '2',
                 title: 'Test 2',
                 children: [],
-            }]);
+            }]);*/
         return (this.collectionsService.getPortalTreeApiV1CollectionsNoderefIdTreeGet(nodeRef) as Observable<CollectionTreeNode[]>);
     }
     getStatistics(
         nodeRef: string
     ) {
-        return of({
+        /*return of({
             derived_at: '',
             stats: {}
-        } as StatsResponse);
+        } as StatsResponse);*/
         return this.statisticsService.getReadStatsApiV1ReadStatsNoderefIdGet(nodeRef);
     }
     getByMissingAttribute(

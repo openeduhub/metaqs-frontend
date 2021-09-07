@@ -17,6 +17,9 @@ import { NodeImageUrlPipe } from './node-image-url.pipe';
 import { TreeTableComponent } from './tree-table/tree-table.component';
 import { WrapObservablePipe } from './wrap-observable.pipe';
 import {MatTableModule} from "@angular/material/table";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [MetaWidgetComponent, NodeEntryComponent, NodeImageUrlPipe, TreeTableComponent, WrapObservablePipe],
@@ -36,6 +39,9 @@ import {MatTableModule} from "@angular/material/table";
         MatButtonModule,
         MatProgressSpinnerModule,
         MatTableModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
     ],
     providers: [{ provide: APP_BASE_HREF, useValue: '/' }],
 })

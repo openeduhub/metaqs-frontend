@@ -31,55 +31,119 @@ mat-tree-node, mat-nested-tree-node {
 .mat-header-cell {
     text-align: center;
 }
-.mat-cell {
+.mat-header-cell-scope {
+    min-width: 55px;
+}
+.mat-cell.mat-column-total_collection {
     .number {
-        text-align: center;
+        display: flex;
+        height: 47px;
+        justify-content: center;
+        align-items: center;
         &.number-warn {
-            color: #a86d00;
+            background-color: var(--orange---orange_40);
         }
         &.number-error {
-            color: #a86d00;
+            background-color: var(--red---red_40);
             font-weight: bold;
-        }
-        &.number-search {
-            font-weight: normal;
-            color: #555;
-        }
-    }
-    a {
-        cursor: pointer;
-        color: mat.get-color-from-palette(mat.$blue-palette);
-        &:hover {
-            text-decoration: underline;
         }
     }
 }
-$colors:
-          #b1d6ff,
-          #b1f6ff,
-          #b1fff6,
-          #b1ffd0,
-          #d9ffb1,
-          #faffb1,
-          #ffe4b1,
-          #ffbab1;
 
+.mat-cell {
+    .number {
+        text-align: center;
+        a {
+            color: #336296;
+            text-decoration: underline;
+            justify-content: center;
+        }
+    }
+}
+.mat-header-cell, .mat-cell {
+    a {
+        cursor: pointer;
+        color: mat.get-color-from-palette(mat.$blue-palette);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        > mat-icon, > img {
+            padding-right: 5px;
+            font-size: 22px;
+            height: 20px;
+            opacity: .75;
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+        }
+        &:hover {
+            text-decoration: underline;
+            > mat-icon, > img {
+                text-decoration: none;
+            }
+        }
+    }
+}
+.mat-header-cell {
+    a {
+        justify-content: center;
+    }
+}
+
+$colors:
+          var(--lila---lila_15),
+          var(--rose---rose_15),
+          var(--pink---pink_15),
+          var(--red---red_15),
+          var(--orange---orange_15),
+          var(--green---green_15),
+          var(--dark-green---dark-green_15),
+          var(--dark-blue---dark-blue_15);
+
+.mat-header-cell-label {
+    color: #545454;
+    > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        vertical-align: middle;
+        > img {
+            opacity: 0.75;
+            height: 16px;
+            padding-right: 5px;
+        }
+    }
+}
+.mat-header-cell-search {
+    mat-form-field {
+        width: 100%;
+        display: flex;
+        margin-left: 7px;
+        margin-bottom: -16px;
+        color: var(--black);
+    }
+}
+.mat-header-cell-scope {
+    color: #545454;
+}
 @for $i from 1 through 8 {
     .mat-header-cell-label:nth-child(#{$i + 1}),
     .mat-header-cell-scope:nth-child(#{$i * 2 + 1}),
-    .mat-header-cell-scope:nth-child(#{$i * 2 + 2}),
-    td:nth-child(#{$i * 2 + 1}),
-    td:nth-child(#{$i * 2 + 2})
+    .mat-header-cell-scope:nth-child(#{$i * 2 + 2})
+    //td:nth-child(#{$i * 2 + 1}),
+    //td:nth-child(#{$i * 2 + 2})
     {
         background: nth($colors, $i);
     }
     tr:nth-child(odd) {
-        td:nth-child(#{$i * 2 + 1}),
-        td:nth-child(#{$i * 2 + 2}) {
-            background-color: lighten(nth($colors, $i), 5%);
+        td:nth-child(#{$i * 2 - 1}),
+        td:nth-child(#{$i * 2 }) {
+            //background-color: lighten(nth($colors, $i), 5%);
+            background-color: #f4f4f4;
         }
     }
-
+    .mat-header-cell-search,
     .mat-header-cell-label:nth-child(#{$i}),
     .mat-header-cell-label:nth-child(#{$i + 1}),
     .mat-header-cell-scope:nth-child(#{$i*2}),

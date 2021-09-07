@@ -135,9 +135,9 @@ export class StatisticsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
-    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
-    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
+    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<string>>;
+    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<string>>>;
+    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<string>>>;
     public getMaterialTypesApiV1StatsMaterialTypesGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
@@ -160,7 +160,7 @@ export class StatisticsService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<object>(`${this.configuration.basePath}/api/v1/stats/material-types`,
+        return this.httpClient.get<Array<string>>(`${this.configuration.basePath}/api/v1/stats/material-types`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -215,6 +215,51 @@ export class StatisticsService {
         return this.httpClient.get<StatsResponse>(`${this.configuration.basePath}/api/v1/read-stats/${encodeURIComponent(String(noderefId))}`,
             {
                 params: queryParameters,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get Read Stats Timeline
+     * @param noderefId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<string>>;
+    public getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<string>>>;
+    public getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<string>>>;
+    public getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        if (noderefId === null || noderefId === undefined) {
+            throw new Error('Required parameter noderefId was null or undefined when calling getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.get<Array<string>>(`${this.configuration.basePath}/api/v1/read-stats/${encodeURIComponent(String(noderefId))}/timeline`,
+            {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

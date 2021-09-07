@@ -14,13 +14,13 @@
 /**
  * An enumeration.
  */
-export type CollectionAttribute = 'nodeRef.id' | 'type' | 'properties.cm:name' | 'permissions.read' | 'properties.cm:edu_metadataset' | 'nodeRef.storeRef.protocol' | 'fullpath' | 'properties.cm:title' | 'properties.cclom:general_keyword' | 'properties.cm:description' | 'path' | 'parentRef.id';
+export type CollectionAttribute = 'nodeRef.id' | 'type' | 'properties.cm:name' | 'permissions.Read' | 'properties.cm:edu_metadataset' | 'nodeRef.storeRef.protocol' | 'fullpath' | 'properties.cm:title' | 'properties.cclom:general_keyword' | 'properties.cm:description' | 'path' | 'parentRef.id';
 
 export const CollectionAttribute = {
     NodeRefId: 'nodeRef.id' as CollectionAttribute,
     Type: 'type' as CollectionAttribute,
     PropertiesCmname: 'properties.cm:name' as CollectionAttribute,
-    PermissionsRead: 'permissions.read' as CollectionAttribute,
+    PermissionsRead: 'permissions.Read' as CollectionAttribute,
     PropertiesCmeduMetadataset: 'properties.cm:edu_metadataset' as CollectionAttribute,
     NodeRefStoreRefProtocol: 'nodeRef.storeRef.protocol' as CollectionAttribute,
     Fullpath: 'fullpath' as CollectionAttribute,
