@@ -85,7 +85,7 @@ export class TreeTableComponent implements OnInit {
     }
     async ngOnInit() {
         const data = await this.metaApi.getTree(this.collectionId).toPromise();
-        const stats = await this.metaApi.getStatistics(this.collectionId).toPromise();
+        const stats = await this.metaApi.getStatisticsFacettePerCollection(this.collectionId).toPromise();
         this.lrtCombinedSKOS = (await this.metaApi.getCombinedVocab().toPromise()).hasTopConcept;
         const icons = [
             '',

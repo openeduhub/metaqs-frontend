@@ -16,6 +16,8 @@ model/collectionMaterialsCount.ts
 model/hTTPValidationError.ts
 model/learningMaterial.ts
 model/materialAttribute.ts
+model/materialFieldValidation.ts
+model/materialValidationStats.ts
 model/missingCollectionField.ts
 model/missingMaterialField.ts
 model/models.ts
@@ -23,4 +25,5 @@ model/ping.ts
 model/portalTreeNode.ts
 model/statsResponse.ts
 model/validationError.ts
+model/validationStatsResponse.ts
 variables.ts

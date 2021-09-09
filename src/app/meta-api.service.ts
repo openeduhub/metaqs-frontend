@@ -38,16 +38,25 @@ export class MetaApiService {
                 title: 'Test 2',
                 children: [],
             }]);*/
-        return (this.collectionsService.getPortalTreeApiV1CollectionsNoderefIdTreeGet(nodeRef) as Observable<CollectionTreeNode[]>);
+        return (this.collectionsService.getPortalTree(nodeRef) as Observable<CollectionTreeNode[]>);
     }
-    getStatistics(
+    getStatisticsMaterialPerCollection(
         nodeRef: string
     ) {
         /*return of({
             derived_at: '',
             stats: {}
         } as StatsResponse);*/
-        return this.statisticsService.getReadStatsApiV1ReadStatsNoderefIdGet(nodeRef);
+        return this.statisticsService.readStatsValidation(nodeRef);
+    }
+    getStatisticsFacettePerCollection(
+        nodeRef: string
+    ) {
+        /*return of({
+            derived_at: '',
+            stats: {}
+        } as StatsResponse);*/
+        return this.statisticsService.readStats(nodeRef);
     }
     getByMissingAttribute(
         nodeRef: string,
@@ -55,17 +64,17 @@ export class MetaApiService {
         attribute: MissingField | 'count',
     ): Observable<Node[]> {
         if (type === Type.Material) {
-            return this.collectionsService.getChildMaterialsWithMissingAttributesApiV1CollectionsNoderefIdPendingMaterialsMissingAttrGet(
+            return this.collectionsService.filterMaterialsWithMissingAttributes(
                 nodeRef,
                 attribute as MissingMaterialField,
             );
         } else if (type === Type.Collection) {
             if (attribute === 'count') {
-                return this.collectionsService.getDescendantCollectionsMaterialsCountsApiV1CollectionsNoderefIdStatsDescendantCollectionsMaterialsCountsGet(
+                return this.collectionsService.materialCountsTree(
                     nodeRef,
                 );
             } else {
-                return this.collectionsService.getChildCollectionsWithMissingAttributesApiV1CollectionsNoderefIdPendingSubcollectionsMissingAttrGet(
+                return this.collectionsService.filterCollectionsWithMissingAttributes(
                     nodeRef,
                     attribute as MissingCollectionField,
                 );

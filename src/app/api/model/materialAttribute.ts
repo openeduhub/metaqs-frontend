@@ -14,7 +14,7 @@
 /**
  * An enumeration.
  */
-export type MaterialAttribute = 'nodeRef.id' | 'type' | 'properties.cm:name' | 'permissions.Read' | 'properties.cm:edu_metadataset' | 'nodeRef.storeRef.protocol' | 'fullpath' | 'properties.cclom:title' | 'properties.cclom:general_keyword' | 'properties.ccm:educationalcontext' | 'properties.ccm:taxonid' | 'properties.ccm:wwwurl' | 'properties.cclom:general_description' | 'properties.ccm:commonlicense_key' | 'collections.nodeRef.id' | 'collections.path' | 'content.fulltext' | 'properties.ccm:educationallearningresourcetype';
+export type MaterialAttribute = 'nodeRef.id' | 'type' | 'properties.cm:name' | 'permissions.Read' | 'properties.cm:edu_metadataset' | 'nodeRef.storeRef.protocol' | 'fullpath' | 'properties.cclom:title' | 'properties.cclom:general_keyword' | 'properties.ccm:educationalcontext' | 'i18n.de_DE.ccm:educationalcontext' | 'properties.ccm:taxonid' | 'i18n.de_DE.ccm:taxonid' | 'properties.ccm:wwwurl' | 'properties.cclom:general_description' | 'properties.ccm:commonlicense_key' | 'collections.nodeRef.id' | 'collections.path' | 'content.fulltext' | 'properties.ccm:educationallearningresourcetype' | 'i18n.de_DE.ccm:educationallearningresourcetype' | 'i18n.de_DE.ccm:educationalintendedenduserrole' | 'properties.ccm:containsAdvertisement' | 'properties.ccm:objecttype';
 
 export const MaterialAttribute = {
     NodeRefId: 'nodeRef.id' as MaterialAttribute,
@@ -27,13 +27,19 @@ export const MaterialAttribute = {
     PropertiesCclomtitle: 'properties.cclom:title' as MaterialAttribute,
     PropertiesCclomgeneralKeyword: 'properties.cclom:general_keyword' as MaterialAttribute,
     PropertiesCcmeducationalcontext: 'properties.ccm:educationalcontext' as MaterialAttribute,
+    I18nDeDeCcmeducationalcontext: 'i18n.de_DE.ccm:educationalcontext' as MaterialAttribute,
     PropertiesCcmtaxonid: 'properties.ccm:taxonid' as MaterialAttribute,
+    I18nDeDeCcmtaxonid: 'i18n.de_DE.ccm:taxonid' as MaterialAttribute,
     PropertiesCcmwwwurl: 'properties.ccm:wwwurl' as MaterialAttribute,
     PropertiesCclomgeneralDescription: 'properties.cclom:general_description' as MaterialAttribute,
     PropertiesCcmcommonlicenseKey: 'properties.ccm:commonlicense_key' as MaterialAttribute,
     CollectionsNodeRefId: 'collections.nodeRef.id' as MaterialAttribute,
     CollectionsPath: 'collections.path' as MaterialAttribute,
     ContentFulltext: 'content.fulltext' as MaterialAttribute,
-    PropertiesCcmeducationallearningresourcetype: 'properties.ccm:educationallearningresourcetype' as MaterialAttribute
+    PropertiesCcmeducationallearningresourcetype: 'properties.ccm:educationallearningresourcetype' as MaterialAttribute,
+    I18nDeDeCcmeducationallearningresourcetype: 'i18n.de_DE.ccm:educationallearningresourcetype' as MaterialAttribute,
+    I18nDeDeCcmeducationalintendedenduserrole: 'i18n.de_DE.ccm:educationalintendedenduserrole' as MaterialAttribute,
+    PropertiesCcmcontainsAdvertisement: 'properties.ccm:containsAdvertisement' as MaterialAttribute,
+    PropertiesCcmobjecttype: 'properties.ccm:objecttype' as MaterialAttribute
 };
 

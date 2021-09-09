@@ -93,22 +93,22 @@ export class CollectionsService {
     }
 
     /**
-     * Get Child Collections With Missing Attributes
+     * Filter Collections With Missing Attributes
      * @param noderefId 
      * @param missingAttr 
      * @param responseFields 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getChildCollectionsWithMissingAttributesApiV1CollectionsNoderefIdPendingSubcollectionsMissingAttrGet(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Collection>>;
-    public getChildCollectionsWithMissingAttributesApiV1CollectionsNoderefIdPendingSubcollectionsMissingAttrGet(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Collection>>>;
-    public getChildCollectionsWithMissingAttributesApiV1CollectionsNoderefIdPendingSubcollectionsMissingAttrGet(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Collection>>>;
-    public getChildCollectionsWithMissingAttributesApiV1CollectionsNoderefIdPendingSubcollectionsMissingAttrGet(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public filterCollectionsWithMissingAttributes(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Collection>>;
+    public filterCollectionsWithMissingAttributes(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Collection>>>;
+    public filterCollectionsWithMissingAttributes(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Collection>>>;
+    public filterCollectionsWithMissingAttributes(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling getChildCollectionsWithMissingAttributesApiV1CollectionsNoderefIdPendingSubcollectionsMissingAttrGet.');
+            throw new Error('Required parameter noderefId was null or undefined when calling filterCollectionsWithMissingAttributes.');
         }
         if (missingAttr === null || missingAttr === undefined) {
-            throw new Error('Required parameter missingAttr was null or undefined when calling getChildCollectionsWithMissingAttributesApiV1CollectionsNoderefIdPendingSubcollectionsMissingAttrGet.');
+            throw new Error('Required parameter missingAttr was null or undefined when calling filterCollectionsWithMissingAttributes.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -152,22 +152,22 @@ export class CollectionsService {
     }
 
     /**
-     * Get Child Materials With Missing Attributes
+     * Filter Materials With Missing Attributes
      * @param noderefId 
      * @param missingAttr 
      * @param responseFields 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getChildMaterialsWithMissingAttributesApiV1CollectionsNoderefIdPendingMaterialsMissingAttrGet(noderefId: string, missingAttr: MissingMaterialField, responseFields?: Set<MaterialAttribute>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<LearningMaterial>>;
-    public getChildMaterialsWithMissingAttributesApiV1CollectionsNoderefIdPendingMaterialsMissingAttrGet(noderefId: string, missingAttr: MissingMaterialField, responseFields?: Set<MaterialAttribute>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<LearningMaterial>>>;
-    public getChildMaterialsWithMissingAttributesApiV1CollectionsNoderefIdPendingMaterialsMissingAttrGet(noderefId: string, missingAttr: MissingMaterialField, responseFields?: Set<MaterialAttribute>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<LearningMaterial>>>;
-    public getChildMaterialsWithMissingAttributesApiV1CollectionsNoderefIdPendingMaterialsMissingAttrGet(noderefId: string, missingAttr: MissingMaterialField, responseFields?: Set<MaterialAttribute>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public filterMaterialsWithMissingAttributes(noderefId: string, missingAttr: MissingMaterialField, responseFields?: Set<MaterialAttribute>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<LearningMaterial>>;
+    public filterMaterialsWithMissingAttributes(noderefId: string, missingAttr: MissingMaterialField, responseFields?: Set<MaterialAttribute>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<LearningMaterial>>>;
+    public filterMaterialsWithMissingAttributes(noderefId: string, missingAttr: MissingMaterialField, responseFields?: Set<MaterialAttribute>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<LearningMaterial>>>;
+    public filterMaterialsWithMissingAttributes(noderefId: string, missingAttr: MissingMaterialField, responseFields?: Set<MaterialAttribute>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling getChildMaterialsWithMissingAttributesApiV1CollectionsNoderefIdPendingMaterialsMissingAttrGet.');
+            throw new Error('Required parameter noderefId was null or undefined when calling filterMaterialsWithMissingAttributes.');
         }
         if (missingAttr === null || missingAttr === undefined) {
-            throw new Error('Required parameter missingAttr was null or undefined when calling getChildMaterialsWithMissingAttributesApiV1CollectionsNoderefIdPendingMaterialsMissingAttrGet.');
+            throw new Error('Required parameter missingAttr was null or undefined when calling filterMaterialsWithMissingAttributes.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -211,62 +211,17 @@ export class CollectionsService {
     }
 
     /**
-     * Get Descendant Collections Materials Counts
-     * @param noderefId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getDescendantCollectionsMaterialsCountsApiV1CollectionsNoderefIdStatsDescendantCollectionsMaterialsCountsGet(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<CollectionMaterialsCount>>;
-    public getDescendantCollectionsMaterialsCountsApiV1CollectionsNoderefIdStatsDescendantCollectionsMaterialsCountsGet(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<CollectionMaterialsCount>>>;
-    public getDescendantCollectionsMaterialsCountsApiV1CollectionsNoderefIdStatsDescendantCollectionsMaterialsCountsGet(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<CollectionMaterialsCount>>>;
-    public getDescendantCollectionsMaterialsCountsApiV1CollectionsNoderefIdStatsDescendantCollectionsMaterialsCountsGet(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling getDescendantCollectionsMaterialsCountsApiV1CollectionsNoderefIdStatsDescendantCollectionsMaterialsCountsGet.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType_ = 'text';
-        }
-
-        return this.httpClient.get<Array<CollectionMaterialsCount>>(`${this.configuration.basePath}/api/v1/collections/${encodeURIComponent(String(noderefId))}/stats/descendant-collections-materials-counts`,
-            {
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
      * Get Portal Tree
      * @param noderefId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPortalTreeApiV1CollectionsNoderefIdTreeGet(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<PortalTreeNode>>;
-    public getPortalTreeApiV1CollectionsNoderefIdTreeGet(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<PortalTreeNode>>>;
-    public getPortalTreeApiV1CollectionsNoderefIdTreeGet(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<PortalTreeNode>>>;
-    public getPortalTreeApiV1CollectionsNoderefIdTreeGet(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getPortalTree(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<PortalTreeNode>>;
+    public getPortalTree(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<PortalTreeNode>>>;
+    public getPortalTree(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<PortalTreeNode>>>;
+    public getPortalTree(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling getPortalTreeApiV1CollectionsNoderefIdTreeGet.');
+            throw new Error('Required parameter noderefId was null or undefined when calling getPortalTree.');
         }
 
         let headers = this.defaultHeaders;
@@ -305,10 +260,10 @@ export class CollectionsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPortalsApiV1CollectionsGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
-    public getPortalsApiV1CollectionsGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
-    public getPortalsApiV1CollectionsGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
-    public getPortalsApiV1CollectionsGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public getPortals(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public getPortals(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public getPortals(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public getPortals(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
 
@@ -331,6 +286,51 @@ export class CollectionsService {
         }
 
         return this.httpClient.get<any>(`${this.configuration.basePath}/api/v1/collections`,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Material Counts Tree
+     * @param noderefId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public materialCountsTree(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<CollectionMaterialsCount>>;
+    public materialCountsTree(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<CollectionMaterialsCount>>>;
+    public materialCountsTree(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<CollectionMaterialsCount>>>;
+    public materialCountsTree(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        if (noderefId === null || noderefId === undefined) {
+            throw new Error('Required parameter noderefId was null or undefined when calling materialCountsTree.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.get<Array<CollectionMaterialsCount>>(`${this.configuration.basePath}/api/v1/collections/${encodeURIComponent(String(noderefId))}/stats/descendant-collections-materials-counts`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { HTTPValidationError } from '../model/models';
 import { StatsResponse } from '../model/models';
+import { ValidationStatsResponse } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -86,17 +87,58 @@ export class StatisticsService {
     }
 
     /**
-     * Get Material Type Stats
+     * Get Material Types
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getMaterialTypes(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<string>>;
+    public getMaterialTypes(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<string>>>;
+    public getMaterialTypes(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<string>>>;
+    public getMaterialTypes(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.get<Array<string>>(`${this.configuration.basePath}/api/v1/stats/material-types`,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Material Counts By Type
      * @param noderefId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getMaterialTypeStatsApiV1StatsNoderefIdMaterialTypeGet(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
-    public getMaterialTypeStatsApiV1StatsNoderefIdMaterialTypeGet(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
-    public getMaterialTypeStatsApiV1StatsNoderefIdMaterialTypeGet(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
-    public getMaterialTypeStatsApiV1StatsNoderefIdMaterialTypeGet(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public materialCountsByType(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
+    public materialCountsByType(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
+    public materialCountsByType(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
+    public materialCountsByType(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling getMaterialTypeStatsApiV1StatsNoderefIdMaterialTypeGet.');
+            throw new Error('Required parameter noderefId was null or undefined when calling materialCountsByType.');
         }
 
         let headers = this.defaultHeaders;
@@ -131,59 +173,18 @@ export class StatisticsService {
     }
 
     /**
-     * Get Material Types
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<string>>;
-    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<string>>>;
-    public getMaterialTypesApiV1StatsMaterialTypesGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<string>>>;
-    public getMaterialTypesApiV1StatsMaterialTypesGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-
-        let headers = this.defaultHeaders;
-
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType_ = 'text';
-        }
-
-        return this.httpClient.get<Array<string>>(`${this.configuration.basePath}/api/v1/stats/material-types`,
-            {
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get Read Stats
+     * Read Stats
      * @param noderefId 
      * @param at 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getReadStatsApiV1ReadStatsNoderefIdGet(noderefId: string, at?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<StatsResponse>;
-    public getReadStatsApiV1ReadStatsNoderefIdGet(noderefId: string, at?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<StatsResponse>>;
-    public getReadStatsApiV1ReadStatsNoderefIdGet(noderefId: string, at?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<StatsResponse>>;
-    public getReadStatsApiV1ReadStatsNoderefIdGet(noderefId: string, at?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public readStats(noderefId: string, at?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<StatsResponse>;
+    public readStats(noderefId: string, at?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<StatsResponse>>;
+    public readStats(noderefId: string, at?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<StatsResponse>>;
+    public readStats(noderefId: string, at?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling getReadStatsApiV1ReadStatsNoderefIdGet.');
+            throw new Error('Required parameter noderefId was null or undefined when calling readStats.');
         }
 
         let queryParameters = new HttpParams({encoder: this.encoder});
@@ -225,17 +226,17 @@ export class StatisticsService {
     }
 
     /**
-     * Get Read Stats Timeline
+     * Read Stats Timeline
      * @param noderefId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<string>>;
-    public getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<string>>>;
-    public getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<string>>>;
-    public getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public readStatsTimeline(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<string>>;
+    public readStatsTimeline(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<string>>>;
+    public readStatsTimeline(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<string>>>;
+    public readStatsTimeline(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling getReadStatsTimelineApiV1ReadStatsNoderefIdTimelineGet.');
+            throw new Error('Required parameter noderefId was null or undefined when calling readStatsTimeline.');
         }
 
         let headers = this.defaultHeaders;
@@ -270,23 +271,17 @@ export class StatisticsService {
     }
 
     /**
-     * Get Search Stats By Material Type
-     * @param queryStr 
+     * Read Stats Validation
+     * @param noderefId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getSearchStatsByMaterialTypeApiV1StatsSearchMaterialTypeGet(queryStr: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
-    public getSearchStatsByMaterialTypeApiV1StatsSearchMaterialTypeGet(queryStr: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
-    public getSearchStatsByMaterialTypeApiV1StatsSearchMaterialTypeGet(queryStr: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
-    public getSearchStatsByMaterialTypeApiV1StatsSearchMaterialTypeGet(queryStr: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (queryStr === null || queryStr === undefined) {
-            throw new Error('Required parameter queryStr was null or undefined when calling getSearchStatsByMaterialTypeApiV1StatsSearchMaterialTypeGet.');
-        }
-
-        let queryParameters = new HttpParams({encoder: this.encoder});
-        if (queryStr !== undefined && queryStr !== null) {
-          queryParameters = this.addToHttpParams(queryParameters,
-            <any>queryStr, 'query_str');
+    public readStatsValidation(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ValidationStatsResponse>>;
+    public readStatsValidation(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ValidationStatsResponse>>>;
+    public readStatsValidation(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ValidationStatsResponse>>>;
+    public readStatsValidation(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        if (noderefId === null || noderefId === undefined) {
+            throw new Error('Required parameter noderefId was null or undefined when calling readStatsValidation.');
         }
 
         let headers = this.defaultHeaders;
@@ -309,9 +304,8 @@ export class StatisticsService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<object>(`${this.configuration.basePath}/api/v1/stats/search/material-type`,
+        return this.httpClient.get<Array<ValidationStatsResponse>>(`${this.configuration.basePath}/api/v1/read-stats/${encodeURIComponent(String(noderefId))}/validation`,
             {
-                params: queryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -322,17 +316,17 @@ export class StatisticsService {
     }
 
     /**
-     * Post Run Stats
+     * Run Stats
      * @param noderefId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public postRunStatsApiV1RunStatsNoderefIdPost(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
-    public postRunStatsApiV1RunStatsNoderefIdPost(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
-    public postRunStatsApiV1RunStatsNoderefIdPost(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
-    public postRunStatsApiV1RunStatsNoderefIdPost(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public runStats(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public runStats(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public runStats(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public runStats(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling postRunStatsApiV1RunStatsNoderefIdPost.');
+            throw new Error('Required parameter noderefId was null or undefined when calling runStats.');
         }
 
         let headers = this.defaultHeaders;
@@ -375,17 +369,69 @@ export class StatisticsService {
     }
 
     /**
-     * Post Seed Stats
+     * Search Hits By Material Type
+     * @param queryStr 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public searchHitsByMaterialType(queryStr: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
+    public searchHitsByMaterialType(queryStr: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
+    public searchHitsByMaterialType(queryStr: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
+    public searchHitsByMaterialType(queryStr: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        if (queryStr === null || queryStr === undefined) {
+            throw new Error('Required parameter queryStr was null or undefined when calling searchHitsByMaterialType.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (queryStr !== undefined && queryStr !== null) {
+          queryParameters = this.addToHttpParams(queryParameters,
+            <any>queryStr, 'query_str');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.get<object>(`${this.configuration.basePath}/api/v1/stats/search/material-type`,
+            {
+                params: queryParameters,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Seed Stats
      * @param noderefId 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public postSeedStatsApiV1SeedStatsNoderefIdPost(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
-    public postSeedStatsApiV1SeedStatsNoderefIdPost(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
-    public postSeedStatsApiV1SeedStatsNoderefIdPost(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
-    public postSeedStatsApiV1SeedStatsNoderefIdPost(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public seedStats(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public seedStats(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public seedStats(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public seedStats(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling postSeedStatsApiV1SeedStatsNoderefIdPost.');
+            throw new Error('Required parameter noderefId was null or undefined when calling seedStats.');
         }
 
         let headers = this.defaultHeaders;
