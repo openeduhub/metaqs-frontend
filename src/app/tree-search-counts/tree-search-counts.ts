@@ -6,6 +6,7 @@ import {StatsResponse} from "../api";
 import {Node} from "../meta-widget/meta-widget.component";
 import {Helper} from "../helper";
 import {environment} from "../../environments/environment";
+import {MetaWidgetService} from "../meta-widget/meta-widget.service";
 
 interface CollectionTreeNodeEntry extends CollectionTreeNode{
     title: string;
@@ -16,16 +17,15 @@ interface CollectionTreeNodeEntry extends CollectionTreeNode{
     level: number;
 }
 @Component({
-    selector: 'app-tree-table',
-    templateUrl: './tree-table.component.html',
-    styleUrls: ['./tree-table.component.scss'],
+    selector: 'app-tree-search-counts',
+    templateUrl: './tree-search-counts.html',
+    styleUrls: ['./tree-search-counts.scss'],
 })
-export class TreeTableComponent implements OnInit {
+export class TreeSearchCounts implements OnInit {
     readonly COLLECTION_POSTFIX = '_collection';
     readonly SEARCH_POSTFIX = '_search';
     readonly THRESHOLD_ERROR = 1;
     readonly THRESHOLD_WARN = 3;
-    @Input() collectionId: string;
 
     /*
     private _transformer = (node: CollectionTreeNode, level: number) => {
@@ -56,7 +56,8 @@ export class TreeTableComponent implements OnInit {
     private lrtData: CollectionTreeNodeEntry[];
 
     constructor(
-        private readonly metaApi: MetaApiService
+        private readonly metaApi: MetaApiService,
+        private readonly metaWidget: MetaWidgetService
     ) {}
     flatten(flat: CollectionTreeNode[], collector: CollectionTreeNodeEntry[] = [], level = 1): CollectionTreeNodeEntry[] {
         flat.forEach((f) => {
@@ -84,8 +85,8 @@ export class TreeTableComponent implements OnInit {
         );
     }
     async ngOnInit() {
-        const data = await this.metaApi.getTree(this.collectionId).toPromise();
-        const stats = await this.metaApi.getStatisticsFacettePerCollection(this.collectionId).toPromise();
+        const data = await this.metaApi.getTree(this.metaWidget.getCollectionId()).toPromise();
+        const stats = await this.metaApi.getStatisticsFacettePerCollection(this.metaWidget.getCollectionId()).toPromise();
         this.lrtCombinedSKOS = (await this.metaApi.getCombinedVocab().toPromise()).hasTopConcept;
         const icons = [
             '',
@@ -141,12 +142,12 @@ export class TreeTableComponent implements OnInit {
     }
     openNode(node: Node|'root') {
         if(node === 'root') {
-            Helper.openNode({
-                noderef_id: this.collectionId,
+            this.metaWidget.openNode({
+                noderef_id: this.metaWidget.getCollectionId(),
                 type: 'ccm:map'
             } as Node);
         } else {
-            Helper.openNode(node);
+            this.metaWidget.openNode(node);
         }
     }
     private collectHits(skos: any, stat: { [p: string]: number }) {

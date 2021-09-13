@@ -3,6 +3,7 @@ import { CollectionMaterialsCount, LearningMaterial } from '../api';
 import { environment } from '../../environments/environment';
 import { Node } from '../meta-widget/meta-widget.component';
 import {Helper} from "../helper";
+import {MetaWidgetService} from "../meta-widget/meta-widget.service";
 
 @Component({
     selector: 'app-node-entry',
@@ -13,12 +14,14 @@ export class NodeEntryComponent implements OnInit {
     @Input() node: Node;
     @Output() edit = new EventEmitter<Node>();
 
-    constructor() {}
+    constructor(
+        private metaWidget: MetaWidgetService
+    ) {}
 
     ngOnInit(): void {}
 
     openNode(node: Node) {
-        Helper.openNode(node);
+        this.metaWidget.openNode(node);
     }
 
     isCollectionCount() {

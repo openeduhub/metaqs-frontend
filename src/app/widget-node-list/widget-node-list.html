@@ -1,0 +1,48 @@
+<div class="wrapper">
+  <mat-card *ngIf="modeDetail">
+    <mat-card-header>
+      <mat-card-title>
+        {{ modeDetail.title }}
+        <span class="count" *ngIf="data">({{ data.length || 0 }})</span>
+      </mat-card-title>
+      <button mat-icon-button color="primary" [disabled]="!data" (click)="refresh()">
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </mat-card-header>
+    <div *ngIf="mode === Mode.CollectionsNoContent" class="count-slider">
+      <label>Sammlungen mit {{ count }} oder weniger Inhalten</label>
+      <mat-slider
+        thumbLabel
+        step="1"
+        tickInterval="1"
+        min="0"
+        max="10"
+        [value]="count"
+        (change)="count = $event.value; filterCount()"
+      ></mat-slider>
+    </div>
+    <ng-container *ngIf="wrappedData$ | async as wrappedData">
+      <mat-spinner
+        *ngIf="wrappedData.state === 'loading'"
+        diameter="40"
+        color="primary"
+      ></mat-spinner>
+      <div class="error" *ngIf="wrappedData.state === 'error'">
+        <p class="error-text">Etwas ist schief gelaufen.</p>
+      </div>
+      <div class="scroll" *ngIf="wrappedData.state === 'success'">
+        <app-node-entry
+          *ngFor="let node of data"
+          [node]="node"
+          (edit)="editNode(node)"
+        ></app-node-entry>
+        <div *ngIf="!data?.length">
+          <div class="all-done">
+            <p class="all-done-emoji">🥳</p>
+            <p class="all-done-text">Keine Elemente ausstehend</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </mat-card>
+</div>

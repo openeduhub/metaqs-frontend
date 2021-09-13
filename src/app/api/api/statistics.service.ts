@@ -19,7 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { HTTPValidationError } from '../model/models';
 import { StatsResponse } from '../model/models';
-import { ValidationStatsResponse } from '../model/models';
+import { ValidationStatsResponseMaterialValidationStats } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -276,9 +276,9 @@ export class StatisticsService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public readStatsValidation(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ValidationStatsResponse>>;
-    public readStatsValidation(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ValidationStatsResponse>>>;
-    public readStatsValidation(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ValidationStatsResponse>>>;
+    public readStatsValidation(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<ValidationStatsResponseMaterialValidationStats>>;
+    public readStatsValidation(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<ValidationStatsResponseMaterialValidationStats>>>;
+    public readStatsValidation(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<ValidationStatsResponseMaterialValidationStats>>>;
     public readStatsValidation(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
         if (noderefId === null || noderefId === undefined) {
             throw new Error('Required parameter noderefId was null or undefined when calling readStatsValidation.');
@@ -304,7 +304,7 @@ export class StatisticsService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<ValidationStatsResponse>>(`${this.configuration.basePath}/api/v1/read-stats/${encodeURIComponent(String(noderefId))}/validation`,
+        return this.httpClient.get<Array<ValidationStatsResponseMaterialValidationStats>>(`${this.configuration.basePath}/api/v1/read-stats/${encodeURIComponent(String(noderefId))}/validation`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -411,59 +411,6 @@ export class StatisticsService {
         return this.httpClient.get<object>(`${this.configuration.basePath}/api/v1/stats/search/material-type`,
             {
                 params: queryParameters,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Seed Stats
-     * @param noderefId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public seedStats(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
-    public seedStats(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
-    public seedStats(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
-    public seedStats(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling seedStats.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        let credential: string | undefined;
-        // authentication (APIKeyHeader) required
-        credential = this.configuration.lookupCredential('APIKeyHeader');
-        if (credential) {
-            headers = headers.set('X-API-KEY', credential);
-        }
-
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType_ = 'text';
-        }
-
-        return this.httpClient.post<any>(`${this.configuration.basePath}/api/v1/seed-stats/${encodeURIComponent(String(noderefId))}`,
-            null,
-            {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

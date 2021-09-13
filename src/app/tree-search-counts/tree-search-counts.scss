@@ -151,11 +151,14 @@ $colors:
         border-right: 1px solid #888;
     }
 }
-:host ::ng-deep {
-    thead {
-        box-shadow: 0 5px 3px rgba(0,0,0,.15);
-        position: relative;
-        z-index: 1;
+:host {
+    overflow: auto;
+    ::ng-deep {
+        thead {
+            box-shadow: 0 5px 3px rgba(0, 0, 0, .15);
+            position: relative;
+            z-index: 1;
+        }
     }
 }
 

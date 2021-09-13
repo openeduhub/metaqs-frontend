@@ -14,15 +14,16 @@ import { ApiModule, Configuration } from './api';
 import { MetaWidgetComponent } from './meta-widget/meta-widget.component';
 import { NodeEntryComponent } from './node-entry/node-entry.component';
 import { NodeImageUrlPipe } from './node-image-url.pipe';
-import { TreeTableComponent } from './tree-table/tree-table.component';
 import { WrapObservablePipe } from './wrap-observable.pipe';
 import {MatTableModule} from "@angular/material/table";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
+import {WidgetNodeList} from "./widget-node-list/widget-node-list";
+import {TreeSearchCounts} from "./tree-search-counts/tree-search-counts";
 
 @NgModule({
-    declarations: [MetaWidgetComponent, NodeEntryComponent, NodeImageUrlPipe, TreeTableComponent, WrapObservablePipe],
+    declarations: [MetaWidgetComponent, NodeEntryComponent, NodeImageUrlPipe, TreeSearchCounts, WrapObservablePipe, WidgetNodeList],
     imports: [
         BrowserModule,
         MatCardModule,
@@ -49,7 +50,7 @@ export class AppModule {
     // add any component that may be injected from an external html container
     static readonly BOOTSTRAP_COMPONENTS: { [key: string]: Type<any> } = {
         'app-meta-widget': MetaWidgetComponent,
-        'app-tree-table': TreeTableComponent,
+        //'app-tree-table': TreeSearchCounts,
     };
 
     ngDoBootstrap(appRef: ApplicationRef) {

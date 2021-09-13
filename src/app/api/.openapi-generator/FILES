@@ -25,5 +25,5 @@ model/ping.ts
 model/portalTreeNode.ts
 model/statsResponse.ts
 model/validationError.ts
-model/validationStatsResponse.ts
+model/validationStatsResponseMaterialValidationStats.ts
 variables.ts

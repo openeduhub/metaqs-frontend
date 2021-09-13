@@ -12,4 +12,4 @@ export * from './ping';
 export * from './portalTreeNode';
 export * from './statsResponse';
 export * from './validationError';
-export * from './validationStatsResponse';
+export * from './validationStatsResponseMaterialValidationStats';

@@ -17,8 +17,8 @@ export interface MaterialValidationStats {
     keywords?: MaterialFieldValidation;
     subjects?: MaterialFieldValidation;
     description?: MaterialFieldValidation;
-    license?: MaterialFieldValidation;
     educontext?: MaterialFieldValidation;
+    license?: MaterialFieldValidation;
     ads_qualifier?: MaterialFieldValidation;
     material_type?: MaterialFieldValidation;
     object_type?: MaterialFieldValidation;

@@ -3,8 +3,9 @@ import {Observable, of} from 'rxjs';
 import {
     CollectionsService, MissingCollectionField, MissingMaterialField, StatisticsService, StatsResponse,
 } from './api';
-import { MissingField, Node } from './meta-widget/meta-widget.component';
 import {HttpClient} from "@angular/common/http";
+import {Node} from "./meta-widget/meta-widget.component";
+import {MissingField} from "./widget-node-list/widget-node-list";
 
 export interface CollectionTreeNode {
     noderef_id: string;
