@@ -185,9 +185,9 @@ export class TreeSearchCounts implements OnInit {
             parameters['ccm:educationallearningresourcetype'] = this.lrtCombinedSKOS.filter((lrt: any) => lrt.id ===id)[0].relatedMatch.map((r: any) => r.id);
         }
         window.open(
-            environment.eduSharingPath + '/components/search?' +
-            'query=' + encodeURIComponent(query) + '&' +
-            'parameters=' + encodeURIComponent(JSON.stringify(parameters)) + '&',
+            environment.eduSharingPath + '/components/editorial-desk?mode=audit&' +
+            'q=' + encodeURIComponent(query) + '&' +
+            'filters=' + encodeURIComponent(JSON.stringify(parameters)) + '&',
             '_BLANK'
         )
     }
