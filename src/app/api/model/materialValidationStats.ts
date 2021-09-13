@@ -15,9 +15,9 @@ import { MaterialFieldValidation } from './materialFieldValidation';
 export interface MaterialValidationStats { 
     title?: MaterialFieldValidation;
     keywords?: MaterialFieldValidation;
-    subjects?: MaterialFieldValidation;
     description?: MaterialFieldValidation;
     educontext?: MaterialFieldValidation;
+    subjects?: MaterialFieldValidation;
     license?: MaterialFieldValidation;
     ads_qualifier?: MaterialFieldValidation;
     material_type?: MaterialFieldValidation;

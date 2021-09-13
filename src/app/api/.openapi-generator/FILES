@@ -13,6 +13,7 @@ index.ts
 model/collection.ts
 model/collectionAttribute.ts
 model/collectionMaterialsCount.ts
+model/collectionValidationStats.ts
 model/hTTPValidationError.ts
 model/learningMaterial.ts
 model/materialAttribute.ts
@@ -21,9 +22,11 @@ model/materialValidationStats.ts
 model/missingCollectionField.ts
 model/missingMaterialField.ts
 model/models.ts
+model/oehValidationError.ts
 model/ping.ts
 model/portalTreeNode.ts
 model/statsResponse.ts
 model/validationError.ts
+model/validationStatsResponseCollectionValidationStats.ts
 model/validationStatsResponseMaterialValidationStats.ts
 variables.ts

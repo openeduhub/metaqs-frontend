@@ -21,9 +21,17 @@ import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {WidgetNodeList} from "./widget-node-list/widget-node-list";
 import {TreeSearchCounts} from "./tree-search-counts/tree-search-counts";
+import {TreeCollectionDetails} from "./tree-collection-details/tree-collection-details";
 
 @NgModule({
-    declarations: [MetaWidgetComponent, NodeEntryComponent, NodeImageUrlPipe, TreeSearchCounts, WrapObservablePipe, WidgetNodeList],
+    declarations: [
+        MetaWidgetComponent,
+        NodeEntryComponent,
+        NodeImageUrlPipe,
+        TreeSearchCounts,
+        TreeCollectionDetails,
+        WrapObservablePipe,
+        WidgetNodeList],
     imports: [
         BrowserModule,
         MatCardModule,

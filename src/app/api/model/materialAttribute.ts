@@ -14,7 +14,7 @@
 /**
  * An enumeration.
  */
-export type MaterialAttribute = 'nodeRef.id' | 'type' | 'properties.cm:name' | 'permissions.Read' | 'properties.cm:edu_metadataset' | 'nodeRef.storeRef.protocol' | 'fullpath' | 'properties.cclom:title' | 'properties.cclom:general_keyword' | 'properties.ccm:educationalcontext' | 'i18n.de_DE.ccm:educationalcontext' | 'properties.ccm:taxonid' | 'i18n.de_DE.ccm:taxonid' | 'properties.ccm:wwwurl' | 'properties.cclom:general_description' | 'properties.ccm:commonlicense_key' | 'collections.nodeRef.id' | 'collections.path' | 'content.fulltext' | 'properties.ccm:educationallearningresourcetype' | 'i18n.de_DE.ccm:educationallearningresourcetype' | 'i18n.de_DE.ccm:educationalintendedenduserrole' | 'properties.ccm:containsAdvertisement' | 'properties.ccm:objecttype';
+export type MaterialAttribute = 'nodeRef.id' | 'type' | 'properties.cm:name' | 'permissions.Read' | 'properties.cm:edu_metadataset' | 'nodeRef.storeRef.protocol' | 'fullpath' | 'properties.cclom:general_keyword' | 'properties.ccm:educationalcontext' | 'i18n.de_DE.ccm:educationalcontext' | 'properties.cclom:title' | 'properties.ccm:taxonid' | 'i18n.de_DE.ccm:taxonid' | 'properties.ccm:wwwurl' | 'properties.cclom:general_description' | 'properties.ccm:commonlicense_key' | 'collections.nodeRef.id' | 'collections.path' | 'content.fulltext' | 'properties.ccm:educationallearningresourcetype' | 'i18n.de_DE.ccm:educationallearningresourcetype' | 'i18n.de_DE.ccm:educationalintendedenduserrole' | 'properties.ccm:containsAdvertisement' | 'properties.ccm:objecttype';
 
 export const MaterialAttribute = {
     NodeRefId: 'nodeRef.id' as MaterialAttribute,
@@ -24,10 +24,10 @@ export const MaterialAttribute = {
     PropertiesCmeduMetadataset: 'properties.cm:edu_metadataset' as MaterialAttribute,
     NodeRefStoreRefProtocol: 'nodeRef.storeRef.protocol' as MaterialAttribute,
     Fullpath: 'fullpath' as MaterialAttribute,
-    PropertiesCclomtitle: 'properties.cclom:title' as MaterialAttribute,
     PropertiesCclomgeneralKeyword: 'properties.cclom:general_keyword' as MaterialAttribute,
     PropertiesCcmeducationalcontext: 'properties.ccm:educationalcontext' as MaterialAttribute,
     I18nDeDeCcmeducationalcontext: 'i18n.de_DE.ccm:educationalcontext' as MaterialAttribute,
+    PropertiesCclomtitle: 'properties.cclom:title' as MaterialAttribute,
     PropertiesCcmtaxonid: 'properties.ccm:taxonid' as MaterialAttribute,
     I18nDeDeCcmtaxonid: 'i18n.de_DE.ccm:taxonid' as MaterialAttribute,
     PropertiesCcmwwwurl: 'properties.ccm:wwwurl' as MaterialAttribute,

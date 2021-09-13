@@ -12,7 +12,7 @@ export enum Mode {
     CollectionsNoKeywords = 'CollectionsNoKeywords',
     CollectionsNoContent = 'CollectionsNoContent',
     CollectionsTreeSearchCounts = 'CollectionsTreeSearchCounts',
-    CollectionsTreeStats = 'CollectionsStats',
+    CollectionsTreeStats = 'CollectionsTreeStats',
 }
 export type Node = LearningMaterial | Collection | CollectionMaterialsCount;
 

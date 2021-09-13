@@ -50,6 +50,15 @@ export class MetaApiService {
         } as StatsResponse);*/
         return this.statisticsService.readStatsValidation(nodeRef);
     }
+    getCollectionValidation(
+        nodeRef: string
+    ) {
+        /*return of({
+            derived_at: '',
+            stats: {}
+        } as StatsResponse);*/
+        return this.statisticsService.readStatsValidationCollection(nodeRef);
+    }
     getStatisticsFacettePerCollection(
         nodeRef: string
     ) {

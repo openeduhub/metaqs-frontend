@@ -7,14 +7,13 @@ import {Node} from "../meta-widget/meta-widget.component";
 import {Helper} from "../helper";
 import {environment} from "../../environments/environment";
 import {MetaWidgetService} from "../meta-widget/meta-widget.service";
+import {CollectionTreeNodeEntry, Tree} from "../tree";
 
-interface CollectionTreeNodeEntry extends CollectionTreeNode{
-    title: string;
+export interface CollectionTreeNodeStatsEntry extends CollectionTreeNodeEntry{
     data: {
         search: {[key: string]: number};
         collection: {[key: string]: number};
     }
-    level: number;
 }
 @Component({
     selector: 'app-tree-search-counts',
@@ -59,16 +58,6 @@ export class TreeSearchCounts implements OnInit {
         private readonly metaApi: MetaApiService,
         private readonly metaWidget: MetaWidgetService
     ) {}
-    flatten(flat: CollectionTreeNode[], collector: CollectionTreeNodeEntry[] = [], level = 1): CollectionTreeNodeEntry[] {
-        flat.forEach((f) => {
-            const entry = f as CollectionTreeNodeEntry ;
-            entry.level = level;
-            collector.push(entry);
-            this.flatten(entry.children, collector, level + 1);
-        })
-        return collector;
-
-    }
     collectFacettes(stats: StatsResponse): string[] {
         const facettes = new Set<string>();
         for(const id of Object.keys(stats.stats)) {
@@ -76,7 +65,6 @@ export class TreeSearchCounts implements OnInit {
             Object.keys(element.search).forEach(e => facettes.add(e));
             Object.keys(element.material_types).forEach(e => facettes.add(e));
         }
-        console.log(facettes);
         return [...facettes];
     }
     filter(){
@@ -104,13 +92,12 @@ export class TreeSearchCounts implements OnInit {
                 label: skos.prefLabel.de
             }
         });
-        console.log(facettes);
 
         this.columns = [{
             id:'total', icon: 'total', label: 'Gesamt',
         }].concat(facettes)
 
-        const dataFlat = this.flatten(data);
+        const dataFlat: CollectionTreeNodeStatsEntry[] = Tree.flatten(data);
         this.lrtData = this.mapLRTData(dataFlat, stats);
         this.filter();
         /*
@@ -120,7 +107,6 @@ export class TreeSearchCounts implements OnInit {
          */
     }
 
-    hasChild = (_: number, node: CollectionTreeNodeEntry) => node.children?.length;
     searchToken = '';
 
     getColumnIds() {
@@ -130,14 +116,13 @@ export class TreeSearchCounts implements OnInit {
         return this.getColumnIds().map(c => [c + this.COLLECTION_POSTFIX, c + this.SEARCH_POSTFIX]).reduce((a,b) => a.concat(b));
     }
 
-    private mapLRTData(dataFlat: CollectionTreeNodeEntry[], stats: StatsResponse) {
+    private mapLRTData(dataFlat: CollectionTreeNodeStatsEntry[], stats: StatsResponse) {
         dataFlat.map((d) => {
             d.data = {
                 search: this.collectHits(this.lrtCombinedSKOS, stats.stats[d.noderef_id]?.['search']),
                 collection: this.collectHits(this.lrtCombinedSKOS, stats.stats[d.noderef_id]?.['material_types'])
             };
         });
-        console.log(dataFlat);
         return dataFlat;
     }
     openNode(node: Node|'root') {
@@ -151,7 +136,6 @@ export class TreeSearchCounts implements OnInit {
         }
     }
     private collectHits(skos: any, stat: { [p: string]: number }) {
-        //console.log(stat);
         let data: {[key: string]: number} = {
             total: stat?.['total']
         };
@@ -166,7 +150,7 @@ export class TreeSearchCounts implements OnInit {
         return data;
     }
 
-    getCount(element: CollectionTreeNodeEntry, column: string) {
+    getCount(element: CollectionTreeNodeStatsEntry, column: string) {
         return element.data
             [column.includes('_search') ? 'search' : 'collection']
             [this.getColumnId(column)] || 0
@@ -178,7 +162,6 @@ export class TreeSearchCounts implements OnInit {
 
     showSearch(element: CollectionTreeNodeEntry, column: string) {
         const id = this.getColumnId(column);
-        console.log(element, id, this.lrtCombinedSKOS);
         const query = element.title;
         const parameters: any = {};
         if(id !== 'total') {

@@ -1,0 +1,179 @@
+@use '~@angular/material' as mat;
+
+.row {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+table {
+    width: 100%;
+}
+mat-tree-node, mat-nested-tree-node {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-left: 30px;
+}
+.mat-tree-node {
+    width: 100%;
+    > button {
+        margin-left: -40px;
+    }
+}
+
+.cell {
+    flex: 1;
+}
+.title-cell {
+    min-width: 250px;
+}
+.mat-header-cell {
+    text-align: center;
+}
+.mat-header-cell-scope {
+    min-width: 55px;
+}
+.mat-cell.mat-column-total_collection {
+    .number {
+        display: flex;
+        height: 47px;
+        justify-content: center;
+        align-items: center;
+        &.number-warn {
+            background-color: var(--orange---orange_40);
+        }
+        &.number-error {
+            background-color: var(--red---red_40);
+            font-weight: bold;
+        }
+    }
+}
+
+.mat-cell {
+    .number {
+        text-align: center;
+        a {
+            color: #336296;
+            text-decoration: underline;
+            justify-content: center;
+        }
+    }
+}
+.mat-header-cell, .mat-cell {
+    a {
+        cursor: pointer;
+        color: mat.get-color-from-palette(mat.$blue-palette);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        > mat-icon, > img {
+            padding-right: 5px;
+            font-size: 22px;
+            height: 20px;
+            opacity: .75;
+            &:hover, &:focus {
+                text-decoration: none;
+            }
+        }
+        &:hover {
+            text-decoration: underline;
+            > mat-icon, > img {
+                text-decoration: none;
+            }
+        }
+    }
+}
+.mat-header-cell {
+    a {
+        justify-content: center;
+    }
+}
+
+$colors:
+          var(--lila---lila_15),
+          var(--rose---rose_15),
+          var(--pink---pink_15),
+          var(--red---red_15),
+          var(--orange---orange_15),
+          var(--green---green_15),
+          var(--dark-green---dark-green_15),
+          var(--dark-blue---dark-blue_15);
+
+.mat-header-cell-label {
+    color: #545454;
+    > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        vertical-align: middle;
+        > img {
+            opacity: 0.75;
+            height: 16px;
+            padding-right: 5px;
+        }
+    }
+}
+.mat-header-cell-search {
+    mat-form-field {
+        width: 100%;
+        display: flex;
+        margin-left: 7px;
+        margin-bottom: -16px;
+        color: var(--black);
+    }
+}
+.mat-header-cell-scope {
+    color: #545454;
+}
+@for $i from 1 through 8 {
+    .mat-header-cell-label:nth-child(#{$i + 1}),
+    .mat-header-cell-scope:nth-child(#{$i * 2 + 1}),
+    .mat-header-cell-scope:nth-child(#{$i * 2 + 2})
+    //td:nth-child(#{$i * 2 + 1}),
+    //td:nth-child(#{$i * 2 + 2})
+    {
+        background: nth($colors, $i);
+    }
+    tr:nth-child(odd) {
+        td:nth-child(#{$i * 2 - 1}),
+        td:nth-child(#{$i * 2 }) {
+            //background-color: lighten(nth($colors, $i), 5%);
+            background-color: #f4f4f4;
+        }
+    }
+    .mat-header-cell-search,
+    .mat-header-cell-label:nth-child(#{$i}),
+    .mat-header-cell-label:nth-child(#{$i + 1}),
+    .mat-header-cell-scope:nth-child(#{$i*2}),
+    td:nth-child(#{$i*2}) {
+        border-right: 1px solid #888;
+    }
+}
+:host {
+    overflow: auto;
+    ::ng-deep {
+        thead {
+            box-shadow: 0 5px 3px rgba(0, 0, 0, .15);
+            position: relative;
+            z-index: 1;
+        }
+    }
+}
+
+@for $i from 1 through 8 {
+    .mat-cell-level-#{$i} {
+        padding-left: ($i) * 20px!important;
+    }
+}
+.mat-table-sticky-border-elem-right {
+    border-left: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky-border-elem-left {
+    border-right: 1px solid #e0e0e0;
+}
+.mat-header-cell {
+    padding: 0 15px;
+}
