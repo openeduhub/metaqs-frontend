@@ -34,30 +34,10 @@ mat-tree-node, mat-nested-tree-node {
 .mat-header-cell-scope {
     min-width: 55px;
 }
-.mat-cell.mat-column-total_collection {
-    .number {
-        display: flex;
-        height: 47px;
-        justify-content: center;
-        align-items: center;
-        &.number-warn {
-            background-color: var(--orange---orange_40);
-        }
-        &.number-error {
-            background-color: var(--red---red_40);
-            font-weight: bold;
-        }
-    }
-}
 
 .mat-cell {
-    .number {
-        text-align: center;
-        a {
-            color: #336296;
-            text-decoration: underline;
-            justify-content: center;
-        }
+    &.mat-cell-validation {
+        padding: 5px;
     }
 }
 .mat-header-cell, .mat-cell {

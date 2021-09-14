@@ -19,33 +19,6 @@ export interface CollectionTreeNodeDetailEntry extends CollectionTreeNodeEntry{
     styleUrls: ['./tree-collection-details.scss'],
 })
 export class TreeCollectionDetails implements OnInit {
-    readonly COLLECTION_POSTFIX = '_collection';
-    readonly SEARCH_POSTFIX = '_search';
-    readonly THRESHOLD_ERROR = 1;
-    readonly THRESHOLD_WARN = 3;
-
-    /*
-    private _transformer = (node: CollectionTreeNode, level: number) => {
-        return {
-            expandable: !!node.children && node.children.length > 0,
-            data: node.data,
-            level: level,
-        };
-    };
-
-    treeControl = new NestedTreeControl<CollectionTreeNodeEntry>(
-        (node) => node.children,
-        // (node) => node.expandable,
-    );
-    /*
-    treeFlattener = new MatTreeFlattener(
-        this._transformer,
-        (node) => node.level,
-        (node) => node.expandable,
-        (node) => node.children,
-    );
-     */
-
     dataSource = new MatTreeNestedDataSource<CollectionTreeNodeEntry>();
 
     private statsData: CollectionTreeNodeEntry[];
@@ -54,16 +27,6 @@ export class TreeCollectionDetails implements OnInit {
         private readonly metaApi: MetaApiService,
         private readonly metaWidget: MetaWidgetService
     ) {}
-    collectFacettes(stats: StatsResponse): string[] {
-        const facettes = new Set<string>();
-        for(const id of Object.keys(stats.stats)) {
-            const element = stats.stats[id] as any;
-            Object.keys(element.search).forEach(e => facettes.add(e));
-            Object.keys(element.material_types).forEach(e => facettes.add(e));
-        }
-        console.log(facettes);
-        return [...facettes];
-    }
     filter(){
         this.dataSource.data = this.statsData.filter((l) =>
             l.title.toLowerCase().includes(this.searchToken.toLowerCase())
@@ -107,10 +70,11 @@ export class TreeCollectionDetails implements OnInit {
     getColumnIds() {
         return [
             'Sammlung',
-            'Metadaten_Sammlung'
-        ];
-    }
+            'Metadaten Sammlung'
+        ].concat(
 
+        );
+    }
     openNode(node: Node|'root') {
         if(node === 'root') {
             this.metaWidget.openNode({
@@ -121,23 +85,5 @@ export class TreeCollectionDetails implements OnInit {
             this.metaWidget.openNode(node);
         }
     }
-    private collectHits(skos: any, stat: { [p: string]: number }) {
-        //console.log(stat);
-        let data: {[key: string]: number} = {
-            total: stat?.['total']
-        };
-        skos.forEach((s: any) => {
-            const count = s.relatedMatch.map(
-                (r: any) => {
-                    return (stat?.[r.id]  || 0) as number
-                }).
-            reduce((a: number, b: number) => a + b);
-            data[s.id] = count;
-        });
-        return data;
-    }
 
-    getColumnId(column: string) {
-        return column.replace(this.SEARCH_POSTFIX, '').replace(this.COLLECTION_POSTFIX, '');
-    }
 }

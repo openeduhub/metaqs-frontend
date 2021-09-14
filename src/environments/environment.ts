@@ -4,8 +4,9 @@
 
 export const environment = {
     production: false,
-    apiPath: 'https://ed7f-2001-16b8-f12-a700-3cf5-5f09-c639-79e9.ngrok.io',
-    eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',
+    useDummyValues: false,
+    apiPath: 'https://3117-2001-16b8-f34-5c00-b922-b895-4b21-ee52.ngrok.io',
+    eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
 };
 
 /*

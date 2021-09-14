@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {
-    CollectionsService, MissingCollectionField, MissingMaterialField, StatisticsService, StatsResponse,
+    CollectionsService,
+    MissingCollectionField,
+    MissingMaterialField,
+    StatisticsService,
+    StatsResponse,
+    ValidationStatsResponseCollectionValidationStats,
 } from './api';
 import {HttpClient} from "@angular/common/http";
 import {Node} from "./meta-widget/meta-widget.component";
 import {MissingField} from "./widget-node-list/widget-node-list";
+import {environment} from "../environments/environment";
 
 export interface CollectionTreeNode {
     noderef_id: string;
@@ -28,44 +34,64 @@ export class MetaApiService {
     getTree(
         nodeRef: string
     ) {
-        /*return of([
-            {
-                noderef_id: '1',
-                title: 'Test 1',
-                children: [],
-            },
-            {
-                noderef_id: '2',
-                title: 'Test 2',
-                children: [],
-            }]);*/
+        if(environment.useDummyValues) {
+            return of([
+                {
+                    noderef_id: '1',
+                    title: 'Test 1',
+                    children: [],
+                },
+                {
+                    noderef_id: '2',
+                    title: 'Test 2',
+                    children: [],
+                }]);
+        }
         return (this.collectionsService.getPortalTree(nodeRef) as Observable<CollectionTreeNode[]>);
     }
     getStatisticsMaterialPerCollection(
         nodeRef: string
     ) {
-        /*return of({
-            derived_at: '',
-            stats: {}
-        } as StatsResponse);*/
+        if(environment.useDummyValues) {
+            return of({
+                derived_at: '',
+                stats: {}
+            } as StatsResponse);
+        }
         return this.statisticsService.readStatsValidation(nodeRef);
     }
     getCollectionValidation(
         nodeRef: string
-    ) {
-        /*return of({
-            derived_at: '',
-            stats: {}
-        } as StatsResponse);*/
+    ): Observable<ValidationStatsResponseCollectionValidationStats[]> {
+        if(environment.useDummyValues) {
+            return of([{
+                noderef_id: '1',
+                validation_stats: {
+                    title: [],
+                    description: ['missing'],
+                    educontext: ['missing'],
+                    keywords: ['missing'],
+                },
+            },
+            {
+                noderef_id: '2',
+                validation_stats: {
+                    title: [],
+                    description: ['too_few'],
+                },
+            }]);
+        }
         return this.statisticsService.readStatsValidationCollection(nodeRef);
     }
     getStatisticsFacettePerCollection(
         nodeRef: string
     ) {
-        /*return of({
-            derived_at: '',
-            stats: {}
-        } as StatsResponse);*/
+        if(environment.useDummyValues) {
+            return of({
+                derived_at: '',
+                stats: {}
+            } as StatsResponse);
+        }
         return this.statisticsService.readStats(nodeRef);
     }
     getByMissingAttribute(
