@@ -2,7 +2,12 @@ import {NestedTreeControl} from '@angular/cdk/tree';
 import {Component, Input, OnInit} from '@angular/core';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {CollectionTreeNode, MetaApiService} from "../meta-api.service";
-import {CollectionValidationStats, StatsResponse} from "../api";
+import {
+    CollectionValidationStats,
+    MaterialFieldValidation,
+    StatsResponse,
+    ValidationStatsResponseMaterialValidationStats
+} from "../api";
 import {Node} from "../meta-widget/meta-widget.component";
 import {Helper} from "../helper";
 import {environment} from "../../environments/environment";
@@ -11,7 +16,8 @@ import {CollectionTreeNodeEntry, Tree} from "../tree";
 import {transition} from "@angular/animations";
 
 export interface CollectionTreeNodeDetailEntry extends CollectionTreeNodeEntry{
-    validationStats: CollectionValidationStats;
+    collectionDetails: CollectionValidationStats;
+    collectionCounts: ValidationStatsResponseMaterialValidationStats;
 }
 @Component({
     selector: 'app-tree-collection-details',
@@ -20,6 +26,18 @@ export interface CollectionTreeNodeDetailEntry extends CollectionTreeNodeEntry{
 })
 export class TreeCollectionDetails implements OnInit {
     dataSource = new MatTreeNestedDataSource<CollectionTreeNodeEntry>();
+
+    countColumns = {
+        title: 'Material ohne Titel',
+        license: 'Material ohne Lizenz',
+        subjects: 'Material ohne Fachzuordnung',
+        educontext: 'Material ohne Bildungsstufe',
+        keywords: 'Material ohne Schlagworte',
+        description: 'Material ohne Beschreibungstext',
+        ads_qualifier: 'Material ohne Angaben zu Werbung',
+        material_Type: 'Material ohne Materialtypzuordnung',
+        object_type: 'Material ohne Objekttypzuordnung',
+    };
 
     private statsData: CollectionTreeNodeEntry[];
 
@@ -44,35 +62,38 @@ export class TreeCollectionDetails implements OnInit {
             'missing': 'fehlt',
             'too_few': 'zu kurz / zu wenig',
         }
-        const translation =  ([]).concat(...Object.keys(entry.validationStats).map((key) => {
-            return (entry.validationStats as any)[key].map((error: string) => {
-                return keyI18n[key]+': '+errorI18n[error];
+        const translation =  ([]).concat(...Object.keys(entry.collectionDetails).map((key) => {
+            return (entry.collectionDetails as any)[key].map((error: string) => {
+                return keyI18n[key]+' '+errorI18n[error];
             })
         }));
-        console.log(translation);
         return translation;
     }
     async ngOnInit() {
         const data = await this.metaApi.getTree(this.metaWidget.getCollectionId()).toPromise();
-        const collectionValidation = await this.metaApi.getCollectionValidation(this.metaWidget.getCollectionId()).toPromise();
+        const collectionDetails = await this.metaApi.getCollectionValidation(this.metaWidget.getCollectionId()).toPromise();
+        const collectionCounts = await this.metaApi.getCollectionMaterialStats(this.metaWidget.getCollectionId()).toPromise();
         const dataFlat: CollectionTreeNodeDetailEntry[] = Tree.flatten(data);
-        collectionValidation.forEach((v) => {
+        collectionDetails.forEach((v) => {
             // @ts-ignore
-            dataFlat.find((d) => d.noderef_id === v.noderef_id).validationStats = v.validation_stats;
+            dataFlat.find((d) => d.noderef_id === v.noderef_id).collectionDetails = v.validation_stats;
+        })
+        collectionCounts.forEach((v) => {
+            // @ts-ignore
+            dataFlat.find((d) => d.noderef_id === v.noderef_id).collectionCounts = v.validation_stats;
         })
         this.statsData = dataFlat;
         this.filter();
-        console.log(dataFlat, collectionValidation, this.getValidationTranslation(dataFlat[0]));
+        console.log(dataFlat);
     }
 
     searchToken = '';
-
     getColumnIds() {
         return [
             'Sammlung',
             'Metadaten Sammlung'
         ].concat(
-
+            Object.keys(this.countColumns)
         );
     }
     openNode(node: Node|'root') {

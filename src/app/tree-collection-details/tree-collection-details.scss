@@ -28,6 +28,11 @@ mat-tree-node, mat-nested-tree-node {
 .title-cell {
     min-width: 250px;
 }
+.metadata-cell {
+    min-width: 150px;
+    padding: 2px 8px;
+
+}
 .mat-header-cell {
     text-align: center;
 }
@@ -35,11 +40,6 @@ mat-tree-node, mat-nested-tree-node {
     min-width: 55px;
 }
 
-.mat-cell {
-    &.mat-cell-validation {
-        padding: 5px;
-    }
-}
 .mat-header-cell, .mat-cell {
     a {
         cursor: pointer;
@@ -64,21 +64,26 @@ mat-tree-node, mat-nested-tree-node {
         }
     }
 }
+.mat-cell {
+    .number {
+        display: flex;
+        height: 47px;
+        justify-content: center;
+        align-items: center;
+        &.number-warn {
+            background-color: var(--orange---orange_40);
+        }
+        &.number-error {
+            background-color: var(--red---red_40);
+            font-weight: bold;
+        }
+    }
+}
 .mat-header-cell {
     a {
         justify-content: center;
     }
 }
-
-$colors:
-          var(--lila---lila_15),
-          var(--rose---rose_15),
-          var(--pink---pink_15),
-          var(--red---red_15),
-          var(--orange---orange_15),
-          var(--green---green_15),
-          var(--dark-green---dark-green_15),
-          var(--dark-blue---dark-blue_15);
 
 .mat-header-cell-label {
     color: #545454;
@@ -107,15 +112,8 @@ $colors:
 .mat-header-cell-scope {
     color: #545454;
 }
-@for $i from 1 through 8 {
-    .mat-header-cell-label:nth-child(#{$i + 1}),
-    .mat-header-cell-scope:nth-child(#{$i * 2 + 1}),
-    .mat-header-cell-scope:nth-child(#{$i * 2 + 2})
-    //td:nth-child(#{$i * 2 + 1}),
-    //td:nth-child(#{$i * 2 + 2})
-    {
-        background: nth($colors, $i);
-    }
+@for $i from 1 through 9 {
+
     tr:nth-child(odd) {
         td:nth-child(#{$i * 2 - 1}),
         td:nth-child(#{$i * 2 }) {
@@ -123,12 +121,11 @@ $colors:
             background-color: #f4f4f4;
         }
     }
+    .title-cell,
     .mat-header-cell-search,
-    .mat-header-cell-label:nth-child(#{$i}),
     .mat-header-cell-label:nth-child(#{$i + 1}),
-    .mat-header-cell-scope:nth-child(#{$i*2}),
-    td:nth-child(#{$i*2}) {
-        border-right: 1px solid #888;
+    td {
+        border-right: 1px solid #ccc!important;
     }
 }
 :host {

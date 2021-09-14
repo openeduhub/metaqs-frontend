@@ -67,6 +67,7 @@ mat-tree-node, mat-nested-tree-node {
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        text-decoration: none;
         > mat-icon, > img {
             padding-right: 5px;
             font-size: 22px;

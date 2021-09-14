@@ -6,7 +6,7 @@ import {
     MissingMaterialField,
     StatisticsService,
     StatsResponse,
-    ValidationStatsResponseCollectionValidationStats,
+    ValidationStatsResponseCollectionValidationStats, ValidationStatsResponseMaterialValidationStats,
 } from './api';
 import {HttpClient} from "@angular/common/http";
 import {Node} from "./meta-widget/meta-widget.component";
@@ -82,6 +82,24 @@ export class MetaApiService {
             }]);
         }
         return this.statisticsService.readStatsValidationCollection(nodeRef);
+    }
+    getCollectionMaterialStats(
+        nodeRef: string
+    ): Observable<Array<ValidationStatsResponseMaterialValidationStats>> {
+        if(environment.useDummyValues) {
+            return of([{
+                noderef_id: '1',
+                validation_stats: {
+                    title: {
+                        missing: 5
+                    },
+                    description: {
+                        missing: 2
+                    }
+                }
+                }]);
+        }
+        return this.statisticsService.readStatsValidation(nodeRef);
     }
     getStatisticsFacettePerCollection(
         nodeRef: string
