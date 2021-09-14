@@ -5,5 +5,5 @@ export const environment = {
     production: false,
     useDummyValues: false,
     apiPath: 'https://metaqs-api.openeduhub.net',
-    eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',
+    eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
 };
