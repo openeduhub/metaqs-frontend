@@ -170,7 +170,8 @@ export class TreeSearchCounts implements OnInit {
         window.open(
             environment.eduSharingPath + '/components/editorial-desk?mode=audit&' +
             'q=' + encodeURIComponent(query) + '&' +
-            'filters=' + encodeURIComponent(JSON.stringify(parameters)) + '&',
+            'filters=' + encodeURIComponent(JSON.stringify(parameters)) + '&' +
+            'tab=collections&',
             '_BLANK'
         )
     }

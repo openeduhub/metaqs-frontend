@@ -74,13 +74,18 @@ export class TreeCollectionDetails implements OnInit {
         const collectionDetails = await this.metaApi.getCollectionValidation(this.metaWidget.getCollectionId()).toPromise();
         const collectionCounts = await this.metaApi.getCollectionMaterialStats(this.metaWidget.getCollectionId()).toPromise();
         const dataFlat: CollectionTreeNodeDetailEntry[] = Tree.flatten(data);
+        console.log(dataFlat.length);
         collectionDetails.forEach((v) => {
             // @ts-ignore
             dataFlat.find((d) => d.noderef_id === v.noderef_id).collectionDetails = v.validation_stats;
         })
         collectionCounts.forEach((v) => {
-            // @ts-ignore
-            dataFlat.find((d) => d.noderef_id === v.noderef_id).collectionCounts = v.validation_stats;
+            const flat: any = dataFlat.find((d) => d.noderef_id === v.noderef_id);
+            if(flat) {
+                flat.collectionCounts = v.validation_stats;
+            } else {
+                console.warn(v.noderef_id);
+            }
         })
         this.statsData = dataFlat;
         this.filter();
@@ -107,4 +112,7 @@ export class TreeCollectionDetails implements OnInit {
         }
     }
 
+    getCount(element: CollectionTreeNodeDetailEntry, column: string) {
+        return element.collectionCounts ? (element.collectionCounts as any)[column]?.missing ?? 0 : 0;
+    }
 }
