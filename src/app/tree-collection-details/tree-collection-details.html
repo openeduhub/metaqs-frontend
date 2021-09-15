@@ -1,5 +1,5 @@
 <table mat-table [dataSource]="dataSource">
-  <ng-container [matColumnDef]="'search'" [sticky]="true">
+  <ng-container [matColumnDef]="'search'">
     <th mat-header-cell *matHeaderCellDef class="mat-header-cell-search">
       <mat-form-field appearance="outline">
         <mat-label>Filtern</mat-label>
@@ -8,8 +8,13 @@
       </mat-form-field>
     </th>
   </ng-container>
+  <ng-container [matColumnDef]="'empty'">
+    <th mat-header-cell *matHeaderCellDef [colSpan]="10">
+    </th>
+  </ng-container>
   <ng-container [matColumnDef]="column"
-                *ngFor="let column of getColumnIds(); let i = index" [sticky]="i === 0">
+                *ngFor="let column of getColumnIds(); let i = index">
+    <!-- [sticky]="i === 0"-->
     <ng-container *ngIf="column === 'Sammlung'">
       <!--  [sticky]="true" -->
       <th mat-header-cell *matHeaderCellDef class="title-cell mat-header-cell-label">
@@ -52,7 +57,7 @@
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="getColumnIds(); sticky: true"></tr>
-  <tr mat-header-row *matHeaderRowDef="['search']; sticky: true"></tr>
+  <tr mat-header-row *matHeaderRowDef="['search', 'empty']; sticky: true"></tr>
   <tr mat-row *matRowDef="let row; columns: getColumnIds(); "></tr>
 </table>
 

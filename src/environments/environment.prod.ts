@@ -2,7 +2,7 @@ export const environment = {
     /*production: true,
   apiPath: '/',
   eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',*/
-    production: false,
+    production: true,
     useDummyValues: false,
     apiPath: 'https://metaqs-api.openeduhub.net',
     eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
