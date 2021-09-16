@@ -1,5 +1,5 @@
 <div class="node">
-  <img class="icon" [src]="node | nodeImageUrl" />
+  <img class="icon" [src]="node | nodeImageUrl" loading="lazy"/>
   <div class="text">
     <span class="title">{{ $any(node).title || $any(node).name }}</span>
     <span class="description" *ngIf="!isCollectionCount()">{{ $any(node).description }}</span>
