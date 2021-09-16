@@ -3,11 +3,15 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+    /*production: true,
+  apiPath: '/',
+  eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',*/
     production: false,
     useDummyValues: false,
-    apiPath: 'https://3117-2001-16b8-f34-5c00-b922-b895-4b21-ee52.ngrok.io',
+    apiPath: 'https://metaqs-api.openeduhub.net',
     eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file
