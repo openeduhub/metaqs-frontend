@@ -77,8 +77,13 @@ export class TreeCollectionDetails implements OnInit {
         console.log(dataFlat.length);
         collectionDetails.forEach((v) => {
             // @ts-ignore
-            dataFlat.find((d) => d.noderef_id === v.noderef_id).collectionDetails = v.validation_stats;
-        })
+            const flat: any = dataFlat.find((d) => d.noderef_id === v.noderef_id);
+            if(flat) {
+                flat.collectionDetails = v.validation_stats;
+            } else {
+                console.warn(v.noderef_id);
+            }
+        });
         collectionCounts.forEach((v) => {
             const flat: any = dataFlat.find((d) => d.noderef_id === v.noderef_id);
             if(flat) {
