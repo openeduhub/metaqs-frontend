@@ -3,6 +3,7 @@ import {MetaWidgetService} from "./meta-widget.service";
 import {Collection, CollectionMaterialsCount, LearningMaterial} from "../api";
 
 export enum Mode {
+    Score = 'Score',
     MaterialsNoTitle = 'MaterialsNoTitle',
     MaterialsNoLicense = 'MaterialsNoLicense',
     MaterialsNoDiscipline = 'MaterialsNoDiscipline',
@@ -40,6 +41,9 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
         }
         if(this.mode === Mode.CollectionsTreeStats){
             return 'treeStats';
+        }
+        if(this.mode === Mode.Score){
+            return 'score';
         }
         return 'widgetNode';
     }

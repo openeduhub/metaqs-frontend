@@ -22,6 +22,7 @@ import {FormsModule} from "@angular/forms";
 import {WidgetNodeList} from "./widget-node-list/widget-node-list";
 import {TreeSearchCounts} from "./tree-search-counts/tree-search-counts";
 import {TreeCollectionDetails} from "./tree-collection-details/tree-collection-details";
+import { MetaScoreComponent } from './meta-score/meta-score.component';
 
 @NgModule({
     declarations: [
@@ -31,7 +32,8 @@ import {TreeCollectionDetails} from "./tree-collection-details/tree-collection-d
         TreeSearchCounts,
         TreeCollectionDetails,
         WrapObservablePipe,
-        WidgetNodeList],
+        WidgetNodeList,
+        MetaScoreComponent],
     imports: [
         BrowserModule,
         MatCardModule,

@@ -1,0 +1,52 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    mat-card {
+        box-shadow: none;
+        width: 100%;
+
+        .scroll {
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            .score {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+
+                &.score-poor {
+
+                }
+                &.score-good {
+                    color: var(--dark-green---dark-green);
+                }
+                &.score-mediocore {
+                    color: var(--orange---orange);
+                }
+                &.score-poor {
+                    color: var(--red---red);
+                }
+
+                > label {
+                    color: #888;
+                }
+
+                > span {
+                    font-weight: bold;
+                    font-size: 200%;
+                    padding: 10px 0;
+                }
+                > mat-icon {
+                    width: 60px;
+                    height: 60px;
+                    font-size: 60px;
+                    opacity: .75;
+                }
+            }
+        }
+    }
+}

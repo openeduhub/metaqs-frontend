@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {
-    CollectionsService,
+    CollectionsService, MaterialsService,
     MissingCollectionField,
     MissingMaterialField,
     StatisticsService,
@@ -24,6 +24,7 @@ export interface CollectionTreeNode {
 export class MetaApiService {
     constructor(
         private collectionsService: CollectionsService,
+        private materialsService: MaterialsService,
         private statisticsService: StatisticsService,
         private httpClient: HttpClient,
     ) {}
@@ -118,13 +119,13 @@ export class MetaApiService {
         attribute: MissingField | 'count',
     ): Observable<Node[]> {
         if (type === Type.Material) {
-            return this.collectionsService.filterMaterialsWithMissingAttributes(
+            return this.materialsService.filterMaterialsWithMissingAttributes(
                 nodeRef,
                 attribute as MissingMaterialField,
             );
         } else if (type === Type.Collection) {
             if (attribute === 'count') {
-                return this.collectionsService.materialCountsTree(
+                return this.statisticsService.materialCountsTree(
                     nodeRef,
                 );
             } else {
@@ -136,8 +137,15 @@ export class MetaApiService {
         }
         throw new Error('Unexpected type ' + type);
     }
+    getScore(
+        nodeRef: string,
+    ): Observable<Score> {
+        return this.statisticsService.score(nodeRef) as Observable<Score>;
+    }
 }
-
+export type Score = {
+    score: number
+};
 export enum Type {
     Material,
     Collection,

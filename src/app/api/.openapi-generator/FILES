@@ -2,9 +2,11 @@
 README.md
 api.module.ts
 api/api.ts
+api/authenticated.service.ts
 api/collections.service.ts
 api/demo.service.ts
 api/healthcheck.service.ts
+api/materials.service.ts
 api/statistics.service.ts
 configuration.ts
 encoder.ts
@@ -25,6 +27,8 @@ model/models.ts
 model/oehValidationError.ts
 model/ping.ts
 model/portalTreeNode.ts
+model/scoreModulator.ts
+model/scoreWeights.ts
 model/statsResponse.ts
 model/validationError.ts
 model/validationStatsResponseCollectionValidationStats.ts

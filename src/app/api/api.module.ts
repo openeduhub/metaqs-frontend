@@ -2,9 +2,11 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
+import { AuthenticatedService } from './api/authenticated.service';
 import { CollectionsService } from './api/collections.service';
 import { DemoService } from './api/demo.service';
 import { HealthcheckService } from './api/healthcheck.service';
+import { MaterialsService } from './api/materials.service';
 import { StatisticsService } from './api/statistics.service';
 
 @NgModule({

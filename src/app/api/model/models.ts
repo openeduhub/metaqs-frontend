@@ -12,6 +12,8 @@ export * from './missingMaterialField';
 export * from './oehValidationError';
 export * from './ping';
 export * from './portalTreeNode';
+export * from './scoreModulator';
+export * from './scoreWeights';
 export * from './statsResponse';
 export * from './validationError';
 export * from './validationStatsResponseCollectionValidationStats';

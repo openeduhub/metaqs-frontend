@@ -1,0 +1,17 @@
+<div class="wrapper">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        MetaQS-Score
+      </mat-card-title>
+    </mat-card-header>
+
+    <div class="scroll" *ngIf="score">
+      <div class="score score-{{getQuality()}}">
+        <label>Qualitätsscore</label>
+        <span>{{score.score }}</span>
+        <mat-icon>{{getQuality() === 'good' ? 'check_circle' : 'error' }}</mat-icon>
+      </div>
+    </div>
+  </mat-card>
+</div>
