@@ -9,10 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ValidationError } from './validationError';
 
 
-export interface HTTPValidationError { 
-    errors?: Array<ValidationError>;
+export interface CheckTextBody { 
+    language: string;
+    text: string;
 }
 

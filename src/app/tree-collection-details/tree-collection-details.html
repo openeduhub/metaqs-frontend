@@ -49,9 +49,17 @@
     </ng-container>
     <ng-container *ngIf="column !== 'Sammlung' && column !== 'Metadaten Sammlung'">
       <td mat-cell *matCellDef="let element">
-        <div class="number" [class.number-warn]="getCount(element, column) > 0">
+        <div class="number"
+             *ngIf="getCount(element, column) === 0"
+             [class.number-warn]="getCount(element, column) > 0">
           {{getCount(element, column)}}
         </div>
+        <a class="number"
+           *ngIf="getCount(element, column) > 0"
+           target="_blank"
+           [class.number-warn]="getCount(element, column) > 0" [href]="getListLink(element, column)">
+          {{getCount(element, column)}}
+        </a>
       </td>
     </ng-container>
   </ng-container>

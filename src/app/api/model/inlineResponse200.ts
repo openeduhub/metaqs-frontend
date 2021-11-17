@@ -9,10 +9,20 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ValidationError } from './validationError';
 
 
-export interface HTTPValidationError { 
-    errors?: Array<ValidationError>;
+export interface InlineResponse200 { 
+    /**
+     * a language name like \'French\' or \'English (Australia)\'
+     */
+    name: string;
+    /**
+     * a language code like \'en\'
+     */
+    code: string;
+    /**
+     * a language code like \'en-US\' or \'ca-ES-valencia\'
+     */
+    longCode: string;
 }
 

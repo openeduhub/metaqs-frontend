@@ -1,19 +1,11 @@
-import {NestedTreeControl} from '@angular/cdk/tree';
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
-import {CollectionTreeNode, MetaApiService} from "../meta-api.service";
-import {
-    CollectionValidationStats,
-    MaterialFieldValidation,
-    StatsResponse,
-    ValidationStatsResponseMaterialValidationStats
-} from "../api";
+import {MetaApiService} from "../meta-api.service";
+import {CollectionValidationStats, ValidationStatsResponseMaterialValidationStats} from "../api";
 import {Node} from "../meta-widget/meta-widget.component";
-import {Helper} from "../helper";
 import {environment} from "../../environments/environment";
 import {MetaWidgetService} from "../meta-widget/meta-widget.service";
 import {CollectionTreeNodeEntry, Tree} from "../tree";
-import {transition} from "@angular/animations";
 
 export interface CollectionTreeNodeDetailEntry extends CollectionTreeNodeEntry{
     collectionDetails: CollectionValidationStats;
@@ -62,12 +54,11 @@ export class TreeCollectionDetails implements OnInit {
             'missing': 'fehlt',
             'too_few': 'zu kurz / zu wenig',
         }
-        const translation =  ([]).concat(...Object.keys(entry.collectionDetails).map((key) => {
+        return ([]).concat(...Object.keys(entry.collectionDetails).map((key) => {
             return (entry.collectionDetails as any)[key].map((error: string) => {
-                return keyI18n[key]+' '+errorI18n[error];
+                return keyI18n[key] + ' ' + errorI18n[error];
             })
         }));
-        return translation;
     }
     async ngOnInit() {
         const data = await this.metaApi.getTree(this.metaWidget.getCollectionId()).toPromise();
@@ -116,8 +107,17 @@ export class TreeCollectionDetails implements OnInit {
             this.metaWidget.openNode(node);
         }
     }
+    getListLink(element: CollectionTreeNodeDetailEntry, column: string) {
+        if(this.getCount(element, column)) {
+            const ids = (element.collectionCounts as any)[column]?.missing;
+            const title = (this.countColumns as any)[column] + ' - ' + element.title;
+            return environment.eduSharingPath + '/components/editorial-desk?mode=metaqs&title=' + encodeURIComponent(title) +
+                '&ids=' + ids.join(',')
 
+        }
+        return null;
+    }
     getCount(element: CollectionTreeNodeDetailEntry, column: string) {
-        return element.collectionCounts ? (element.collectionCounts as any)[column]?.missing ?? 0 : 0;
+        return element.collectionCounts ? (element.collectionCounts as any)[column]?.missing?.length ?? 0 : 0;
     }
 }

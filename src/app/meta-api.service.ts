@@ -92,10 +92,10 @@ export class MetaApiService {
                 noderef_id: '1',
                 validation_stats: {
                     title: {
-                        missing: 5
+                        missing: ['a','b']
                     },
                     description: {
-                        missing: 2
+                        missing: ['a']
                     }
                 }
                 }]);

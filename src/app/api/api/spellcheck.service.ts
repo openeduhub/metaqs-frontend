@@ -17,6 +17,9 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
+import { CheckTextBody } from '../model/models';
+import { HTTPValidationError } from '../model/models';
+import { InlineResponse200 } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -26,7 +29,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticatedService {
+export class SpellcheckService {
 
     protected basePath = 'http://localhost';
     public defaultHeaders = new HttpHeaders();
@@ -134,6 +137,62 @@ export class AuthenticatedService {
     }
 
     /**
+     * Check Text
+     * The main feature - check a text with LanguageTool for possible style and grammar issues.
+     * @param checkTextBody 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public checkText(checkTextBody: CheckTextBody, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
+    public checkText(checkTextBody: CheckTextBody, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
+    public checkText(checkTextBody: CheckTextBody, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
+    public checkText(checkTextBody: CheckTextBody, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+        if (checkTextBody === null || checkTextBody === undefined) {
+            throw new Error('Required parameter checkTextBody was null or undefined when calling checkText.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.post<object>(`${this.configuration.basePath}/api/v1/spellcheck/check`,
+            checkTextBody,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Delete Word From Dictionary
      * Remove a word from one of the user\&#39;s personal dictionaries.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -184,23 +243,17 @@ export class AuthenticatedService {
     }
 
     /**
-     * Pg Version
+     * List Supported Languages
+     * Get a list of supported languages.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public pgVersion(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
-    public pgVersion(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
-    public pgVersion(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
-    public pgVersion(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public listSupportedLanguages(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<InlineResponse200>>;
+    public listSupportedLanguages(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<InlineResponse200>>>;
+    public listSupportedLanguages(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<InlineResponse200>>>;
+    public listSupportedLanguages(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
-
-        let credential: string | undefined;
-        // authentication (APIKeyHeader) required
-        credential = this.configuration.lookupCredential('APIKeyHeader');
-        if (credential) {
-            headers = headers.set('X-API-KEY', credential);
-        }
 
         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (httpHeaderAcceptSelected === undefined) {
@@ -220,7 +273,7 @@ export class AuthenticatedService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<object>(`${this.configuration.basePath}/pg-version`,
+        return this.httpClient.get<Array<InlineResponse200>>(`${this.configuration.basePath}/api/v1/spellcheck/languages`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -232,23 +285,17 @@ export class AuthenticatedService {
     }
 
     /**
-     * Run Analytics
+     * List Words In Dictionaries
+     * List words in the user\&#39;s personal dictionaries.
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public runAnalytics(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
-    public runAnalytics(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
-    public runAnalytics(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
-    public runAnalytics(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public listWordsInDictionaries(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
+    public listWordsInDictionaries(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
+    public listWordsInDictionaries(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
+    public listWordsInDictionaries(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
-
-        let credential: string | undefined;
-        // authentication (APIKeyHeader) required
-        credential = this.configuration.lookupCredential('APIKeyHeader');
-        if (credential) {
-            headers = headers.set('X-API-KEY', credential);
-        }
 
         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (httpHeaderAcceptSelected === undefined) {
@@ -268,8 +315,7 @@ export class AuthenticatedService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<any>(`${this.configuration.basePath}/api/v1/analytics/run-analytics`,
-            null,
+        return this.httpClient.get<object>(`${this.configuration.basePath}/api/v1/spellcheck/words`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -281,23 +327,16 @@ export class AuthenticatedService {
     }
 
     /**
-     * Run Spellcheck
+     * Spellcheck Random Material
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public runSpellcheck(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
-    public runSpellcheck(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
-    public runSpellcheck(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
-    public runSpellcheck(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public spellcheckRandomMaterial(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public spellcheckRandomMaterial(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public spellcheckRandomMaterial(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public spellcheckRandomMaterial(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
-
-        let credential: string | undefined;
-        // authentication (APIKeyHeader) required
-        credential = this.configuration.lookupCredential('APIKeyHeader');
-        if (credential) {
-            headers = headers.set('X-API-KEY', credential);
-        }
 
         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (httpHeaderAcceptSelected === undefined) {
@@ -317,8 +356,7 @@ export class AuthenticatedService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.post<any>(`${this.configuration.basePath}/api/v1/analytics/run-spellcheck`,
-            null,
+        return this.httpClient.get<any>(`${this.configuration.basePath}/api/v1/spellcheck/check/random-material`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

@@ -8,7 +8,7 @@ export const environment = {
   eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',*/
     production: false,
     useDummyValues: false,
-    apiPath: 'https://metaqs-api.openeduhub.net',
+    apiPath: 'http://141.5.104.94',
     eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
 };
 
