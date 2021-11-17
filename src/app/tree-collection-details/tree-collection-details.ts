@@ -46,7 +46,7 @@ export class TreeCollectionDetails implements OnInit {
     getValidationTranslation(entry: CollectionTreeNodeDetailEntry) {
         const keyI18n: any = {
             description: 'Beschreibung',
-            educontext: 'Fachgebiet',
+            edu_context: 'Fachgebiet',
             keywords: 'Schlagworte',
             title: 'Titel',
         }
