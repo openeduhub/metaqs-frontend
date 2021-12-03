@@ -1,6 +1,6 @@
 /**
- * MetaQS API
- *  * [**Analytics API**](/metaqs-api/v1/analytics/docs) * [**LanguageTool API**](/metaqs-api/v1/languagetool/docs)     
+ * MetaQS Analytics API
+ *  * [**Real-Time API**](/metaqs-api/v1/docs) * [**LanguageTool API**](/metaqs-api/v1/languagetool/docs)     
  *
  * The version of the OpenAPI document: v1
  * 

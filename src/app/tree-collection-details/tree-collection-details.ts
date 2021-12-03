@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {MetaApiService} from "../meta-api.service";
-import {CollectionValidationStats, ValidationStatsResponseMaterialValidationStats} from "../api";
+import {CollectionValidationStats, ValidationStatsResponseMaterialValidationStats} from "../api-analytics";
 import {Node} from "../meta-widget/meta-widget.component";
 import {environment} from "../../environments/environment";
 import {MetaWidgetService} from "../meta-widget/meta-widget.service";
@@ -111,7 +111,7 @@ export class TreeCollectionDetails implements OnInit {
         if(this.getCount(element, column)) {
             const ids = (element.collectionCounts as any)[column]?.missing;
             const title = (this.countColumns as any)[column] + ' - ' + element.title;
-            return environment.eduSharingPath + '/components/editorial-desk?mode=metaqs&title=' + encodeURIComponent(title) +
+            return environment.eduSharingPath + '/components/editorial-desk?mode=audit&title=' + encodeURIComponent(title) +
                 '&ids=' + ids.join(',')
 
         }

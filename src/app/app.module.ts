@@ -11,6 +11,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { environment } from '../environments/environment';
 import { ApiModule, Configuration } from './api';
+import { ApiModule as ApiModuleAnalytics, Configuration as ConfigurationAnalytics } from './api-analytics';
 import { MetaWidgetComponent } from './meta-widget/meta-widget.component';
 import { NodeEntryComponent } from './node-entry/node-entry.component';
 import { NodeImageUrlPipe } from './node-image-url.pipe';
@@ -42,6 +43,11 @@ import { MetaScoreComponent } from './meta-score/meta-score.component';
         ApiModule.forRoot(() => {
             return new Configuration({
                 basePath: environment.apiPath,
+            });
+        }),
+        ApiModuleAnalytics.forRoot(() => {
+            return new ConfigurationAnalytics({
+                basePath: environment.apiPath + '/analytics',
             });
         }),
         BrowserAnimationsModule,

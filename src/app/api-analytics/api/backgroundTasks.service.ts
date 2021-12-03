@@ -1,6 +1,6 @@
 /**
- * MetaQS API
- *  * [**Analytics API**](/metaqs-api/v1/analytics/docs) * [**LanguageTool API**](/metaqs-api/v1/languagetool/docs)     
+ * MetaQS Analytics API
+ *  * [**Real-Time API**](/metaqs-api/v1/docs) * [**LanguageTool API**](/metaqs-api/v1/languagetool/docs)     
  *
  * The version of the OpenAPI document: v1
  * 
@@ -17,11 +17,6 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-import { Collection } from '../model/models';
-import { CollectionAttribute } from '../model/models';
-import { HTTPValidationError } from '../model/models';
-import { MissingCollectionField } from '../model/models';
-import { PortalTreeNode } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -31,9 +26,9 @@ import { Configuration }                                     from '../configurat
 @Injectable({
   providedIn: 'root'
 })
-export class CollectionsService {
+export class BackgroundTasksService {
 
-    protected basePath = 'http://c104-094.cloud.gwdg.de/metaqs-api/v1';
+    protected basePath = 'http://c104-094.cloud.gwdg.de/metaqs-api/v1/analytics';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -89,33 +84,23 @@ export class CollectionsService {
     }
 
     /**
-     * Filter Collections With Missing Attributes
-     * @param noderefId 
-     * @param missingAttr 
-     * @param responseFields 
+     * Run Analytics
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public filterCollectionsWithMissingAttributes(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<Collection>>;
-    public filterCollectionsWithMissingAttributes(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<Collection>>>;
-    public filterCollectionsWithMissingAttributes(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<Collection>>>;
-    public filterCollectionsWithMissingAttributes(noderefId: string, missingAttr: MissingCollectionField, responseFields?: Set<CollectionAttribute>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling filterCollectionsWithMissingAttributes.');
-        }
-        if (missingAttr === null || missingAttr === undefined) {
-            throw new Error('Required parameter missingAttr was null or undefined when calling filterCollectionsWithMissingAttributes.');
-        }
-
-        let queryParameters = new HttpParams({encoder: this.encoder});
-        if (responseFields) {
-            responseFields.forEach((element) => {
-                queryParameters = this.addToHttpParams(queryParameters,
-                  <any>element, 'response_fields');
-            })
-        }
+    public runAnalyticsRunAnalyticsPost(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public runAnalyticsRunAnalyticsPost(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public runAnalyticsRunAnalyticsPost(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public runAnalyticsRunAnalyticsPost(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
+
+        let credential: string | undefined;
+        // authentication (APIKeyHeader) required
+        credential = this.configuration.lookupCredential('APIKeyHeader');
+        if (credential) {
+            headers = headers.set('X-API-KEY', credential);
+        }
 
         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (httpHeaderAcceptSelected === undefined) {
@@ -135,53 +120,8 @@ export class CollectionsService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Array<Collection>>(`${this.configuration.basePath}/real-time/collections/${encodeURIComponent(String(noderefId))}/pending-subcollections/${encodeURIComponent(String(missingAttr))}`,
-            {
-                params: queryParameters,
-                responseType: <any>responseType_,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     * Get Portal Tree
-     * @param noderefId 
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public getPortalTree(noderefId: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Array<PortalTreeNode>>;
-    public getPortalTree(noderefId: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Array<PortalTreeNode>>>;
-    public getPortalTree(noderefId: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Array<PortalTreeNode>>>;
-    public getPortalTree(noderefId: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
-        if (noderefId === null || noderefId === undefined) {
-            throw new Error('Required parameter noderefId was null or undefined when calling getPortalTree.');
-        }
-
-        let headers = this.defaultHeaders;
-
-        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
-        if (httpHeaderAcceptSelected === undefined) {
-            // to determine the Accept header
-            const httpHeaderAccepts: string[] = [
-                'application/json'
-            ];
-            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        }
-        if (httpHeaderAcceptSelected !== undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-
-        let responseType_: 'text' | 'json' = 'json';
-        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
-            responseType_ = 'text';
-        }
-
-        return this.httpClient.get<Array<PortalTreeNode>>(`${this.configuration.basePath}/real-time/collections/${encodeURIComponent(String(noderefId))}/tree`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/run-analytics`,
+            null,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
@@ -193,16 +133,23 @@ export class CollectionsService {
     }
 
     /**
-     * Get Portals
+     * Run Search Stats
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getPortals(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
-    public getPortals(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
-    public getPortals(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
-    public getPortals(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public runSearchStatsRunSearchStatsPost(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public runSearchStatsRunSearchStatsPost(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public runSearchStatsRunSearchStatsPost(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public runSearchStatsRunSearchStatsPost(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
+
+        let credential: string | undefined;
+        // authentication (APIKeyHeader) required
+        credential = this.configuration.lookupCredential('APIKeyHeader');
+        if (credential) {
+            headers = headers.set('X-API-KEY', credential);
+        }
 
         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (httpHeaderAcceptSelected === undefined) {
@@ -222,7 +169,57 @@ export class CollectionsService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<any>(`${this.configuration.basePath}/real-time/collections`,
+        return this.httpClient.post<any>(`${this.configuration.basePath}/run-search-stats`,
+            null,
+            {
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Run Spellcheck
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public runSpellcheckRunSpellcheckPost(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<any>;
+    public runSpellcheckRunSpellcheckPost(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<any>>;
+    public runSpellcheckRunSpellcheckPost(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<any>>;
+    public runSpellcheckRunSpellcheckPost(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        let credential: string | undefined;
+        // authentication (APIKeyHeader) required
+        credential = this.configuration.lookupCredential('APIKeyHeader');
+        if (credential) {
+            headers = headers.set('X-API-KEY', credential);
+        }
+
+        let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (httpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            httpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        let responseType_: 'text' | 'json' = 'json';
+        if(httpHeaderAcceptSelected && httpHeaderAcceptSelected.startsWith('text')) {
+            responseType_ = 'text';
+        }
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/run-spellcheck`,
+            null,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

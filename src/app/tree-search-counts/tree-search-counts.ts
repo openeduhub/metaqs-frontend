@@ -2,7 +2,7 @@ import {NestedTreeControl} from '@angular/cdk/tree';
 import {Component, Input, OnInit} from '@angular/core';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
 import {CollectionTreeNode, MetaApiService} from "../meta-api.service";
-import {StatsResponse} from "../api";
+import {StatsResponse} from "../api-analytics";
 import {Node} from "../meta-widget/meta-widget.component";
 import {Helper} from "../helper";
 import {environment} from "../../environments/environment";

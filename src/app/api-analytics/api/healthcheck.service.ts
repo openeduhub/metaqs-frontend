@@ -1,6 +1,6 @@
 /**
- * MetaQS API
- *  * [**Analytics API**](/metaqs-api/v1/analytics/docs) * [**LanguageTool API**](/metaqs-api/v1/languagetool/docs)     
+ * MetaQS Analytics API
+ *  * [**Real-Time API**](/metaqs-api/v1/docs) * [**LanguageTool API**](/metaqs-api/v1/languagetool/docs)     
  *
  * The version of the OpenAPI document: v1
  * 
@@ -17,7 +17,6 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-import { Ping } from '../model/models';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -29,7 +28,7 @@ import { Configuration }                                     from '../configurat
 })
 export class HealthcheckService {
 
-    protected basePath = 'http://c104-094.cloud.gwdg.de/metaqs-api/v1';
+    protected basePath = 'http://c104-094.cloud.gwdg.de/metaqs-api/v1/analytics';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
     public encoder: HttpParameterCodec;
@@ -85,17 +84,23 @@ export class HealthcheckService {
     }
 
     /**
-     * Ping Api
-     * Ping function for automatic health check.
+     * Pg Version
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public pingApi(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<Ping>;
-    public pingApi(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<Ping>>;
-    public pingApi(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<Ping>>;
-    public pingApi(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
+    public pgVersionPgVersionGet(observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<object>;
+    public pgVersionPgVersionGet(observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpResponse<object>>;
+    public pgVersionPgVersionGet(observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json'}): Observable<HttpEvent<object>>;
+    public pgVersionPgVersionGet(observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json'}): Observable<any> {
 
         let headers = this.defaultHeaders;
+
+        let credential: string | undefined;
+        // authentication (APIKeyHeader) required
+        credential = this.configuration.lookupCredential('APIKeyHeader');
+        if (credential) {
+            headers = headers.set('X-API-KEY', credential);
+        }
 
         let httpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
         if (httpHeaderAcceptSelected === undefined) {
@@ -115,7 +120,7 @@ export class HealthcheckService {
             responseType_ = 'text';
         }
 
-        return this.httpClient.get<Ping>(`${this.configuration.basePath}/_ping`,
+        return this.httpClient.get<object>(`${this.configuration.basePath}/pg-version`,
             {
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,

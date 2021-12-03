@@ -1,6 +1,6 @@
 /**
- * MetaQS API
- *  * [**Analytics API**](/metaqs-api/v1/analytics/docs) * [**LanguageTool API**](/metaqs-api/v1/languagetool/docs)     
+ * MetaQS Analytics API
+ *  * [**Real-Time API**](/metaqs-api/v1/docs) * [**LanguageTool API**](/metaqs-api/v1/languagetool/docs)     
  *
  * The version of the OpenAPI document: v1
  * 
@@ -11,9 +11,9 @@
  */
 
 
-export interface CollectionMaterialsCount { 
+export interface PortalTreeNode { 
     noderef_id: string;
     title: string;
-    materials_count: number;
+    children: Array<PortalTreeNode>;
 }
 

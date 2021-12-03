@@ -5,13 +5,15 @@ import {
     MissingCollectionField,
     MissingMaterialField,
     StatisticsService,
-    StatsResponse,
-    ValidationStatsResponseCollectionValidationStats, ValidationStatsResponseMaterialValidationStats,
 } from './api';
 import {HttpClient} from "@angular/common/http";
 import {Node} from "./meta-widget/meta-widget.component";
 import {MissingField} from "./widget-node-list/widget-node-list";
 import {environment} from "../environments/environment";
+import { AnalyticsService } from './api-analytics';
+import {ValidationStatsResponseCollectionValidationStats} from "./api/model/validationStatsResponseCollectionValidationStats";
+import {StatsResponse} from "./api/model/statsResponse";
+import {ValidationStatsResponseMaterialValidationStats} from "./api/model/validationStatsResponseMaterialValidationStats";
 
 export interface CollectionTreeNode {
     noderef_id: string;
@@ -26,6 +28,7 @@ export class MetaApiService {
         private collectionsService: CollectionsService,
         private materialsService: MaterialsService,
         private statisticsService: StatisticsService,
+        private analyticsService: AnalyticsService,
         private httpClient: HttpClient,
     ) {}
     getCombinedVocab() {
@@ -59,7 +62,7 @@ export class MetaApiService {
                 stats: {}
             } as StatsResponse);
         }
-        return this.statisticsService.readStatsValidation(nodeRef);
+        return this.analyticsService.readStatsValidationNoderefIdValidationGet(nodeRef);
     }
     getCollectionValidation(
         nodeRef: string
@@ -82,7 +85,7 @@ export class MetaApiService {
                 },
             }]);
         }
-        return this.statisticsService.readStatsValidationCollection(nodeRef);
+        return this.analyticsService.readStatsValidationCollectionNoderefIdValidationCollectionsGet(nodeRef);
     }
     getCollectionMaterialStats(
         nodeRef: string
@@ -100,18 +103,18 @@ export class MetaApiService {
                 }
                 }]);
         }
-        return this.statisticsService.readStatsValidation(nodeRef);
+        return this.analyticsService.readStatsValidationNoderefIdValidationGet(nodeRef);
     }
     getStatisticsFacettePerCollection(
         nodeRef: string
-    ) {
+    ): Observable<StatsResponse> {
         if(environment.useDummyValues) {
             return of({
                 derived_at: '',
                 stats: {}
             } as StatsResponse);
         }
-        return this.statisticsService.readStats(nodeRef);
+        return this.analyticsService.readStatsNoderefIdGet(nodeRef);
     }
     getByMissingAttribute(
         nodeRef: string,
