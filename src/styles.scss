@@ -34,6 +34,11 @@ $ng-meta-widgets-theme: mat.define-light-theme(
 // that you are using.
 @include mat.all-component-themes($ng-meta-widgets-theme);
 
+app-meta-widget {
+    div {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+    }
+}
 
 // WP fixes
 input.mat-input-element {
