@@ -54,6 +54,9 @@ export class TreeCollectionDetails implements OnInit {
             'missing': 'fehlt',
             'too_few': 'zu kurz / zu wenig',
         }
+        if(!entry.collectionDetails) {
+            return [];
+        }
         return ([]).concat(...Object.keys(entry.collectionDetails).map((key) => {
             return (entry.collectionDetails as any)[key].map((error: string) => {
                 return keyI18n[key] + ' ' + errorI18n[error];
@@ -111,7 +114,7 @@ export class TreeCollectionDetails implements OnInit {
         if(this.getCount(element, column)) {
             const ids = (element.collectionCounts as any)[column]?.missing;
             const title = (this.countColumns as any)[column] + ' - ' + element.title;
-            return environment.eduSharingPath + '/components/editorial-desk?mode=audit&title=' + encodeURIComponent(title) +
+            return environment.eduSharingPath + '/components/editorial-desk?mode=metaqs&title=' + encodeURIComponent(title) +
                 '&ids=' + ids.join(',')
 
         }

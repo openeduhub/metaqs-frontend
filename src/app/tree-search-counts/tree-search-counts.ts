@@ -170,8 +170,9 @@ export class TreeSearchCounts implements OnInit {
         window.open(
             environment.eduSharingPath + '/components/editorial-desk?mode=audit&' +
             'q=' + encodeURIComponent(query) + '&' +
+            'title=' + encodeURIComponent('MetaQS - Suchergebnisse für "' + query + '"') + '&' +
             'filters=' + encodeURIComponent(JSON.stringify(parameters)) + '&' +
-            '&panel=tasks&tab=5&',
+            '&panel=contents&tab=4&',
             '_BLANK'
         )
     }
