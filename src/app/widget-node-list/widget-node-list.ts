@@ -124,7 +124,7 @@ export class WidgetNodeList implements OnInit, OnChanges {
         const id = (node as LearningMaterial).noderef_id;
         const win = window.open(
             environment.eduSharingPath +
-                '/components/render/' +
+                '/components/editorial-desk/?mode=render&viewType=single&ids=' +
                 encodeURIComponent(id) +
                 '?action=' +
                 action +
