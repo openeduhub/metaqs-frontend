@@ -24,15 +24,9 @@ export class MetaWidgetService {
     openNode(node: Node){
         const id =
             (node as LearningMaterial).noderef_id;
-        if ((node as LearningMaterial).type === 'ccm:io') {
-            window.open(
-                (node as LearningMaterial).www_url ||
-                environment.eduSharingPath + '/components/render/' + encodeURIComponent(id) + '?ticket=' + encodeURIComponent(this.ticket),
-            );
-        } else {
-            window.open(
-                environment.eduSharingPath + '/components/collections?id=' + encodeURIComponent(id) + '&ticket=' + encodeURIComponent(this.ticket),
-            );
-        }
+        window.open(
+            (node as LearningMaterial).www_url ||
+            environment.eduSharingPath + '/components/editorial-desk/?mode=render&viewType=single&ids=' + encodeURIComponent(id) + '&ticket=' + encodeURIComponent(this.ticket),
+        );
     }
 }
