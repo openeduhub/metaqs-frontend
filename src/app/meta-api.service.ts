@@ -33,7 +33,7 @@ export class MetaApiService {
     ) {}
     getCombinedVocab() {
         return this.httpClient.get<any>
-        ('https://vocabs.openeduhub.de/w3id.org/openeduhub/vocabs/learningResourceTypeCombined/index.json');
+        ('https://vocabs.openeduhub.de/w3id.org/openeduhub/vocabs/new_lrt_aggregated/index.json');
     }
     getTree(
         nodeRef: string

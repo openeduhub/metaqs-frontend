@@ -76,15 +76,15 @@ export class TreeSearchCounts implements OnInit {
         const data = await this.metaApi.getTree(this.metaWidget.getCollectionId()).toPromise();
         const stats = await this.metaApi.getStatisticsFacettePerCollection(this.metaWidget.getCollectionId()).toPromise();
         this.lrtCombinedSKOS = (await this.metaApi.getCombinedVocab().toPromise()).hasTopConcept;
-        const icons = [
-            '',
-            'worksheet',
-            'video',
-            'audio',
-            'image',
-            'exercise',
-            'lesson_planning',
-        ]
+        // @TODO: adopt to new icons
+        const icons: any = {
+            '': 'worksheet',
+            'x': 'video',
+            'xx': 'audio',
+            'b8fb5fb2-d8bf-4bbe-ab68-358b65a26bed': 'image',
+            'xxx': 'exercise',
+            'xxxx': 'lesson_planning',
+        }
         const facettes = this.lrtCombinedSKOS.map((skos: any) => {
             return {
                 id: skos.id,
@@ -139,6 +139,8 @@ export class TreeSearchCounts implements OnInit {
         let data: {[key: string]: number} = {
             total: stat?.['total']
         };
+        return stat;
+        /*
         skos.forEach((s: any) => {
             const count = s.relatedMatch.map(
                 (r: any) => {
@@ -146,7 +148,7 @@ export class TreeSearchCounts implements OnInit {
                 }).
             reduce((a: number, b: number) => a + b);
             data[s.id] = count;
-        });
+        });*/
         return data;
     }
 
@@ -165,7 +167,7 @@ export class TreeSearchCounts implements OnInit {
         const query = element.title;
         const parameters: any = {};
         if(id !== 'total') {
-            parameters['ccm:educationallearningresourcetype'] = this.lrtCombinedSKOS.filter((lrt: any) => lrt.id ===id)[0].relatedMatch.map((r: any) => r.id);
+            parameters['ccm:oeh_lrt_aggregated'] = [id];
         }
         window.open(
             environment.eduSharingPath + '/components/editorial-desk?mode=audit&' +
