@@ -70,9 +70,9 @@
         <a *ngIf="column.endsWith('search')" (click)="showSearch(element, column)">
           {{getCount(element, column)}}
         </a>
-        <ng-container *ngIf="!column.endsWith('search')">
+        <a *ngIf="!column.endsWith('search')" (click)="showCollectionItems(element, column)">
           {{getCount(element, column)}}
-        </ng-container>
+        </a>
       </div>
     </td>
   </ng-container>

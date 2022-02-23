@@ -129,7 +129,7 @@ export class WidgetNodeList implements OnInit, OnChanges {
                 '?action=' +
                 action +
                 '&ticket=' +
-                this.widgetService.getTicket(),
+                this.widgetService.getTicket() || '',
         );
         if (win) {
             win.onunload = () => {

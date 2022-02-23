@@ -178,4 +178,22 @@ export class TreeSearchCounts implements OnInit {
             '_BLANK'
         )
     }
+
+    showCollectionItems(element: CollectionTreeNodeEntry, column: string) {
+        const id = this.getColumnId(column);
+        console.log(element.noderef_id);
+        const parameters: any = {
+            'virtual:collection_id': [element.noderef_id],
+        };
+        if(id !== 'total') {
+            parameters['ccm:oeh_lrt_aggregated'] = [id];
+        }
+        window.open(
+            environment.eduSharingPath + '/components/editorial-desk?mode=audit&' +
+            'title=' + encodeURIComponent('MetaQS - Sammlungsinhalte für "' + element.title + '"') + '&' +
+            'filters=' + encodeURIComponent(JSON.stringify(parameters)) + '&' +
+            '&panel=contents&tab=4&',
+            '_BLANK'
+        )
+    }
 }
