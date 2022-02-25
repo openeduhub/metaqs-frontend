@@ -78,12 +78,12 @@ export class TreeSearchCounts implements OnInit {
         this.lrtCombinedSKOS = (await this.metaApi.getCombinedVocab().toPromise()).hasTopConcept;
         // @TODO: adopt to new icons
         const icons: any = {
-            '': 'worksheet',
-            'x': 'video',
-            'xx': 'audio',
+            'c8e52242-361b-4a2a-b95d-25e516b28b45': 'worksheet',
+            '38774279-af36-4ec2-8e70-811d5a51a6a1': 'video',
+            '39197d6f-dfb1-4e82-92e5-79f906e9d2a9': 'audio',
             'b8fb5fb2-d8bf-4bbe-ab68-358b65a26bed': 'image',
-            'xxx': 'exercise',
-            'xxxx': 'lesson_planning',
+            '0b2d7dec-8eb1-4a28-9cf2-4f3a4f5a511b': 'exercise',
+            '8526273b-2b21-46f2-ac8d-bbf362c8a690': 'lesson_planning',
         }
         const facettes = this.lrtCombinedSKOS.map((skos: any) => {
             return {

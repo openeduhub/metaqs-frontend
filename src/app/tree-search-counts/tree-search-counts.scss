@@ -134,14 +134,14 @@ $colors:
 .mat-header-cell-scope {
     color: #545454;
 }
-@for $i from 1 through 8 {
+@for $i from 0 through 50 {
     .mat-header-cell-label:nth-child(#{$i + 1}),
     .mat-header-cell-scope:nth-child(#{$i * 2 + 1}),
     .mat-header-cell-scope:nth-child(#{$i * 2 + 2})
     //td:nth-child(#{$i * 2 + 1}),
     //td:nth-child(#{$i * 2 + 2})
     {
-        background: nth($colors, $i);
+        background: nth($colors, ($i % length($colors)) + 1);
     }
     tr:nth-child(odd) {
         td:nth-child(#{$i * 2 - 1}),
