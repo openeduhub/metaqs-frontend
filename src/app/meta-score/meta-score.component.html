@@ -8,7 +8,7 @@
 
     <div class="scroll" *ngIf="score">
       <div class="score score-{{getQuality()}}">
-        <label>Qualitätsscore</label>
+        <p>Qualitätsscore</p>
         <span>{{score.score }}</span>
         <mat-icon>{{getQuality() === 'good' ? 'check_circle' : 'error' }}</mat-icon>
       </div>
