@@ -174,7 +174,8 @@ export class TreeSearchCounts implements OnInit {
             'q=' + encodeURIComponent(query) + '&' +
             'title=' + encodeURIComponent('MetaQS - Suchergebnisse für "' + query + '"') + '&' +
             'filters=' + encodeURIComponent(JSON.stringify(parameters)) + '&' +
-            '&panel=contents&tab=4&',
+            'panel=contents&tab=4&' +
+            'ticket=' + this.metaWidget.getTicket() || '',
             '_BLANK'
         )
     }
