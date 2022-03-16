@@ -6,3 +6,11 @@
     -webkit-line-clamp: $count;
     -webkit-box-orient: vertical;
 }
+@mixin metaCard() {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    box-shadow: none;
+}

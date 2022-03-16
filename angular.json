@@ -32,6 +32,7 @@
             ],
             "styles": [
               "src/styles.scss",
+              "src/variables.scss",
               "src/variables-figma.scss"
             ],
             "scripts": []
