@@ -153,8 +153,8 @@ export class TreeSearchCounts implements OnInit {
     }
 
     getCount(element: CollectionTreeNodeStatsEntry, column: string) {
-        return element.data
-            [column.includes('_search') ? 'search' : 'collection']
+        return element?.data?.
+            [column.includes('_search') ? 'search' : 'collection']?.
             [this.getColumnId(column)] || 0
     }
 
