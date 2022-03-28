@@ -9,7 +9,7 @@ export const environment = {
     production: false,
     useDummyValues: false,
     apiPath: 'https://c104-094.cloud.gwdg.de/metaqs-api/v1',
-    eduSharingPath: 'https://redaktion-staging.openeduhub.net/edu-sharing',
+    eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',
 };
 
 
