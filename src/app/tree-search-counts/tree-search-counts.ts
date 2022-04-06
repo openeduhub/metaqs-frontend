@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { StatsResponse } from '../api-analytics';
 import { MetaApiService } from '../meta-api.service';
@@ -19,7 +21,7 @@ export interface CollectionTreeNodeStatsEntry extends CollectionTreeNodeEntry {
     templateUrl: './tree-search-counts.html',
     styleUrls: ['./tree-search-counts.scss'],
 })
-export class TreeSearchCounts implements OnInit {
+export class TreeSearchCounts implements OnInit, OnDestroy {
     readonly COLLECTION_POSTFIX = '_collection';
     readonly SEARCH_POSTFIX = '_search';
     readonly THRESHOLD_ERROR = 1;
@@ -31,16 +33,29 @@ export class TreeSearchCounts implements OnInit {
     searchToken = '';
 
     private lrtData: CollectionTreeNodeEntry[];
+    private destroyed$ = new Subject<void>();
 
     constructor(
         private readonly metaApi: MetaApiService,
         private readonly metaWidget: MetaWidgetService,
     ) {}
 
-    async ngOnInit() {
-        const data = await this.metaApi.getTree(this.metaWidget.getCollectionId()).toPromise();
+    ngOnInit(): void {
+        this.metaWidget
+            .observeCollectionId()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((collectionId) => this.init(collectionId));
+    }
+
+    ngOnDestroy(): void {
+        this.destroyed$.next();
+        this.destroyed$.complete();
+    }
+
+    private async init(collectionId: string): Promise<void> {
+        const data = await this.metaApi.getTree(collectionId).toPromise();
         const stats = await this.metaApi
-            .getStatisticsFacettePerCollection(this.metaWidget.getCollectionId())
+            .getStatisticsFacettePerCollection(collectionId)
             .toPromise();
         this.lrtCombinedSKOS = (await this.metaApi.getCombinedVocab().toPromise()).hasTopConcept;
         // @TODO: adopt to new icons

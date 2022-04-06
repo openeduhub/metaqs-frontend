@@ -49,6 +49,7 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
+        console.log('on changes', changes);
         this.widgetService.init(this.collectionid, this.ticket);
     }
 }

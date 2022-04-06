@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import {
     CollectionValidationStats,
@@ -20,7 +22,7 @@ export interface CollectionTreeNodeDetailEntry extends CollectionTreeNodeEntry {
     templateUrl: './tree-collection-details.html',
     styleUrls: ['./tree-collection-details.scss'],
 })
-export class TreeCollectionDetails implements OnInit {
+export class TreeCollectionDetails implements OnInit, OnDestroy {
     dataSource = new MatTreeNestedDataSource<CollectionTreeNodeEntry>();
 
     countColumns = {
@@ -38,19 +40,32 @@ export class TreeCollectionDetails implements OnInit {
     searchToken = '';
 
     private statsData: CollectionTreeNodeEntry[];
+    private destroyed$ = new Subject<void>();
 
     constructor(
         private readonly metaApi: MetaApiService,
         private readonly metaWidget: MetaWidgetService,
     ) {}
 
-    async ngOnInit() {
-        const data = await this.metaApi.getTree(this.metaWidget.getCollectionId()).toPromise();
+    ngOnInit(): void {
+        this.metaWidget
+            .observeCollectionId()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((collectionId) => this.init(collectionId));
+    }
+
+    ngOnDestroy(): void {
+        this.destroyed$.next();
+        this.destroyed$.complete();
+    }
+
+    private async init(collectionId: string): Promise<void> {
+        const data = await this.metaApi.getTree(collectionId).toPromise();
         const collectionDetails = await this.metaApi
-            .getCollectionValidation(this.metaWidget.getCollectionId())
+            .getCollectionValidation(collectionId)
             .toPromise();
         const collectionCounts = await this.metaApi
-            .getCollectionMaterialStats(this.metaWidget.getCollectionId())
+            .getCollectionMaterialStats(collectionId)
             .toPromise();
         const dataFlat: CollectionTreeNodeDetailEntry[] = Tree.flatten(data);
         console.log(dataFlat.length);

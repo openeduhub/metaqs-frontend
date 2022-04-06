@@ -1,6 +1,6 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { map, shareReplay, takeUntil } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import {
     CollectionMaterialsCount,
@@ -68,7 +68,7 @@ ModeDetails[Mode.CollectionsNoContent] = {
     templateUrl: './widget-node-list.html',
     styleUrls: ['./widget-node-list.scss'],
 })
-export class WidgetNodeList implements OnInit, OnChanges {
+export class WidgetNodeList implements OnInit, OnChanges, OnDestroy {
     @Input() mode: Mode;
 
     readonly Mode = Mode;
@@ -78,14 +78,26 @@ export class WidgetNodeList implements OnInit, OnChanges {
     modeDetail: ModeDetail;
     count: number | null = 0;
 
+    private destroyed$ = new Subject<void>();
+
     constructor(private metaApi: MetaApiService, private widgetService: MetaWidgetService) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.widgetService
+            .observeCollectionId()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe(() => this.refresh());
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
         console.log(changes);
         this.modeDetail = ModeDetails[this.mode.toString()];
         this.refresh();
+    }
+
+    ngOnDestroy(): void {
+        this.destroyed$.next();
+        this.destroyed$.complete();
     }
 
     async refresh() {
