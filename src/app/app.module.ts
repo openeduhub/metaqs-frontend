@@ -74,38 +74,16 @@ export class AppModule {
         //'app-tree-table': TreeSearchCounts,
     };
 
-    ngDoBootstrap(appRef: ApplicationRef) {
-        for (const key of Object.keys(AppModule.BOOTSTRAP_COMPONENTS)) {
-            const componentClass = AppModule.BOOTSTRAP_COMPONENTS[key];
-            // Don't call ngOnInit right away when bootstrapping, but wait for inputs to be set.
-            const ngOnInit = componentClass.prototype.ngOnInit;
-            componentClass.prototype.ngOnInit = () => {};
-            const rootElements = document.querySelectorAll(key);
-            for (const element of rootElements as any as HTMLElement[]) {
-                const componentRef = appRef.bootstrap(componentClass, element);
-                for (let i = 0; i < element.attributes.length; i++) {
-                    const attr = element.attributes.item(i) as Attr;
-                    this.setInput(componentRef, attr.name, attr.value);
-                }
-                if (typeof ngOnInit === 'function') {
-                    ngOnInit.apply(componentRef.instance);
-                }
-            }
+    constructor(private injector: Injector) {}
+
+    ngDoBootstrap() {
+        for (const [name, component] of Object.entries(AppModule.BOOTSTRAP_COMPONENTS)) {
+            this.registerWebComponent(name, component);
         }
     }
 
-    private setInput(componentRef: ComponentRef<any>, name: string, value: string): void {
-        const cmp = (componentRef.componentType as any).ɵcmp;
-        const publicName = Object.keys(cmp.inputs).find(
-            (publicName) => publicName.toLowerCase() === name,
-        );
-        if (publicName) {
-            const privateName: string = cmp.inputs[publicName];
-            if (cmp.setInput) {
-                cmp.setInput(componentRef.instance, value, publicName, privateName);
-            } else {
-                componentRef.instance[privateName] = value;
-            }
-        }
+    private registerWebComponent(name: string, component: Type<any>): void {
+        const element = createCustomElement(component, { injector: this.injector });
+        customElements.define(name, element);
     }
 }
