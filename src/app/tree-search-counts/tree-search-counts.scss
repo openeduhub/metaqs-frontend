@@ -74,7 +74,7 @@ mat-tree-node, mat-nested-tree-node {
         align-items: center;
         justify-content: flex-start;
         text-decoration: none;
-        > mat-icon, > img {
+        > mat-icon {
             padding-right: 5px;
             font-size: 22px;
             height: 20px;
@@ -85,7 +85,7 @@ mat-tree-node, mat-nested-tree-node {
         }
         &:hover {
             text-decoration: underline;
-            > mat-icon, > img {
+            > mat-icon {
                 text-decoration: none;
             }
         }
@@ -115,7 +115,7 @@ $colors:
         justify-content: center;
         font-weight: bold;
         vertical-align: middle;
-        > img {
+        > mat-icon {
             opacity: 0.75;
             height: 16px;
             padding-right: 5px;
