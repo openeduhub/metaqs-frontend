@@ -90,7 +90,6 @@ export class WidgetNodeList implements OnInit, OnChanges, OnDestroy {
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
         this.modeDetail = ModeDetails[this.mode.toString()];
         this.refresh();
     }
@@ -101,7 +100,6 @@ export class WidgetNodeList implements OnInit, OnChanges, OnDestroy {
     }
 
     async refresh() {
-        console.log('refresh', this.widgetService.getCollectionId());
         if (this.modeDetail.missing) {
             this.wrappedData$ = this.metaApi
                 .getByMissingAttribute(
@@ -124,7 +122,6 @@ export class WidgetNodeList implements OnInit, OnChanges, OnDestroy {
         if (this.mode === Mode.CollectionsNoContent && this.rawData) {
             this.filterCount();
         }
-        console.log('refresh', this.count);
     }
 
     editNode(node: Node) {

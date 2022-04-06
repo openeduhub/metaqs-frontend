@@ -198,7 +198,6 @@ export class TreeSearchCounts implements OnInit, OnDestroy {
 
     showCollectionItems(element: CollectionTreeNodeEntry, column: string) {
         const id = this.getColumnId(column);
-        console.log(element.noderef_id);
         const parameters: any = {
             'virtual:collection_id': [element.noderef_id],
         };

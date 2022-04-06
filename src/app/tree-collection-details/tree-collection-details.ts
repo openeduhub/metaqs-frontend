@@ -68,14 +68,13 @@ export class TreeCollectionDetails implements OnInit, OnDestroy {
             .getCollectionMaterialStats(collectionId)
             .toPromise();
         const dataFlat: CollectionTreeNodeDetailEntry[] = Tree.flatten(data);
-        console.log(dataFlat.length);
         collectionDetails.forEach((v) => {
             // @ts-ignore
             const flat: any = dataFlat.find((d) => d.noderef_id === v.noderef_id);
             if (flat) {
                 flat.collectionDetails = v.validation_stats;
             } else {
-                console.warn(v.noderef_id);
+                // console.warn(v.noderef_id);
             }
         });
         collectionCounts.forEach((v) => {
@@ -83,12 +82,11 @@ export class TreeCollectionDetails implements OnInit, OnDestroy {
             if (flat) {
                 flat.collectionCounts = v.validation_stats;
             } else {
-                console.warn(v.noderef_id);
+                // console.warn(v.noderef_id);
             }
         });
         this.statsData = dataFlat;
         this.filter();
-        console.log(dataFlat);
     }
 
     filter() {
