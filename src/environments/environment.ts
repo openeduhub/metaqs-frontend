@@ -3,9 +3,6 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-    /*production: true,
-  apiPath: '/',
-  eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',*/
     production: false,
     useDummyValues: false,
     apiPath: 'https://c104-094.cloud.gwdg.de/metaqs-api/v1',

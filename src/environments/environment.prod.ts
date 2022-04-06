@@ -1,7 +1,4 @@
 export const environment = {
-    /*production: true,
-  apiPath: '/',
-  eduSharingPath: 'https://redaktion.openeduhub.net/edu-sharing',*/
     production: true,
     useDummyValues: false,
     apiPath: 'https://c104-094.cloud.gwdg.de/metaqs-api/v1',

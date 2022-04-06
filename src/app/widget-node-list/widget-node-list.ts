@@ -2,23 +2,25 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import {Node} from "../meta-widget/meta-widget.component";
 import {
-    Collection,
     CollectionMaterialsCount,
-    LearningMaterial, MissingCollectionField, MissingMaterialField,
+    LearningMaterial,
+    MissingCollectionField,
+    MissingMaterialField,
 } from '../api';
 import { MetaApiService, Type } from '../meta-api.service';
+import { Mode, Node } from '../meta-widget/meta-widget.component';
+import { MetaWidgetService } from '../meta-widget/meta-widget.service';
 import { WrappedResponse, wrapResponse } from '../wrap-observable.pipe';
-import {Mode} from "../meta-widget/meta-widget.component";
-import {MetaWidgetService} from "../meta-widget/meta-widget.service";
 
 export type MissingField = MissingMaterialField | MissingCollectionField;
+
 export type ModeDetail = {
     title: string;
     type: Type;
     missing?: MissingField | 'count';
 };
+
 const ModeDetails: { [key: string]: ModeDetail } = {};
 ModeDetails[Mode.MaterialsNoTitle] = {
     title: 'Materialien ohne Titel',
@@ -60,26 +62,25 @@ ModeDetails[Mode.CollectionsNoContent] = {
     type: Type.Collection,
     missing: 'count',
 };
+
 @Component({
     selector: 'app-widget-node-list',
     templateUrl: './widget-node-list.html',
     styleUrls: ['./widget-node-list.scss'],
 })
 export class WidgetNodeList implements OnInit, OnChanges {
-    readonly Mode = Mode;
     @Input() mode: Mode;
+
+    readonly Mode = Mode;
     wrappedData$: Observable<WrappedResponse<Node[]>>;
     data: Node[] | undefined;
     rawData: Node[] | undefined;
     modeDetail: ModeDetail;
     count: number | null = 0;
-    constructor(
-        private metaApi: MetaApiService,
-        private widgetService: MetaWidgetService
-    ) {}
 
-    ngOnInit(): void {
-    }
+    constructor(private metaApi: MetaApiService, private widgetService: MetaWidgetService) {}
+
+    ngOnInit(): void {}
 
     ngOnChanges(changes: SimpleChanges): void {
         console.log(changes);
