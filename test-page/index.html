@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>NgMetaWidgets</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script src="ng-meta-widgets/runtime.js" defer></script>
+    <script src="ng-meta-widgets/polyfills.js" defer></script>
+    <script src="ng-meta-widgets/main.js" defer></script>
+    <script>console.log('index')</script>
+  </head>
+  <style>
+    app-meta-widget {
+      display: flex;
+      height: 400px;
+      width: 500px;
+      padding: 10px;
+      margin: 10px;
+      box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
+    }
+  </style>
+  <body style="display: flex; flex-wrap: wrap">
+    <app-meta-widget
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      mode="MaterialsNoTitle"
+    ></app-meta-widget>
+    <app-meta-widget
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      mode="MaterialsNoLicense"
+    ></app-meta-widget>
+    <app-meta-widget
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      mode="MaterialsNoDiscipline"
+    ></app-meta-widget>
+    <app-meta-widget
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      mode="MaterialsNoContext"
+    ></app-meta-widget>
+    <app-meta-widget
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      mode="MaterialsNoKeywords"
+    ></app-meta-widget>
+
+    <app-meta-widget
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      mode="CollectionsNoDescription"
+    ></app-meta-widget>
+    <app-meta-widget
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      mode="CollectionsNoKeywords"
+    ></app-meta-widget>
+    <app-meta-widget
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      mode="CollectionsNoContent"
+    ></app-meta-widget>
+
+    <app-tree-table
+      collectionId="15fce411-54d9-467f-8f35-61ea374a298d"
+      style="width: 100%"
+    ></app-tree-table>
+  </body>
+</html>
