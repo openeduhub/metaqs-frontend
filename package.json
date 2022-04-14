@@ -17,6 +17,7 @@
     "@angular/common": "~12.0.0",
     "@angular/compiler": "~12.0.0",
     "@angular/core": "~12.0.0",
+    "@angular/elements": "~12.0.0",
     "@angular/forms": "~12.0.0",
     "@angular/material": "^12.2.0",
     "@angular/platform-browser": "~12.0.0",
@@ -24,6 +25,7 @@
     "@angular/router": "~12.0.0",
     "@openapitools/openapi-generator-cli": "^2.3.10",
     "rxjs": "~6.6.0",
+    "svg-inline-loader": "^0.8.2",
     "tslib": "^2.1.0",
     "zone.js": "~0.11.4"
   },

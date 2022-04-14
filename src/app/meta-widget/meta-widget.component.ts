@@ -1,6 +1,7 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from "@angular/core";
-import {MetaWidgetService} from "./meta-widget.service";
-import {Collection, CollectionMaterialsCount, LearningMaterial} from "../api";
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { MetaWidgetService } from './meta-widget.service';
+import { Collection, CollectionMaterialsCount, LearningMaterial } from '../api';
+import { SvgIconsService } from '../core/svg-icons.service';
 
 export enum Mode {
     Score = 'Score',
@@ -21,7 +22,7 @@ export type Node = LearningMaterial | Collection | CollectionMaterialsCount;
     selector: 'app-meta-widget',
     templateUrl: './meta-widget.component.html',
     styleUrls: ['./meta-widget.component.scss'],
-    providers: [MetaWidgetService]
+    providers: [MetaWidgetService],
 })
 export class MetaWidgetComponent implements OnInit, OnChanges {
     readonly Mode = Mode;
@@ -29,20 +30,16 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
     @Input() mode: Mode;
     @Input() ticket: string;
 
-    constructor(
-        private widgetService: MetaWidgetService
-    ) {
+    constructor(private widgetService: MetaWidgetService, private icons: SvgIconsService) {}
 
-    }
-
-    getModeComponent(){
-        if(this.mode === Mode.CollectionsTreeSearchCounts){
+    getModeComponent() {
+        if (this.mode === Mode.CollectionsTreeSearchCounts) {
             return 'treeCount';
         }
-        if(this.mode === Mode.CollectionsTreeStats){
+        if (this.mode === Mode.CollectionsTreeStats) {
             return 'treeStats';
         }
-        if(this.mode === Mode.Score){
+        if (this.mode === Mode.Score) {
             return 'score';
         }
         return 'widgetNode';
@@ -50,10 +47,10 @@ export class MetaWidgetComponent implements OnInit, OnChanges {
 
     ngOnInit(): void {
         this.widgetService.init(this.collectionid, this.ticket);
+        this.icons.init();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         this.widgetService.init(this.collectionid, this.ticket);
     }
-
 }

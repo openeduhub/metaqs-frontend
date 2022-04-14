@@ -20,7 +20,7 @@
                 *ngFor="let column of columns; let i = index">
     <th mat-header-cell *matHeaderCellDef [attr.colspan]="2" class="mat-header-cell-label">
       <div>
-        <img [src]="'assets/svg/types/' + column.icon + '.svg'" alt="">
+        <mat-icon *ngIf="column.icon" svgIcon="types/{{column.icon}}"></mat-icon>
         {{column.label}}
       </div>
     </th>
@@ -58,7 +58,7 @@
           <mat-icon>layers</mat-icon>
         </ng-container>
         <ng-container *ngIf="element.level > 1">
-          <img [src]="'assets/svg/' + (element.level === 1 ? 'tree' : 'child')  + '.svg'" alt="">
+          <mat-icon [svgIcon]="element.level === 1 ? 'tree' : 'child'"></mat-icon>
         </ng-container>
         {{element.title}}
       </a>

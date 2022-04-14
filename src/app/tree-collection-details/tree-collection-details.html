@@ -32,7 +32,7 @@
             <mat-icon>layers</mat-icon>
           </ng-container>
           <ng-container *ngIf="element.level > 1">
-            <img [src]="'assets/svg/' + (element.level === 1 ? 'tree' : 'child')  + '.svg'" alt="">
+            <mat-icon [svgIcon]="element.level === 1 ? 'tree' : 'child'"></mat-icon>
           </ng-container>
           {{element.title}}
         </a>

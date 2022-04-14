@@ -1,24 +1,26 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { map, shareReplay, takeUntil } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import {Node} from "../meta-widget/meta-widget.component";
 import {
-    Collection,
     CollectionMaterialsCount,
-    LearningMaterial, MissingCollectionField, MissingMaterialField,
+    LearningMaterial,
+    MissingCollectionField,
+    MissingMaterialField,
 } from '../api';
 import { MetaApiService, Type } from '../meta-api.service';
+import { Mode, Node } from '../meta-widget/meta-widget.component';
+import { MetaWidgetService } from '../meta-widget/meta-widget.service';
 import { WrappedResponse, wrapResponse } from '../wrap-observable.pipe';
-import {Mode} from "../meta-widget/meta-widget.component";
-import {MetaWidgetService} from "../meta-widget/meta-widget.service";
 
 export type MissingField = MissingMaterialField | MissingCollectionField;
+
 export type ModeDetail = {
     title: string;
     type: Type;
     missing?: MissingField | 'count';
 };
+
 const ModeDetails: { [key: string]: ModeDetail } = {};
 ModeDetails[Mode.MaterialsNoTitle] = {
     title: 'Materialien ohne Titel',
@@ -60,35 +62,44 @@ ModeDetails[Mode.CollectionsNoContent] = {
     type: Type.Collection,
     missing: 'count',
 };
+
 @Component({
     selector: 'app-widget-node-list',
     templateUrl: './widget-node-list.html',
     styleUrls: ['./widget-node-list.scss'],
 })
-export class WidgetNodeList implements OnInit, OnChanges {
-    readonly Mode = Mode;
+export class WidgetNodeList implements OnInit, OnChanges, OnDestroy {
     @Input() mode: Mode;
+
+    readonly Mode = Mode;
     wrappedData$: Observable<WrappedResponse<Node[]>>;
     data: Node[] | undefined;
     rawData: Node[] | undefined;
     modeDetail: ModeDetail;
     count: number | null = 0;
-    constructor(
-        private metaApi: MetaApiService,
-        private widgetService: MetaWidgetService
-    ) {}
+
+    private destroyed$ = new Subject<void>();
+
+    constructor(private metaApi: MetaApiService, private widgetService: MetaWidgetService) {}
 
     ngOnInit(): void {
+        this.widgetService
+            .observeCollectionId()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe(() => this.refresh());
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        console.log(changes);
         this.modeDetail = ModeDetails[this.mode.toString()];
         this.refresh();
     }
 
+    ngOnDestroy(): void {
+        this.destroyed$.next();
+        this.destroyed$.complete();
+    }
+
     async refresh() {
-        console.log('refresh', this.widgetService.getCollectionId());
         if (this.modeDetail.missing) {
             this.wrappedData$ = this.metaApi
                 .getByMissingAttribute(
@@ -111,7 +122,6 @@ export class WidgetNodeList implements OnInit, OnChanges {
         if (this.mode === Mode.CollectionsNoContent && this.rawData) {
             this.filterCount();
         }
-        console.log('refresh', this.count);
     }
 
     editNode(node: Node) {
