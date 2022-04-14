@@ -27,8 +27,9 @@ export class TreeCollectionDetails implements OnInit {
         keywords: 'Material ohne Schlagworte',
         description: 'Material ohne Beschreibungstext',
         ads_qualifier: 'Material ohne Angaben zu Werbung',
-        material_Type: 'Material ohne Materialtypzuordnung',
-        object_type: 'Material ohne Objekttypzuordnung',
+        // not used anymore since we have oeh_lrt as a required field
+        // material_Type: 'Material ohne Inhaltetyp',
+        // object_type: 'Material ohne Objekttypzuordnung',
     };
 
     private statsData: CollectionTreeNodeEntry[];
