@@ -25,7 +25,7 @@ export interface CollectionTreeNodeDetailEntry extends CollectionTreeNodeEntry {
 export class TreeCollectionDetails implements OnInit, OnDestroy {
     dataSource = new MatTreeNestedDataSource<CollectionTreeNodeEntry>();
 
-    countColumns = {
+    readonly countColumns = {
         title: 'Material ohne Titel',
         license: 'Material ohne Lizenz',
         subjects: 'Material ohne Fachzuordnung',
@@ -75,7 +75,7 @@ export class TreeCollectionDetails implements OnInit, OnDestroy {
             if (flat) {
                 flat.collectionDetails = v.validation_stats;
             } else {
-                // console.warn(v.noderef_id);
+                console.warn(v.noderef_id + ': has no stats data');
             }
         });
         collectionCounts.forEach((v) => {
@@ -99,7 +99,7 @@ export class TreeCollectionDetails implements OnInit, OnDestroy {
     getValidationTranslation(entry: CollectionTreeNodeDetailEntry) {
         const keyI18n: any = {
             description: 'Beschreibung',
-            edu_context: 'Fachgebiet',
+            edu_context: 'Bildungsstufe',
             keywords: 'Schlagworte',
             title: 'Titel',
         };
