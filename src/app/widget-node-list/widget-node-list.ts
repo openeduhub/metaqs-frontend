@@ -136,7 +136,7 @@ export class WidgetNodeList implements OnInit, OnChanges, OnDestroy {
             environment.eduSharingPath +
                 '/components/editorial-desk?mode=render&viewType=single&ids=' +
                 encodeURIComponent(id) +
-                '?action=' +
+                '&action=' +
                 action +
                 '&ticket=' +
                 this.widgetService.getTicket() || '',
